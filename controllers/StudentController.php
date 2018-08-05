@@ -55,7 +55,7 @@ class StudentController extends Controller
      */
     public function actionView($id)
     {
-        return $this->renderAjax('view', [
+        return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -66,23 +66,55 @@ class StudentController extends Controller
     public function actionGenerate($id)
     {
         $student = Student::findOne($id);
+        $userV = User::findAll('roles');
+        // print_r($userV);
+        // die();
         $user = new User;
-        $user->username = Student::findOne($id)->getStudentUser();
-        $user->setPassword(Student::findOne($id)->getStudentPass());
-        $user->role = 15;
-        $user->status = 10;
-        if(!$user->save()){
-            die("<h1>Wa na save ag user</h1>" . print_r($user));
-        }
-        $student->link('user', $user);
-        Yii::$app->session->setFlash('success', Student::findOne($id)->getFullName()."'s account has been generated");
-        if(!$student->save()){
-            die("<h1>Wa na save ag Student</h1>" . print_r($user));
-        }
+        if ( $userV === 15 && !$student->user_id == 0){
+                Yii::$app->session->setFlash('danger', 
+                            Student::findOne($id)->getFullName().
+                            " has an account already.");
+                            return $this->render('view', [
+                                'model' => $this->findModel($id),
+                        ]);
         
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+                    }else{
+            
+                            $user->username = Student::findOne($id)->getStudentUser();
+                            $user->setPassword(Student::findOne($id)->getStudentPass());
+                            $user->role = 15;
+                            $user->status = 10;
+                            $user->save();
+                            // print_r($user->save());
+                            // die();
+                        if(!$user->save()){
+                            print_r($user->save());
+                            die();
+                            Yii::$app->session->setFlash('danger', 
+                            Student::findOne($id)->getFullName().
+                            " already has an accountsdsds");
+                        }else{
+                            
+                            Yii::$app->session->setFlash('success', 
+                            Student::findOne($id)->getFullName().
+                            "'s account has been generated");
+                            $student->link('user', $user);
+                        }
+                        if(!$student->save()){
+                            Yii::$app->session->setFlash('error', 
+                            Student::findOne($id)->getFullName().
+                            "'s has not been connected to his/her User Account");
+                        }else{
+                            $student->save();
+                        Yii::$app->session->setFlash('notice',
+                        Student::findOne($id)->getFullName().
+                        "'s has been connected to his/her User Account");
+                        }
+
+            }
+             return $this->render('view', [
+                        'model' => $this->findModel($id),
+                    ]);
     }
 
     /**

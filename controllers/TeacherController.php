@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use Yii;
+use yii\base\Model;
 use app\models\User;
 use app\models\Teacher;
 use app\models\TeacherSearch;
@@ -16,31 +17,43 @@ use app\components\AccessRule;
  */
 class TeacherController extends Controller
 {
+    public $username;
+
+    public function rules()
+    {
+        return [
+            ['username', 'required'],
+            // ['username', 'unique', 'targetClass' =>
+            //  '\app\models\User', 'message' => 'This username has already been taken.'],
+            ['username', 'string', 'min' => 2, 'max' => 255],
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
     public function behaviors()
     {
         return [
-        //     'access' => [
-        //     'class' => AccessControl::className(),
-        //     'ruleConfig' => [
-        //         'class' => AccessRule::className(),
-        //     ],
-        //     'only' => ['index','view'],
-        //     'rules'=>[
-        //         [
-        //             'actions'=>['index'],
-        //             'allow' => true,
-        //             'roles' => ['@']
-        //         ],
-        //         [
-        //             'actions' => ['index','delete'],
-        //             'allow' => true,
-        //             'roles' => [User::USER_ADMIN]
-        //         ]
-        //     ],
-        // ],
+            'access' => [
+            'class' => AccessControl::className(),
+            'ruleConfig' => [
+                'class' => AccessRule::className(),
+            ],
+            'only' => ['index','view'],
+            'rules'=>[
+                [
+                    'actions'=>['index'],
+                    'allow' => true,
+                    'roles' => ['@']
+                ],
+                [
+                    'actions' => ['index','view'],
+                    'allow' => true,
+                    'roles' => [User::ROLE_ADMIN]
+                ]
+            ],
+        ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -101,26 +114,51 @@ class TeacherController extends Controller
 
     public function actionGenerate($id)
     {
-        $student = Teacher::findOne($id);
+        $teacher = Teacher::findOne($id);
         $user = new User;
-        $user->username = Teacher::findOne($id)->getTeacherUser();
-        $user->setPassword(Teacher::findOne($id)->getTeacherPass());
-        $user->role = 20;
-        $user->status = 10;
-        if(!$user->save()){
-            Yii::$app->session->setFlash('danger', Teacher::findOne($id)->getFullName()."'s account has not been generated");
-        }else{
-            Yii::$app->session->setFlash('success', Teacher::findOne($id)->getFullName()."'s account has been generated");
-        }
-        $student->link('user', $user);
-         if(!$student->save()){
-            Yii::$app->session->setFlash('error', Teacher::findOne($id)->getFullName()."'s has not been connected to his/her User Account");
-        }else{
-        Yii::$app->session->setFlash('notice', Teacher::findOne($id)->getFullName()."'s has been connected to his/her User Account");
+        if (!$teacher->user_id === 0){
+                Yii::$app->session->setFlash('danger', 
+                            Teacher::findOne($id)->getFullName().
+                            " has an account already.");
+                            return $this->render('view', [
+                                'model' => $this->findModel($id),
+                        ]);
+        
+                    }else{
+            
+                            $user->username = Teacher::findOne($id)->getTeacherUser();
+                            $user->setPassword(Teacher::findOne($id)->getTeacherPass());
+                            $user->role = 20;
+                            $user->status = 10;
+                        
+                        if(!$user->save()){
+                            Yii::$app->session->setFlash('danger', 
+                            Teacher::findOne($id)->getFullName().
+                            " already has an account");
+                        }else{
+                            $user->save();
+                            Yii::$app->session->setFlash('success', 
+                            Teacher::findOne($id)->getFullName().
+                            "'s account has been generated");
+                            $teacher->link('user', $user);
+                        }
+                        if(!$teacher->save()){
+                            Yii::$app->session->setFlash('error', 
+                            Teacher::findOne($id)->getFullName().
+                            "'s has not been connected to his/her User Account");
+                        }else{
+                            $teacher->save();
+                        Yii::$app->session->setFlash('notice',
+                        Teacher::findOne($id)->getFullName().
+                        "'s has been connected to his/her User Account");
+                        }
+                        
+                    return $this->render('view', [
+                        'model' => $this->findModel($id),
+                ]);
+
         }
         
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        
     }
 }

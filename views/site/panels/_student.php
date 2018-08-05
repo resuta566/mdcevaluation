@@ -4,6 +4,7 @@ use app\components\MyWidgets;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use app\assets\MaterialAsset;
+use app\models\Teacher;
 
 MaterialAsset::register($this);
 $this->title = "Dashboard";
@@ -21,37 +22,24 @@ $this->title = "Dashboard";
 							-->
 
 							<div class="logo">
-								
-									<?= Nav::widget([
-						'items' => [
-							Yii::$app->user->isGuest ? (
-								['label' => 'Login', 'url' => ['/site/login'],
-								]
-							) : (
-								'<a href="../web/index.php" class="simple-text">'.
-								Yii::$app->user->identity->student->fullName . '</a>'.
-								Html::a('Logout', ['site/logout'], ['data' => ['method' => 'post']])
-								.''
-							)
-						],
-					]); ?>
-				
+							<?= '<a href="../index.php" class="simple-text">'.
+							Yii::$app->user->identity->student->fullName . '</a>'; ?>
 			</div>
 
 	    	<div class="sidebar-wrapper">
 	            <ul class="nav">
-	                <li class="active">
-	                    <a href="index.php">
-	                        <i class="material-icons">dashboard</i>
-	                        <p>Dashboard</p>
-	                    </a>
-	                </li>
-	                <li>
-	                    <a href="user.html">
-	                        <i class="material-icons">person</i>
-	                        <p>User Profile</p>
-	                    </a>
-	                </li>
+				<li class="active">
+									<a href="index.php">
+										<i class="glyphicon glyphicon-home"></i>
+										<p>Dashboard</p>
+									</a>
+								</li>
+					<li>
+									<a href="index.php/teacher">
+										<i class="glyphicon glyphicon-blackboard"> </i>
+										<p>Teachers</p>
+									</a>
+								</li>
 	               
 	            </ul>
 	    	</div>
@@ -69,31 +57,59 @@ $this->title = "Dashboard";
 							<span class="icon-bar"></span>
 						</button>
 						<a class="navbar-brand" href="#">
-							<img src="mdclogo.png" style="display:inline; horizontal-align: top; height:45px;"/>Teacher Evaluation
+							<img src="mdclogo.png" style="display:inline; horizontal-align: top; height:45px;"/> Teacher Evaluation
 						</a>
 					</div>
+					<div class="collapse navbar-collapse">
+									<ul class="nav navbar-nav navbar-right">
+										<li class="dropdown">
+											<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+												<i style="font-size:25px;" class="glyphicon glyphicon-cog"> </i>
+												<p class="hidden-lg hidden-md"> </p>
+											</a>
+											<ul class="dropdown-menu">
+												<li>
+													<?= Html::a('Logout', ['site/logout'], ['data' => ['method' => 'post']]); ?>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</div>
 	</nav>
 		<div class="content">
 				<div class="container-fluid">
-					<div class="row">
-						<div class="panel panel-info">
-								<div class="panel-heading">
-									<span class="big">
-										<h2>Student Panel</h2>
-									</span>
-								</div>
+						<div class="card">
+					<div class="card-header" data-background-color="blue">
+						<h1 class="title">DASHBOARD</h1>
+						<p class="category">Student Dashboard</p>
+					</div>
 								<div class="panel-body">
-									<center>
-										<?= MyWidgets::mainPanelButton("glyphicon glyphicon-th-list", "Study Load", "/students/load" ) ?>
-										<?= MyWidgets::mainPanelButton("glyphicon glyphicon-folder-close", "Courses", "/courses" ) ?>
-										<p><?= Html::a('Logout', ['site/logout'], ['data' => ['method' => 'post']]) ?></p>
+									
+								<center>
+								<div class="col-lg-3 col-md-6 col-sm-6">
+									<div class="card card-stats">
+                                            <a href="index.php/teacher">
+                                                <div class="card-header" data-background-color="orange">
+                                                    <i class="glyphicon glyphicon-blackboard"></i>
+                                                </div>
+                                                <div class="card-content">
+                                                    <p class="category">Teachers</p>
+                                                    <h3 class="title"><?= Teacher::find()->count(); ?></h3>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <div class="stats">
+                                                        <i class="glyphicon glyphicon-briefcase"></i> Active
+                                                    </div>
+                                                </a>
+                                        </div>
+										
+                        			</div>
 									</center>
 								</div>
-							</div>
-							</div>
-						</div>
-					</div>
-		</div>
+						  	</div>
+				</div>
+			</div>
+	</div>
 
 </div>
 <body>

@@ -98,12 +98,11 @@ $this->title = "Admin Dashboard";
 					<div class="content">
 							<div class="container-fluid">
 								<div class="row">
-										<div class="panel panel-info">
-											<div class="panel-heading">
-												<span class="big">
-													<h2>Dashboard</h2>
-												</span>
-											</div>
+									<div class="card">
+										<div class="card-header" data-background-color="blue">
+											<h1 class="title">DASHBOARD</h1>
+											<p class="category">Admin Dashboard</p>
+										</div>
 												<div class="panel-body">
 													<center>
 													<div class="col-lg-3 col-md-6 col-sm-6">

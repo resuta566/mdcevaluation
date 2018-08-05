@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         // Url::to('student/view'),
                         function ($model) {
                             return Html::a($model->id, 
-                            [ 'teacher/view', 'id' => $model->id ], [
+                            [ 'student/view', 'id' => $model->id ], [
                                 'target' => '_blank']
                                 );
                             },

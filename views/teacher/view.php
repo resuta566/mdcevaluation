@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?php if($model->user_id==0){ ?>
+        
         <?=  
         Html::a('Generate', ['generate', 'id' => $model->id], [
             'class' => 'btn btn-danger',
@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
-        <?php }?>
+       
     </p>
 
     <?= DetailView::widget([

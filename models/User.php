@@ -67,6 +67,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             [['username', 'password', 'role', 'status'], 'required'],
             [['role', 'status', 'department'], 'integer'],
             [['username'], 'string', 'max' => 10],
+            [['username'], 'unique' ],
             [['password', 'authkey'], 'string', 'max' => 225],
         ];
     }
@@ -92,6 +93,10 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function getId()
     {
         return $this->id;
+    }
+    public function getRoles()
+    {
+        return $this->role;
     }
 
     /**
