@@ -12,6 +12,7 @@ use app\models\User;
  */
 class UserSearch extends User
 {
+    public $userSearch;
     /**
      * {@inheritdoc}
      */
@@ -19,7 +20,7 @@ class UserSearch extends User
     {
         return [
             [['id', 'role', 'status', 'department'], 'integer'],
-            [['username', 'password', 'authkey'], 'safe'],
+            [['username','userSearch', 'password','roleName','statusName', 'authkey'], 'safe'],
         ];
     }
 
@@ -58,16 +59,18 @@ class UserSearch extends User
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'role' => $this->role,
-            'status' => $this->status,
-            'department' => $this->department,
-        ]);
+        // $query->andFilterWhere([
+        //     'id' => $this->id,
+        //     'role' => $this->role,
+        //     'status' => $this->status,
+        //     'department' => $this->department,
+        // ]);
 
-        $query->andFilterWhere(['like', 'username', $this->username])
-            ->andFilterWhere(['like', 'password', $this->password])
-            ->andFilterWhere(['like', 'authkey', $this->authkey]);
+        $query->orFilterWhere(['like', 'username', $this->userSearch])
+            // ->orFilterWhere(['like', 'password', $this->userSearch])
+            // ->orFilterWhere(['like', 'authkey', $this->userSearch])
+            ->orFilterWhere(['like', 'role', $this->userSearch])
+            ->orFilterWhere(['like', 'status', $this->userSearch]);
 
         return $dataProvider;
     }

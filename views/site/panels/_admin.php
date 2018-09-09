@@ -14,7 +14,7 @@ $this->title = "Admin Dashboard";
 ?>
 <body>
 <div class="wrapper">
-			<div class="sidebar" data-color="purple" data-image="../assets/img/sidebar-1.jpg">
+			<div class="sidebar" data-color="blue" data-image="mdclogo.png">
 							<!--
 								Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 
@@ -74,7 +74,7 @@ $this->title = "Admin Dashboard";
 										<span class="icon-bar"></span>
 										<span class="icon-bar"></span>
 									</button>
-									<a class="navbar-brand" href="#">
+									<a class="navbar-brand" href="index.php">
 										<img src="mdclogo.png" style="display:inline; horizontal-align: top; height:45px;"/> Teacher Evaluation
 									</a>
 								</div>
@@ -176,7 +176,7 @@ $this->title = "Admin Dashboard";
 										</a></div>
 								
 									</div>
-									
+</center>
 
 									
 												</div>

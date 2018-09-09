@@ -8,6 +8,8 @@ use app\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+use app\components\AccessRule;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -20,6 +22,25 @@ class UserController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'ruleConfig' => [
+                    'class' => AccessRule::className(),
+                ],
+                'only' => ['index','view','update'],
+                'rules'=>[
+                    [
+                        'actions'=>['login'],
+                        'allow' => true,
+                        'roles' => ['@']
+                    ],
+                    [
+                        'actions' => ['index','delete','view','update'],
+                        'allow' => true,
+                        'roles' => [User::ROLE_ADMIN]
+                    ]
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -35,6 +56,7 @@ class UserController extends Controller
      */
     public function actionIndex()
     {
+        $this->layout = "alayout";
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

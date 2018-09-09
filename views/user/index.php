@@ -10,30 +10,45 @@ use yii\grid\GridView;
 $this->title = 'Users';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="user-index">
+<div class="card">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
+<div class="card-header" data-background-color="blue">
+    <h1 class="title"><?= Html::encode($this->title) ?></h1>
+    <p class="category">List of Users of the Evaluation</p>
+    
+</div>
+<div style="margin: 20px">
+    <!-- <p>
+    <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>
+    </p> -->
+    <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        // 'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'username',
+            // 'id',
+            [ 'attribute' => 
+                   'username', 
+                   'label' => 'Username',
+                   'format' => 'raw', 
+                   'value' => 
+                   function ($model) {
+                   return Html::a($model->username, 
+                   [ 'user/view', 'id' => $model->id ], [
+                       'target' => '_blank']
+                       );
+                   },
+               ],
+            // 'holder',
             // 'password',
             // 'authkey',
             'roleName',
-            //'status',
+            'statusName',
             //'department',
 
             // ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+</div>
 </div>

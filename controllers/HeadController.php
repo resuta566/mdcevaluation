@@ -8,6 +8,8 @@ use app\models\HeadSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+use app\components\AccessRule;
 
 /**
  * HeadController implements the CRUD actions for Head model.
@@ -20,6 +22,33 @@ class HeadController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+            'class' => AccessControl::className(),
+            'ruleConfig' => [
+                'class' => AccessRule::className(),
+            ],
+            'only' => ['index','view','about'],
+            'rules'=>[
+                [
+                    'actions'=>['login'],
+                    'allow' => true,
+                    'roles' => ['@']
+                ],[
+                    'actions' => ['index'],
+                    'allow' => true,
+                    'roles' => [User::ROLE_STUDENT]
+                ],[
+                    'actions' => ['index'],
+                    'allow' => true,
+                    'roles' => [User::ROLE_TEACHER]
+                ],
+                [
+                    'actions' => ['index','delete','about'],
+                    'allow' => true,
+                    'roles' => [User::ROLE_ADMIN]
+                ]
+            ],
+        ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

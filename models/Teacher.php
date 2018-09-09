@@ -40,6 +40,10 @@ class Teacher extends \yii\db\ActiveRecord
     {
         return 'teacher';
     }
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * {@inheritdoc}

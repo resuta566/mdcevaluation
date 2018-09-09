@@ -58,6 +58,17 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return static::getRole()[$this->role];
     }
 
+    public static function getStatus() {
+        return $status = [
+            10 => 'Active',
+            0 => 'Inactive',
+        ];
+    }
+
+    public function getStatusName() {
+        return static::getStatus()[$this->status];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -85,7 +96,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'role' => 'Role',
             'status' => 'Status',
             'department' => 'Department',
-            'roleName' => 'User Role'
+            'roleName' => 'User Role',
+            'statusName' => 'Status'
         ];
     }
 
@@ -98,6 +110,22 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return $this->role;
     }
+    // public function getHolder(){
+    //     if(Teacher::find()->where(['user_id'=>'id'])->one()) {
+    //         $gago = Teacher::find()->where(['user_id'=>'id'])->one();
+    //         return $gago;
+    //     }else if (Teacher::find()->where(['user_id'=>'id'])->one()) {
+    //         $gago = Teacher::find()->where(['user_id'=>'id'])->one();
+    //         return $gago;
+    //      }else if (Yii::$app->user->identity->role==User::ROLE_STUDENT) {
+    //         return Yii::$app->user->identity->student->fullName;
+    //      }else if (Yii::$app->user->identity->role==User::ROLE_TEACHER) {
+    //         return Yii::$app->user->identity->teacher->fullName;
+    //      }else{
+    //         $gago = Teacher::find()->where(['user_id'=>'id'])->one();
+    //         return $gago;
+    //      }
+    // }
 
     /**
      * @return \yii\db\ActiveQuery

@@ -18,7 +18,8 @@
         "yiisoft/yii2": "~2.0.14",
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
-        "ramosisw/yii2-material-dashboard": "dev-master"
+        "ramosisw/yii2-material-dashboard": "dev-master",
+        "kartik-v/yii2-checkbox-x": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

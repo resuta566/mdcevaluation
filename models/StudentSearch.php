@@ -12,6 +12,7 @@ use app\models\Student;
  */
 class StudentSearch extends Student
 {
+    public $studentSearch;
     /**
      * {@inheritdoc}
      */
@@ -19,7 +20,7 @@ class StudentSearch extends Student
     {
         return [
             [['id', 'gender', 'user_id'], 'integer'],
-            [['lname', 'fname', 'mname'], 'safe'],
+            [['lname', 'fname', 'mname','studentSearch'], 'safe'],
         ];
     }
 
@@ -58,15 +59,15 @@ class StudentSearch extends Student
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'gender' => $this->gender,
-            'user_id' => $this->user_id,
-        ]);
+        // $query->andFilterWhere([
+        //     'id' => $this->id,
+        //     'gender' => $this->gender,
+        //     'user_id' => $this->user_id,
+        // ]);
 
-        $query->andFilterWhere(['like', 'lname', $this->lname])
-            ->andFilterWhere(['like', 'fname', $this->fname])
-            ->andFilterWhere(['like', 'mname', $this->mname]);
+        $query->orFilterWhere(['like', 'lname', $this->studentSearch])
+            ->orFilterWhere(['like', 'fname', $this->studentSearch])
+            ->orFilterWhere(['like', 'mname', $this->studentSearch]);
 
         return $dataProvider;
     }

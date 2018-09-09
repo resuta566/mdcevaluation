@@ -12,14 +12,15 @@ use app\models\Teacher;
  */
 class TeacherSearch extends Teacher
 {
+    public $teacherSearch;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'gender', 'user_id'], 'integer'],
-            [['lname', 'fname', 'mname'], 'safe'],
+            [['gender', 'user_id'], 'integer'],
+            [['id','lname', 'fname', 'mname','teacherSearch'], 'safe'],
         ];
     }
 
@@ -58,15 +59,16 @@ class TeacherSearch extends Teacher
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'gender' => $this->gender,
-            'user_id' => $this->user_id,
-        ]);
+        // $query->andFilterWhere([
+        //     'id' => $this->id,
+        //     'gender' => $this->gender,
+        //     'user_id' => $this->user_id,
+        // ]);
 
-        $query->andFilterWhere(['like', 'lname', $this->lname])
-            ->andFilterWhere(['like', 'fname', $this->fname])
-            ->andFilterWhere(['like', 'mname', $this->mname]);
+        $query->orFilterWhere(['like', 'id', $this->teacherSearch])
+            ->orFilterWhere(['like', 'fname', $this->teacherSearch])
+            ->orFilterWhere(['like', 'fname', $this->teacherSearch])
+            ->orFilterWhere(['like', 'mname', $this->teacherSearch]);
 
         return $dataProvider;
     }

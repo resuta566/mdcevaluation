@@ -10,7 +10,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AdminLteAsset;
 use app\assets\AppAsset;
-use app\models\Users;
+use app\models\User;
 if (class_exists('ramosisw\CImaterial\web\MaterialAsset')) {
     ramosisw\CImaterial\web\MaterialAsset::register($this);
 }
@@ -30,82 +30,74 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 <div class="wrapper">
-			<div class="sidebar" data-color="purple" data-image="../assets/img/sidebar-1.jpg">
-							<!--
-								Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
+	    <div class="sidebar" data-color="blue" data-image="../web/img/mdclogo.png">
 
-								Tip 2: you can also add an image using data-image tag
-							-->
+			<!--
+		        Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 
-							<div class="logo">
-								
-									<?= Nav::widget([
-						'items' => [
-							Yii::$app->user->isGuest ? (
-								['label' => 'Login', 'url' => ['/site/login'],
-								]
-							) : (
-								'<a href="../web/index.php" class="simple-text">'.
-							Yii::$app->user->identity->username . '</a>'.
-								Html::a('Logout', ['site/logout'], ['data' => ['method' => 'post']])
-								.''
-							)
-						],
-					]); ?>
-				
-			</div>
+		        Tip 2: you can also add an image using data-image tag
+		    -->
+
+			<div class="logo">
+			
+
+		 <?php if(Yii::$app->user->identity->role==User::ROLE_ADMIN){ ?>
+        <?= '<a href="../index.php" class="simple-text">'.
+            Yii::$app->user->identity->teacher->fullName . '</a>'; ?>
+        <?php }else if(Yii::$app->user->identity->role==User::ROLE_STUDENT){?>
+		<?= '<a href="../index.php" class="simple-text">'.
+            Yii::$app->user->identity->student->fullName . '</a>'; ?>
+		<?php }else if(Yii::$app->user->identity->role==User::ROLE_TEACHER){?>
+		<?= '<a href="../index.php" class="simple-text">'.
+            Yii::$app->user->identity->teacher->fullName . '</a>'; ?>
+		<?php }?>
+						</div>
 
 	    	<div class="sidebar-wrapper">
-	            <ul class="nav">
-	                <li class="active">
-	                    <a href="dashboard.html">
-	                        <i class="material-icons">dashboard</i>
-	                        <p>Dashboard</p>
-	                    </a>
-	                </li>
-	                <li>
-	                    <a href="user.html">
-	                        <i class="material-icons">person</i>
-	                        <p>User Profile</p>
-	                    </a>
-	                </li>
-	                <li>
-	                    <a href="table.html">
-	                        <i class="material-icons">content_paste</i>
-	                        <p>Table List</p>
-	                    </a>
-	                </li>
-	                <li>
-	                    <a href="typography.html">
-	                        <i class="material-icons">library_books</i>
-	                        <p>Typography</p>
-	                    </a>
-	                </li>
-	                <li>
-	                    <a href="icons.html">
-	                        <i class="material-icons">bubble_chart</i>
-	                        <p>Icons</p>
-	                    </a>
-	                </li>
-	                <li>
-	                    <a href="maps.html">
-	                        <i class="material-icons">location_on</i>
-	                        <p>Maps</p>
-	                    </a>
-	                </li>
-	                <li>
-	                    <a href="notifications.html">
-	                        <i class="material-icons text-gray">notifications</i>
-	                        <p>Notifications</p>
-	                    </a>
-	                </li>
-	            </ul>
+			<ul class="nav">
+								<li class="active">
+									<a href="../index.php">
+										<i class="glyphicon glyphicon-home"></i>
+										<p>Dashboard</p>
+									</a>
+								</li>
+								<li>
+									<a href="../index.php/user">
+										<i class="glyphicon glyphicon-user"> </i>
+										<p>User</p>
+									</a>
+								</li>
+								<li>
+									<a href="../index.php/teacher">
+										<i class="glyphicon glyphicon-blackboard"> </i>
+										<p>Teachers</p>
+									</a>
+								</li>
+								<li>
+									<a href="../index.php/student">
+										<i class="glyphicon glyphicon-education"></i>
+										<p>Students</p>
+									</a>
+								</li>
+								<li>
+									<a href="../index.php/instrument">
+										<i class="glyphicon glyphicon-book"> </i>
+										<p>Instrument</p>
+									</a>
+									
+								</li>
+								<li>
+									<a href="../index.php/section">
+										<i class="glyphicon glyphicon-book"> </i>
+										<p>Section</p>
+									</a>
+								</li>
+							</ul>
 	    	</div>
 		</div>
-		
-	<div class="main-panel">
-	
-	<nav class="navbar navbar-transparent navbar-absolute">
+
+	    <div class="main-panel">
+			<nav class="navbar navbar-transparent navbar-absolute">
 				<div class="container-fluid">
 					<div class="navbar-header">
 						<button type="button" class="navbar-toggle" data-toggle="collapse">
@@ -114,21 +106,42 @@ AppAsset::register($this);
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="#">
-							<img src="mdclogo.png" style="display:inline; horizontal-align: top; height:45px;"/>Teacher Evaluation
+						<a class="navbar-brand" href="../index.php">
+								<img src="../img/mdclogo.png" style="display:inline; horizontal-align: top; height:45px;"/> Teacher Evaluation
 						</a>
 					</div>
-	</nav>
-		<div class="content">
-				<div class="container-fluid">
-					<div class="row">
-                    <?= $content ?>
-							</div>
-						</div>
-					</div>
-		</div>
+					<div class="collapse navbar-collapse">
+						<ul class="nav navbar-nav navbar-right">
+							
+							<li class="dropdown">
+								  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								  <i style="font-size:25px;" class="glyphicon glyphicon-cog"> </i>
+										<p class="hidden-lg hidden-md">Logout</p>
+								  </a>
+								  <ul class="dropdown-menu">
+								  <li>
+								<?= Html::a('Logout', ['site/logout'], ['data' => ['method' => 'post']]); ?>
+												</li>
+								  </ul>
+							</li>
+							
+						</ul>
 
-</div>
+					</div>
+				</div>
+			</nav>
+
+	        <div class="content">
+	            <div class="container-fluid">
+	                <div class="row">
+						<?= $content ?>
+	                </div>
+	            </div>
+	        </div>
+			
+	    </div>
+	</div>
+
 
 <?php $this->endBody() ?>
 </body>

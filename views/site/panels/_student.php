@@ -14,7 +14,7 @@ $this->title = "Dashboard";
 
 <body>
 <div class="wrapper">
-			<div class="sidebar" data-color="purple" data-image="../assets/img/sidebar-1.jpg">
+			<div class="sidebar" data-color="blue" data-image="mdclogo.png">
 							<!--
 								Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 
@@ -22,7 +22,7 @@ $this->title = "Dashboard";
 							-->
 
 							<div class="logo">
-							<?= '<a href="../index.php" class="simple-text">'.
+							<?= '<a href="index.php" class="simple-text">'.
 							Yii::$app->user->identity->student->fullName . '</a>'; ?>
 			</div>
 
@@ -35,9 +35,9 @@ $this->title = "Dashboard";
 									</a>
 								</li>
 					<li>
-									<a href="index.php/teacher">
-										<i class="glyphicon glyphicon-blackboard"> </i>
-										<p>Teachers</p>
+									<a href="index.php">
+										<i class="glyphicon glyphicon-user"> </i>
+										<p>Profile</p>
 									</a>
 								</li>
 	               

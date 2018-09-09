@@ -12,13 +12,14 @@ use yii\helpers\Url;
 $this->title = 'Students';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="student-index">
+
 <div class="card">
 <div class="card-header" data-background-color="blue">
     <h1 class="title"><?= Html::encode($this->title) ?></h1>
     <p class="category">List of Students of the Evaluation</p>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    
 </div>
+<div style="margin: 20px">
 <?php
  Modal::begin([
                 'header' => '<h4>Student</h4>',
@@ -28,12 +29,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 echo "<div id='modalContent'></div>";
           Modal::end();
 ?>
-
+<?php echo $this->render('_search', ['model' => $searchModel]); ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        // 'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
                  [ 'attribute' => 
                         'id', 
                         'label' => 'Username/ID Number',

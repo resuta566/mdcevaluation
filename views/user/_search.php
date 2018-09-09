@@ -15,15 +15,15 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <?= $form->field($model, 'userSearch') ?>
 
-    <?= $form->field($model, 'username') ?>
+    <!-- <?= $form->field($model, 'username') ?> -->
 
-    <?= $form->field($model, 'password') ?>
+    <!-- <?= $form->field($model, 'password') ?> -->
 
-    <?= $form->field($model, 'authkey') ?>
+    <!-- <?= $form->field($model, 'authkey') ?> -->
 
-    <?= $form->field($model, 'role') ?>
+    <!-- <?= $form->field($model, 'role') ?> -->
 
     <?php // echo $form->field($model, 'status') ?>
 
@@ -31,7 +31,7 @@ use yii\widgets\ActiveForm;
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <!-- <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?> -->
     </div>
 
     <?php ActiveForm::end(); ?>
