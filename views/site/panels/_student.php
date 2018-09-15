@@ -14,7 +14,7 @@ $this->title = "Dashboard";
 
 <body>
 <div class="wrapper">
-			<div class="sidebar" data-color="blue" data-image="mdclogo.png">
+			<div class="sidebar" data-color="blue" data-image="http://mdc.ph/wp-content/uploads/2013/08/MDC-Logo-clipped.png">
 							<!--
 								Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 
@@ -57,7 +57,7 @@ $this->title = "Dashboard";
 							<span class="icon-bar"></span>
 						</button>
 						<a class="navbar-brand" href="#">
-							<img src="mdclogo.png" style="display:inline; horizontal-align: top; height:45px;"/> Teacher Evaluation
+							<img src="http://mdc.ph/wp-content/uploads/2013/08/MDC-Logo-clipped.png" style="display:inline; horizontal-align: top; height:45px;"/> Teacher Evaluation
 						</a>
 					</div>
 					<div class="collapse navbar-collapse">

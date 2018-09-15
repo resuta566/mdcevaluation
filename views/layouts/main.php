@@ -10,6 +10,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AdminLteAsset;
 use app\assets\AppAsset;
+use app\models\User;
 if (class_exists('ramosisw\CImaterial\web\MaterialAsset')) {
     ramosisw\CImaterial\web\MaterialAsset::register($this);
 }
@@ -28,59 +29,89 @@ AppAsset::register($this);
 </head>
 <body>
 <?php $this->beginBody() ?>
+<div class="wrapper">
+	    <div class="sidebar" data-color="blue" data-image="http://mdc.ph/wp-content/uploads/2013/08/MDC-Logo-clipped.png">
 
-<div class="wrap">
-    <?php
-    NavBar::begin([
-        'brandLabel' => 'HOME',
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar navbar-transparent navbar-absolute', 
-            'role' => 'navigation'
-        ],
-    ]);
+			<!--
+		        Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 
-    
+		        Tip 2: you can also add an image using data-image tag
+		    -->
 
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->role 
-                    // . '[' . Yii::$app->user->identity->getRoleName() . ']'
-                    . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
-        ],
-    ]);
-    
-    NavBar::end();
-    ?>
+			<div class="logo">
+			
 
-    <div class="container">
-        <!-- <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?> -->
-        <?= Alert::widget() ?>
-        <?= $content ?>
-    </div>
-</div>
+		 <?php if(Yii::$app->user->identity->role==User::ROLE_ADMIN){ ?>
+        <?= '<a href="../index.php" class="simple-text">'.
+            Yii::$app->user->identity->teacher->fullName . '</a>'; ?>
+        <?php }else if(Yii::$app->user->identity->role==User::ROLE_STUDENT){?>
+		<?= '<a href="../index.php" class="simple-text">'.
+            Yii::$app->user->identity->student->fullName . '</a>'; ?>
+		<?php }else if(Yii::$app->user->identity->role==User::ROLE_TEACHER){?>
+		<?= '<a href="../index.php" class="simple-text">'.
+            Yii::$app->user->identity->teacher->fullName . '</a>'; ?>
+		<?php }?>
+						</div>
 
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; MDC Teachers Evaluation <?= date('Y') ?></p>
+	    	<div class="sidebar-wrapper">
+			<?= ramosisw\CImaterial\widgets\Menu::widget(
+            [
+                'options' => ['class' => 'nav'],
+                'items' => [
+                    ['label' => 'Dashboard', 'icon' => 'home', 'url' => ['/']],
+                    ['label' => 'Users', 'icon' => 'user', 'url' => ['/user']],
+                    ['label' => 'Teachers', 'icon' => 'blackboard', 'url' => ['/teacher']],
+                    ['label' => 'Students', 'icon' => 'education', 'url' => ['/student']],
+                    ['label' => 'Instruments', 'icon' => 'book', 'url' => ['/instrument']],
+                ],
+            ]
+        ) ?>
+	    	</div>
+		</div>
 
-        <p class="pull-right">Powered by <a target="_blank" href="https://www.facebook.com/m3is.tr">Resuta</a></p>
-    </div>
-</footer>
+	    <div class="main-panel">
+		<?php
+		NavBar::begin([
+			'brandLabel' => '<img src="http://mdc.ph/wp-content/uploads/2013/08/MDC-Logo-clipped.png" style="display:inline; horizontal-align: top; height:45px;" alt="logo"/> Teacher Evaluation',
+			'brandUrl' => Yii::$app->homeUrl,
+			'innerContainerOptions' => ['class' => 'container-fluid'],
+			'options' => [
+				'class' => 'navbar navbar-transparent navbar-absolute',
+			],
+		]);
+		echo Nav::widget([
+			'options' => ['class' => 'nav navbar-nav navbar-right'],
+			'encodeLabels' => false,
+			'dropDownCaret' => "<span style='font-size:25px;' class='glyphicon glyphicon-cog'></span>",
+			'items' => [
+				[
+					'label' => '',
+					'items' => [
+						[
+						 'label' => 'Logout',
+						 'url' => ['site/logout'],
+						 'linkOptions' => ['data-method' => 'post']
+						],
+				   ],
+				]
+				],
+		]);
+		NavBar::end();
+		?>
+			
+
+	        <div class="content">
+	            <div class="container-fluid">
+	                <div class="row">
+					<?= ramosisw\CImaterial\widgets\Alert::widget() ?>
+						<?= $content ?>
+	                </div>
+	            </div>
+	        </div>
+			
+	    </div>
+	</div>
+
 
 <?php $this->endBody() ?>
 </body>

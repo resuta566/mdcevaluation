@@ -45,7 +45,7 @@ class TeacherController extends Controller
                 'ruleConfig' => [
                     'class' => AccessRule::className(),
                 ],
-                'only' => ['index','view','generate','unlink'],
+                'only' => ['index','view','generate','unlink','bulk'],
                 'rules'=>[
                     [
                         'actions'=>['login'],
@@ -53,7 +53,7 @@ class TeacherController extends Controller
                         'roles' => ['@']
                     ],
                     [
-                        'actions' => ['index','view','generate','generate'],
+                        'actions' => ['index','view','generate','unlink','bulk'],
                         'allow' => true,
                         'roles' => [User::ROLE_ADMIN]
                     ]
@@ -177,13 +177,11 @@ class TeacherController extends Controller
         $user = User::find()->where(['username'=> $teacher->id])->one();
         $teacher->unlink('user',$user);
         Yii::$app->session->setFlash('success', 
-                            Teacher::findOne($id)->getFullName().
-                            "'s account has been unlinked.");
+        ' '.Teacher::findOne($id)->getFullName(). "'s account has been unlinked.");
                      
         $user->delete();
         Yii::$app->session->setFlash('danger', 
-                            Teacher::findOne($id)->getFullName().
-                            "'s account has been deleted");
+        ' '.Teacher::findOne($id)->getFullName()."'s account has been deleted");
                     
         return $this->render('view', [
             'model' => $this->findModel($id),
@@ -205,8 +203,7 @@ class TeacherController extends Controller
         $user = new User;
         if (!$teacher->user_id === 0){
                 Yii::$app->session->setFlash('danger', 
-                            Teacher::findOne($id)->getFullName().
-                            " has an account already.");
+                ' '.Teacher::findOne($id)->getFullName()." has an account already.");
                             return $this->render('view', [
                                 'model' => $this->findModel($id),
                         ]);
@@ -220,25 +217,21 @@ class TeacherController extends Controller
                             $user->save();
                         if(!$user->save()){
                             Yii::$app->session->setFlash('danger', 
-                            Teacher::findOne($id)->getFullName().
-                            " already has an account");
+                            ' '.Teacher::findOne($id)->getFullName(). " already has an account");
                         }else{
                             
                             Yii::$app->session->setFlash('success', 
-                            Teacher::findOne($id)->getFullName().
-                            "'s account has been generated");
+                            ' '.Teacher::findOne($id)->getFullName()."'s account has been generated");
                             $teacher->link('user', $user);
                         }
                         
                         if(!$teacher->save()){
                             Yii::$app->session->setFlash('error', 
-                            Teacher::findOne($id)->getFullName().
-                            "'s has not been connected to his/her User Account");
+                            ' '.Teacher::findOne($id)->getFullName()."'s has not been connected to his/her User Account");
                         }else{
                         $teacher->save();
                         Yii::$app->session->setFlash('info',
-                        Teacher::findOne($id)->getFullName().
-                        "'s has been connected to his/her User Account");
+                        ' '.Teacher::findOne($id)->getFullName()."'s has been connected to his/her User Account");
                         }
                         
                     return $this->render('view', [

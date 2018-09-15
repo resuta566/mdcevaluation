@@ -114,8 +114,7 @@ class StudentController extends Controller
         $user = new User;
         if (!$student->user_id === 0){
             Yii::$app->session->setFlash('danger', 
-                        Student::findOne($id)->getFullName().
-                        " has an account already.");
+            ' '.Student::findOne($id)->getFullName()." has an account already.");
                         return $this->render('view', [
                             'model' => $this->findModel($id),
                     ]);
@@ -129,25 +128,21 @@ class StudentController extends Controller
                         $user->save();
                     if(!$user->save()){
                         Yii::$app->session->setFlash('danger', 
-                        Student::findOne($id)->getFullName().
-                        " already has an account");
+                        ' '.Student::findOne($id)->getFullName()." already has an account");
                     }else{
                         
                         Yii::$app->session->setFlash('success', 
-                        Student::findOne($id)->getFullName().
-                        "'s account has been generated");
+                        ' '.Student::findOne($id)->getFullName()."'s account has been generated");
                         $student->link('user', $user);
                     }
                     
                     if(!$student->save()){
                         Yii::$app->session->setFlash('error', 
-                        Student::findOne($id)->getFullName().
-                        "'s has not been connected to his/her User Account");
+                        ' '.Student::findOne($id)->getFullName()."'s has not been connected to his/her User Account");
                     }else{
                     $student->save();
                     Yii::$app->session->setFlash('info',
-                    Student::findOne($id)->getFullName().
-                    "'s has been connected to his/her User Account");
+                    ' '.Student::findOne($id)->getFullName()."'s has been connected to his/her User Account");
                     }
                     
                 return $this->render('view', [

@@ -19,8 +19,8 @@ class TeacherSearch extends Teacher
     public function rules()
     {
         return [
-            [['gender', 'user_id'], 'integer'],
-            [['id','lname', 'fname', 'mname','teacherSearch'], 'safe'],
+            [['id','gender', 'user_id'], 'integer'],
+            [['lname', 'fname', 'mname','teacherSearch'], 'safe'],
         ];
     }
 
@@ -67,7 +67,7 @@ class TeacherSearch extends Teacher
 
         $query->orFilterWhere(['like', 'id', $this->teacherSearch])
             ->orFilterWhere(['like', 'fname', $this->teacherSearch])
-            ->orFilterWhere(['like', 'fname', $this->teacherSearch])
+            ->orFilterWhere(['like', 'lname', $this->teacherSearch])
             ->orFilterWhere(['like', 'mname', $this->teacherSearch]);
 
         return $dataProvider;

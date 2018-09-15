@@ -65,7 +65,8 @@ class StudentSearch extends Student
         //     'user_id' => $this->user_id,
         // ]);
 
-        $query->orFilterWhere(['like', 'lname', $this->studentSearch])
+        $query->orFilterWhere(['like', 'id', $this->studentSearch])
+            ->orFilterWhere(['like', 'lname', $this->studentSearch])
             ->orFilterWhere(['like', 'fname', $this->studentSearch])
             ->orFilterWhere(['like', 'mname', $this->studentSearch]);
 

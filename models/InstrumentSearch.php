@@ -12,6 +12,7 @@ use app\models\Instrument;
  */
 class InstrumentSearch extends Instrument
 {
+    public $instrumentSearch;
     /**
      * {@inheritdoc}
      */
@@ -58,12 +59,13 @@ class InstrumentSearch extends Instrument
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-        ]);
+        // $query->andFilterWhere([
+        //     'id' => $this->id,
+        // ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description]);
+        $query->orFilterWhere(['like', 'id', $this->instrumentSearch])
+            ->orFilterWhere(['like', 'name', $this->instrumentSearch])
+            ->orFilterWhere(['like', 'description', $this->instrumentSearch]);
 
         return $dataProvider;
     }

@@ -30,7 +30,7 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 <div class="wrapper">
-	    <div class="sidebar" data-color="blue" data-image="../web/img/mdclogo.png">
+	    <div class="sidebar" data-color="blue" data-image="http://mdc.ph/wp-content/uploads/2013/08/MDC-Logo-clipped.png">
 
 			<!--
 		        Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
@@ -54,86 +54,56 @@ AppAsset::register($this);
 						</div>
 
 	    	<div class="sidebar-wrapper">
-			<ul class="nav">
-								<li class="active">
-									<a href="../index.php">
-										<i class="glyphicon glyphicon-home"></i>
-										<p>Dashboard</p>
-									</a>
-								</li>
-								<li>
-									<a href="../index.php/user">
-										<i class="glyphicon glyphicon-user"> </i>
-										<p>User</p>
-									</a>
-								</li>
-								<li>
-									<a href="../index.php/teacher">
-										<i class="glyphicon glyphicon-blackboard"> </i>
-										<p>Teachers</p>
-									</a>
-								</li>
-								<li>
-									<a href="../index.php/student">
-										<i class="glyphicon glyphicon-education"></i>
-										<p>Students</p>
-									</a>
-								</li>
-								<li>
-									<a href="../index.php/instrument">
-										<i class="glyphicon glyphicon-book"> </i>
-										<p>Instrument</p>
-									</a>
-									
-								</li>
-								<li>
-									<a href="../index.php/section">
-										<i class="glyphicon glyphicon-book"> </i>
-										<p>Section</p>
-									</a>
-								</li>
-							</ul>
+			<?= ramosisw\CImaterial\widgets\Menu::widget(
+            [
+                'options' => ['class' => 'nav'],
+                'items' => [
+                    ['label' => 'Dashboard', 'icon' => 'home', 'url' => ['/']],
+                    ['label' => 'Users', 'icon' => 'user', 'url' => ['/user']],
+                    ['label' => 'Teachers', 'icon' => 'blackboard', 'url' => ['/teacher']],
+                    ['label' => 'Students', 'icon' => 'education', 'url' => ['/student']],
+                    ['label' => 'Instruments', 'icon' => 'book', 'url' => ['/instrument']],
+                ],
+            ]
+        ) ?>
 	    	</div>
 		</div>
 
 	    <div class="main-panel">
-			<nav class="navbar navbar-transparent navbar-absolute">
-				<div class="container-fluid">
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle" data-toggle="collapse">
-							<span class="sr-only">Toggle navigation</span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
-						<a class="navbar-brand" href="../index.php">
-								<img src="../img/mdclogo.png" style="display:inline; horizontal-align: top; height:45px;"/> Teacher Evaluation
-						</a>
-					</div>
-					<div class="collapse navbar-collapse">
-						<ul class="nav navbar-nav navbar-right">
-							
-							<li class="dropdown">
-								  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								  <i style="font-size:25px;" class="glyphicon glyphicon-cog"> </i>
-										<p class="hidden-lg hidden-md">Logout</p>
-								  </a>
-								  <ul class="dropdown-menu">
-								  <li>
-								<?= Html::a('Logout', ['site/logout'], ['data' => ['method' => 'post']]); ?>
-												</li>
-								  </ul>
-							</li>
-							
-						</ul>
-
-					</div>
-				</div>
-			</nav>
+		<?php
+		NavBar::begin([
+			'brandLabel' => '<img src="http://mdc.ph/wp-content/uploads/2013/08/MDC-Logo-clipped.png" style="display:inline; horizontal-align: top; height:45px;" alt="logo"/> Teacher Evaluation',
+			'brandUrl' => Yii::$app->homeUrl,
+			'innerContainerOptions' => ['class' => 'container-fluid'],
+			'options' => [
+				'class' => 'navbar navbar-transparent navbar-absolute',
+			],
+		]);
+		echo Nav::widget([
+			'options' => ['class' => 'nav navbar-nav navbar-right'],
+			'encodeLabels' => false,
+			'dropDownCaret' => "<span style='font-size:25px;' class='glyphicon glyphicon-cog'></span>",
+			'items' => [
+				[
+					'label' => '',
+					'items' => [
+						[
+						 'label' => 'Logout',
+						 'url' => ['site/logout'],
+						 'linkOptions' => ['data-method' => 'post']
+						],
+				   ],
+				]
+				],
+		]);
+		NavBar::end();
+		?>
+			
 
 	        <div class="content">
 	            <div class="container-fluid">
 	                <div class="row">
+					<?= ramosisw\CImaterial\widgets\Alert::widget() ?>
 						<?= $content ?>
 	                </div>
 	            </div>

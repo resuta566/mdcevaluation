@@ -28,6 +28,7 @@ MaterialAsset::register($this);
 <?php $this->beginBody() ?>
 
 <div class="mdcbg">
+<?= ramosisw\CImaterial\widgets\Alert::widget() ?>
         <?= $content ?>
     </div>
 
