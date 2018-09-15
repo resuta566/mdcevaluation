@@ -8,8 +8,6 @@ use app\models\Evaluation;
 use app\models\Classes;
 use app\models\StudentClass;
 use app\models\User;
-use app\models\Section;
-use app\models\Item;
 use app\models\Teacher;
 use app\models\TeacherSearch;
 use yii\web\Controller;
