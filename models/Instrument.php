@@ -12,7 +12,7 @@ use Yii;
  * @property string $description
  *
  * @property Evaluation[] $evaluations
- * @property Section $section
+ * @property Section[] $sections
  */
 class Instrument extends \yii\db\ActiveRecord
 {
@@ -59,8 +59,8 @@ class Instrument extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSection()
+    public function getSections()
     {
-        return $this->hasOne(Section::className(), ['instrument_id' => 'id']);
+        return $this->hasMany(Section::className(), ['instrument_id' => 'id']);
     }
 }

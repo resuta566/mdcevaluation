@@ -10,9 +10,9 @@ use Yii;
  * @property int $id
  * @property int $instrument_id
  * @property string $name
- * @property string $comment
+ * @property string $description
  *
- * @property Item $item
+ * @property Item[] $items
  * @property Instrument $instrument
  */
 class Section extends \yii\db\ActiveRecord
@@ -31,9 +31,9 @@ class Section extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['instrument_id', 'name'], 'required'],
             [['instrument_id'], 'integer'],
-            [['comment'], 'string'],
+            [['name', 'description'], 'required'],
+            [['description'], 'string'],
             [['name'], 'string', 'max' => 100],
             [['instrument_id'], 'exist', 'skipOnError' => true, 'targetClass' => Instrument::className(), 'targetAttribute' => ['instrument_id' => 'id']],
         ];
@@ -48,16 +48,16 @@ class Section extends \yii\db\ActiveRecord
             'id' => 'ID',
             'instrument_id' => 'Instrument ID',
             'name' => 'Name',
-            'comment' => 'Comment',
+            'description' => 'Description',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getItem()
+    public function getItems()
     {
-        return $this->hasOne(Item::className(), ['section_id' => 'id']);
+        return $this->hasMany(Item::className(), ['section_id' => 'id']);
     }
 
     /**

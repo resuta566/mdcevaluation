@@ -28,7 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'instrument_id',
             'name',
-            'comment:ntext',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

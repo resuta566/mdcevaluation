@@ -3,9 +3,13 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\ModelForm as Model;
 use app\models\Instrument;
+use app\models\Section;
+use app\models\Item;
 use app\models\User;
 use app\models\InstrumentSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -75,8 +79,12 @@ class InstrumentController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $section = $model->sections;
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'section' => $section,
         ]);
     }
 
@@ -87,14 +95,73 @@ class InstrumentController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Instrument();
+        $modelInstrument = new Instrument;
+        $modelsSection = [new Section];
+        $modelsItem = [[new Item]];
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($modelInstrument->load(Yii::$app->request->post())) {
+
+            $modelsSection = Model::createMultiple(Section::classname());
+            Model::loadMultiple($modelsSection, Yii::$app->request->post());
+
+            // validate person and houses models
+            $valid = $modelInstrument->validate();
+            $valid = Model::validateMultiple($modelsSection) && $valid;
+
+            if (isset($_POST['Item'][0][0])) {
+                foreach ($_POST['Item'] as $indexSection => $items) {
+                    foreach ($items as $indexItem => $item) {
+                        $data['Item'] = $item;
+                        $modelItem = new Item;
+                        $modelItem->load($data);
+                        $modelsItem[$indexSection][$indexItem] = $modelItem;
+                        $valid = $modelItem->validate();
+                    }
+                }
+            }
+
+            if ($valid) {
+                $transaction = Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $modelInstrument->save(false)) {
+                        // print_r($modelInstrument->save(false));
+                        // die();
+                        foreach ($modelsSection as $indexSection => $modelSection) {
+                            if ($flag === false) {
+                                break;
+                            }
+                            $modelSection->instrument_id = $modelInstrument->id;
+                            if (!($flag = $modelSection->save(false))) {
+                                break;
+                            }
+                            if (isset($modelsItem[$indexSection]) && is_array($modelsItem[$indexSection])) {
+                                foreach ($modelsItem[$indexSection] as $indexItem => $modelItem) {
+                                    $modelItem->section_id = $modelSection->id;
+                                    if (!($flag = $modelItem->save(false))) {
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    if ($flag) {
+                        $transaction->commit();
+                        return $this->redirect(['view', 'id' => $modelInstrument->id]);
+                    } else {
+                        $transaction->rollBack();
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                }
+            }
+            
         }
 
         return $this->render('create', [
-            'model' => $model,
+            'modelInstrument' => $modelInstrument,
+            'modelsSection' => (empty($modelsSection)) ? [new Section] : $modelsSection,
+            'modelsItem' => (empty($modelsItem)) ? [[new Item]] : $modelsItem,
         ]);
     }
 
@@ -107,14 +174,101 @@ class InstrumentController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $modelInstrument = $this->findModel($id);
+        $modelsSection = $modelInstrument->sections;
+        $modelsItem = [];
+        $oldItems = [];
+        if (!empty($modelsSection)) {
+            foreach ($modelsSection as $indexSection => $modelSection) {
+                $items = $modelSection->items;
+                $modelsItem[$indexSection] = $items;
+                $oldItems = ArrayHelper::merge(ArrayHelper::index($items, 'id'), $oldItems);
+            }
+        }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($modelInstrument->load(Yii::$app->request->post())) {
+
+            // reset
+            $modelsItem = [];
+
+            $oldSectionIDs = ArrayHelper::map($modelsSection, 'id', 'id');
+            $modelsSection = Model::createMultiple(Section::classname(), $modelsSection);
+            Model::loadMultiple($modelsSection, Yii::$app->request->post());
+            $deletedSectionIDs = array_diff($oldSectionIDs, array_filter(ArrayHelper::map($modelsSection, 'id', 'id')));
+
+            // validate Instrument and Section models
+            $valid = $modelInstrument->validate();
+            $valid = Model::validateMultiple($modelsSection) && $valid;
+
+            $itemsIDs = [];
+            if (isset($_POST['Item'][0][0])) {
+                foreach ($_POST['Item'] as $indexSection => $items) {
+                    $itemsIDs = ArrayHelper::merge($itemsIDs, array_filter(ArrayHelper::getColumn($items, 'id')));
+                    foreach ($items as $indexItem => $item) {
+                        $data['Item'] = $item;
+                        $modelItem = (isset($item['id']) && isset($oldItems[$item['id']])) ? $oldItems[$item['id']] : new Room;
+                        $modelItem->load($data);
+                        $modelsItem[$indexSection][$indexItem] = $modelItem;
+                        $valid = $modelItem->validate();
+                    }
+                }
+            }
+
+            $oldItemsIDs = ArrayHelper::getColumn($oldItems, 'id');
+            $deletedItemsIDs = array_diff($oldItemsIDs, $itemsIDs);
+
+            if ($valid) {
+                $transaction = Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $modelInstrument->save(false)) {
+
+                        if (! empty($deletedItemsIDs)) {
+                            Item::deleteAll(['id' => $deletedItemsIDs]);
+                        }
+
+                        if (! empty($deletedSectionIDs)) {
+                            Section::deleteAll(['id' => $deletedSectionIDs]);
+                        }
+
+                        foreach ($modelsSection as $indexSection => $modelSection) {
+
+                            if ($flag === false) {
+                                break;
+                            }
+
+                            $modelSection->instrument_id = $modelInstrument->id;
+
+                            if (!($flag = $modelSection->save(false))) {
+                                break;
+                            }
+
+                            if (isset($modelsItem[$indexSection]) && is_array($modelsItem[$indexSection])) {
+                                foreach ($modelsItem[$indexSection] as $indexItem => $modelItem) {
+                                    $modelItem->section_id = $modelSection->id;
+                                    if (!($flag = $modelItem->save(false))) {
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if ($flag) {
+                        $transaction->commit();
+                        return $this->redirect(['view', 'id' => $modelInstrument->id]);
+                    } else {
+                        $transaction->rollBack();
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                }
+            }
         }
 
         return $this->render('update', [
-            'model' => $model,
+            'modelInstrument' => $modelInstrument,
+            'modelsSection' => (empty($modelsSection)) ? [new Section] : $modelsSection,
+            'modelsItem' => (empty($modelsItem)) ? [[new Item]] : $modelsItem
         ]);
     }
 

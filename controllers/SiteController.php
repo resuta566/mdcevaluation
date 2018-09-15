@@ -83,6 +83,12 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $this->layout = 'loginLayout';
+        // $user = new User;
+        // $user->username = "admin";
+        //                 $user->setPassword('admin');
+        //                 $user->role = 100;
+        //                 $user->status = 10;
+        //                 $user->save();
         // Yii::$app->db->schema->getTableSchema('teacher');
         if(Yii::$app->user->isGuest) {
             return $this->render('index');

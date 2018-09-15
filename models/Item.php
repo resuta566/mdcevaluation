@@ -12,7 +12,6 @@ use Yii;
  * @property string $statement
  *
  * @property EvaluationItem[] $evaluationItems
- * @property Evaluation[] $evaluations
  * @property Section $section
  */
 class Item extends \yii\db\ActiveRecord
@@ -31,8 +30,8 @@ class Item extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['section_id', 'statement'], 'required'],
             [['section_id'], 'integer'],
+            [['statement'], 'required'],
             [['statement'], 'string'],
             [['section_id'], 'exist', 'skipOnError' => true, 'targetClass' => Section::className(), 'targetAttribute' => ['section_id' => 'id']],
         ];
@@ -56,14 +55,6 @@ class Item extends \yii\db\ActiveRecord
     public function getEvaluationItems()
     {
         return $this->hasMany(EvaluationItem::className(), ['item_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getEvaluations()
-    {
-        return $this->hasMany(Evaluation::className(), ['id' => 'evaluation_id'])->viaTable('evaluation_item', ['item_id' => 'id']);
     }
 
     /**

@@ -10,12 +10,16 @@ $this->title = 'Create Instrument';
 $this->params['breadcrumbs'][] = ['label' => 'Instruments', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="instrument-create">
+<div class="card">
+	 <div class="card-header" data-background-color="purple">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+</div>
+<div class="card-content">
     <?= $this->render('_form', [
-        'model' => $model,
+        'modelInstrument' => $modelInstrument,
+        'modelsSection' => $modelsSection,
+        'modelsItem' => $modelsItem,
     ]) ?>
-
+</div>
 </div>

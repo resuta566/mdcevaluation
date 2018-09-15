@@ -27,8 +27,19 @@ $this->params['breadcrumbs'][] = $this->title;
         // 'filterModel' => $searchModel,
         'columns' => [
 
-            'id',
-            'name',
+            // 'id',
+            [ 'attribute' => 
+            'id', 
+            'label' => 'Name',
+            'format' => 'raw', 
+            'value' => 
+            function ($model) {
+            return Html::a($model->name, 
+            [ 'instrument/view', 'id' => $model->id ], [
+                'target' => '_blank']
+                );
+            },
+        ],
             'description:ntext',
 
             // ['class' => 'yii\grid\ActionColumn'],

@@ -19,8 +19,7 @@ class InstrumentSearch extends Instrument
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['name', 'description'], 'safe'],
+            [['name', 'description','id'], 'safe'],
         ];
     }
 
