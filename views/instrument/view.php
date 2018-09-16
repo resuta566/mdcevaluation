@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th >Statements</th>
+                                <th ><?php echo '<b>'.$section->name.'</b>' ?></th>
                             </tr>
                         </thead>
                         <tbody class="container-rooms">
