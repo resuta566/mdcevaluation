@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Instruments', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="card">
-	 <div class="card-header" data-background-color="purple">
+	 <div class="card-header" data-background-color="blue">
 
     <h1><?= Html::encode($this->title) ?></h1>
 </div>

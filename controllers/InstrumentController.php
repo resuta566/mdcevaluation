@@ -80,11 +80,11 @@ class InstrumentController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        $section = $model->sections;
+        $sections = $model->sections;
 
         return $this->render('view', [
             'model' => $model,
-            'section' => $section,
+            'sections' => $sections,
         ]);
     }
 
