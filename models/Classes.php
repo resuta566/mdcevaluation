@@ -25,7 +25,7 @@ class Classes extends \yii\db\ActiveRecord
 
     public static function getEstatus() {
         return $estatus = [
-            10 => 'Active',
+            1 => 'Active',
             0 => 'Inactive',
         ];
     }

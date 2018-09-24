@@ -64,7 +64,7 @@ class ClassesSearchT extends Classes
         $query->andFilterWhere([
             'teacher_id' => $this->teacher_id,
             'estatus' => $this->estatus,
-            'estatus' => 0,
+            'estatus' => 0
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])

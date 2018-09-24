@@ -16,6 +16,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use app\components\AccessRule;
 use app\models\ClassesSearchT;
+use app\models\ClassesSearchActive;
 use app\models\Instrument;
 /**
  * TeacherController implements the CRUD actions for Teacher model.
@@ -93,7 +94,10 @@ class TeacherController extends Controller
     public function actionView($id)
     {   
         $searchModel = new ClassesSearchT();
+        $instrument = Instrument::find()->all();
+        $activeClass = new ClassesSearchActive();
         $dataProvider = $searchModel->search($id);
+        $activeDataProvider = $activeClass->search($id);
         $model = Teacher::findOne($id);
         $classes = Classes::find()->where(['teacher_id'=>$id])->one();
         return $this->render('view', [
@@ -101,6 +105,8 @@ class TeacherController extends Controller
             'classes'=> $classes,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'instrument' => $instrument,
+            'activeDataProvider' => $activeDataProvider
         ]);
     }
     protected function findModel($id)
@@ -147,9 +153,12 @@ class TeacherController extends Controller
              $evaluation->link('evalFor', $evalfor);
              $evaluation->link('instrument', $instrument);
              $evaluation->link('class', $model);
-             $model->estatus = 10;
+             $model->estatus = 1;
              $model->save();
              $evaluation->save();
+             if(!$evaluation->save()){
+                print_r($evaluation->save());
+            }
              
             // $gago = Instrument::find($id)->where(['name'=>'Student Form'])->one();
             // echo $gago->id ." ";
@@ -160,7 +169,7 @@ class TeacherController extends Controller
         //  $model->save();
          // or delete
        }
-       return $this->redirect(['/teacher']);
+       return $this->redirect(['view', 'id' => $modelInstrument->id]);
      }
 
      /**
@@ -243,5 +252,10 @@ class TeacherController extends Controller
         }
         
         
+    }
+
+    public function actionStop()
+    {
+        return "GAGO";
     }
 }

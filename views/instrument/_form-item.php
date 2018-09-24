@@ -7,11 +7,12 @@ use wbraganca\dynamicform\DynamicFormWidget;
 
 <?php DynamicFormWidget::begin([
     'widgetContainer' => 'dynamicform_inner',
-    'widgetBody' => '.container-rooms',
+    'widgetBody' => '.container-item',
     'widgetItem' => '.item-item',
+    'limit' => 20,
     'min' => 1,
-    'insertButton' => '.add-item',
-    'deleteButton' => '.remove-item',
+    'insertButton' => '.add-stat',
+    'deleteButton' => '.remove-stat',
     'model' => $modelsItem[0],
     'formId' => 'dynamic-form',
     'formFields' => [
@@ -21,13 +22,13 @@ use wbraganca\dynamicform\DynamicFormWidget;
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th >Statements</th>
+            <th>Statement</th>
             <th class="text-center">
-                <button type="button" class="add-item btn btn-success btn-xs"><span class="glyphicon glyphicon-plus" style="font-size: 10px"></span></button>
+                <button type="button" class="add-stat btn btn-success btn-xs"><span class="glyphicon glyphicon-plus" style="font-size: 10px"></span></button>
             </th>
         </tr>
     </thead>
-    <tbody class="container-rooms">
+    <tbody class="container-item">
     <?php foreach ($modelsItem as $indexItem => $modelItem): ?>
         <tr class="item-item">
             <td class="vcenter">
@@ -39,8 +40,8 @@ use wbraganca\dynamicform\DynamicFormWidget;
                 ?>
                 <?= $form->field($modelItem, "[{$indexSection}][{$indexItem}]statement")->label(false)->textInput(['maxlength' => true]) ?>
             </td>
-            <td class="text-center vcenter" style="width: 40px;">
-                <button type="button" class="remove-item btn btn-danger btn-xs"><span class="glyphicon glyphicon-minus" style="font-size: 10px"></span></button>
+            <td class="text-center vcenter" style="width: 30px;">
+                <button type="button" class="remove-stat btn btn-danger btn-xs"><span class="glyphicon glyphicon-minus" style="font-size: 10px"></span></button>
             </td>
         </tr>
      <?php endforeach; ?>

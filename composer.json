@@ -21,7 +21,8 @@
         "ramosisw/yii2-material-dashboard": "dev-master",
         "kartik-v/yii2-checkbox-x": "@dev",
         "dmstr/yii2-adminlte-asset": "2.1",
-        "wbraganca/yii2-dynamicform": "*"
+        "wbraganca/yii2-dynamicform": "*",
+        "kartik-v/yii2-tabs-x": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

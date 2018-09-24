@@ -4,8 +4,10 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\DetailView;
 use app\models\Teacher;
+use app\models\Instrument;
 use app\models\Classes;
 use yii\grid\GridView;
+use kartik\tabs\TabsX;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Teacher */
@@ -14,10 +16,14 @@ $this->title = $model->getFullName();
 $this->params['breadcrumbs'][] = ['label' => 'Teachers', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="teacher-view">
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="card">
+        <div class="card-header" data-background-color="blue">
+            <h1><?= Html::encode($this->title) ?></h1>
+            <p class="category">Teacher Details</p>
+        </div>
+    <div class="card-content">
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <!-- <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?> -->
         
         <?php if($model->user_id==0){ ?>
         <?=  
@@ -94,8 +100,117 @@ $this->params['breadcrumbs'][] = $this->title;
             'time',
         ],
     ]); ?> -->
+    <?php 
+$items = [
+    [
+        'label'=>'<i class="glyphicon glyphicon-off"></i> INACTIVE',
+        'content'=> 
+        // This is the Inactive Evaluation subjects
+                Html::beginForm(['bulk'],'post').
+                    GridView::widget([
+                        'dataProvider' => $dataProvider,
+                        // 'filterModel' => $searchModel,
+                        'columns' => [
+                            [
+                                    'class' => 'yii\grid\CheckboxColumn',
 
-    <?=Html::beginForm(['bulk'],'post');?>
+                            ],
+                            [
+                                'attribute' => 'estatus',
+                                'value' =>  'estatusName',
+                            ],
+                            [ 'attribute' => 
+                            'name', 
+                            'label' => 'Name',
+                            'format' => 'raw', 
+                            'value' => 
+                            function ($model) {
+                            return Html::a($model->name, 
+                            [ 'classes/view', 'id' => $model->id ], [
+                                'target' => '_blank']
+                                );
+                            },
+                        ],
+                            'description',
+                            'day',
+                            'time',
+                        ],
+                    ])
+                    ." <br> Select the Instrument".
+                    Html::dropDownList($instrument, 'id',
+      ArrayHelper::map(Instrument::find()->all(), 'id', 'name'),
+      [
+        'class' => 'form-control', 
+        'prompt'=>'Choose an Instrument'
+    ])
+                    . 
+                    Html::submitButton('Evaluate', [
+                        'class' => 'btn btn-info',
+                        'data' => [
+                            'confirm' => 'Are you sure you want to make an evaluation to this subjects?',
+                            'method' => 'post',
+                        ],
+                    ]).
+
+        Html::endForm()
+        ,
+        'active'=>true
+    ],
+    [
+        'label'=>'<i class="glyphicon glyphicon-transfer"></i> ACTIVE',
+        'content'=>
+        //Active Evaluation Subjects 
+        Html::beginForm(['stop'],'post').
+                GridView::widget([
+                    'dataProvider' => $activeDataProvider,
+                    // 'filterModel' => $searchModel,
+                    'columns' => [
+                        [
+                                'class' => 'yii\grid\CheckboxColumn',
+
+                        ],
+                        [
+                            'attribute' => 'estatus',
+                            'value' =>  'estatusName',
+                        ],
+                        [ 'attribute' => 
+                        'name', 
+                        'label' => 'Name',
+                        'format' => 'raw', 
+                        'value' => 
+                        function ($model) {
+                        return Html::a($model->name, 
+                        [ 'classes/view', 'id' => $model->id ], [
+                            'target' => '_blank']
+                            );
+                        },
+                    ],
+                    
+                        'description',
+                        'day',
+                        'time',
+                    ],
+                ]) 
+                . 
+                Html::submitButton('Stop', [
+                    'class' => 'btn btn-info',
+                    'data' => [
+                        'confirm' => 'Are you sure you want to stop the evaluation of this subjects?',
+                        'method' => 'post',
+                    ],
+                ])
+                .
+        Html::endForm()
+    ],
+    ];
+echo TabsX::widget([
+    'items'=>$items,
+    'position'=>TabsX::POS_ABOVE,
+    'encodeLabels'=>false
+]);
+?>
+
+    <!-- <?=Html::beginForm(['bulk'],'post');?>
         <?=GridView::widget([
             'dataProvider' => $dataProvider,
             // 'filterModel' => $searchModel,
@@ -135,5 +250,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
 
-<?= Html::endForm();?> 
+<?= Html::endForm();?>  -->
+</div>
 </div>

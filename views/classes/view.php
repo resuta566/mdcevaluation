@@ -84,7 +84,15 @@ $this->params['breadcrumbs'][] = $this->title;
                    },
                ],
                'student.fullName',
-               'student.user.statusName'
+               [ 'attribute' => 
+                   'name', 
+                   'label' => 'Status (Active / Drop)',
+                   'format' => 'raw', 
+                   'value' => 
+                   function ($sclasses) {
+                   return ($sclasses->statusName );
+                   },
+               ],
             ],
         ]); ?>
 

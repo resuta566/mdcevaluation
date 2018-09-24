@@ -22,20 +22,21 @@ $this->title = "Dashboard";
 							-->
 
 							<div class="logo">
-							<?= '<a href="../index.php" class="simple-text">'.
-							Yii::$app->user->identity->teacher->fullName . '</a>'; ?>
-			</div>
+							<a href="<?= \yii\helpers\Url::to(['/']) ?>" class="simple-text">
+							<?= Yii::$app->user->identity->teacher->fullName; ?>
+							</a>
+						</div>
 
 	    	<div class="sidebar-wrapper">
 	            <ul class="nav">
 				<li class="active">
-									<a href="index.php">
+									<a href="<?= \yii\helpers\Url::to(['/']) ?>">
 										<i class="glyphicon glyphicon-home"></i>
 										<p>Dashboard</p>
 									</a>
 								</li>
 					<li>
-									<a href="index.php/teacher">
+									<a href="<?= \yii\helpers\Url::to(['/teacher']) ?>">
 										<i class="glyphicon glyphicon-blackboard"> </i>
 										<p>Teachers</p>
 									</a>
@@ -56,7 +57,7 @@ $this->title = "Dashboard";
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="#">
+						<a class="navbar-brand" href="<?= \yii\helpers\Url::to(['/']) ?>">
 							<img src="http://mdc.ph/wp-content/uploads/2013/08/MDC-Logo-clipped.png" style="display:inline; horizontal-align: top; height:45px;"/> Teacher Evaluation
 						</a>
 					</div>
@@ -88,7 +89,7 @@ $this->title = "Dashboard";
 								<center>
 								<div class="col-lg-3 col-md-6 col-sm-6">
 									<div class="card card-stats">
-                                            <a href="index.php/teacher">
+                                            <a href="<?= \yii\helpers\Url::to(['/teacher']) ?>">
                                                 <div class="card-header" data-background-color="orange">
                                                     <i class="glyphicon glyphicon-blackboard"></i>
                                                 </div>

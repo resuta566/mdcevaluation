@@ -42,7 +42,22 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
             'description:ntext',
 
-            // ['class' => 'yii\grid\ActionColumn'],
+        //     ['class' => 'yii\grid\ActionColumn',
+        //     'template'=>'{delete}',
+        //     'buttons' => [
+        //         'delete' => function ($url) {
+        //             return Html::a(
+        //                 '<span class="glyphicon glyphicon-trash" style="font-size: 10px"></span>',
+        //                 $url, 
+        //                 [
+        //                     'title' => 'Delete',
+        //                     'data-pjax' => '0',
+        //                 ]
+        //             );
+        //         },
+        //     ],
+        // ],
+            
         ],
     ]); ?>
 </div>

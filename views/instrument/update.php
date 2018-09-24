@@ -12,14 +12,13 @@ $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="card">
 	 <div class="card-header" data-background-color="blue">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-</div>
-<div class="card-content">
-    <?= $this->render('_form', [
-        'modelInstrument' => $modelInstrument,
-        'modelsSection' => $modelsSection,
-        'modelsItem' => $modelsItem,
-    ]) ?>
-</div>
+        <h1><?= Html::encode($this->title) ?></h1>
+    </div>
+    <div class="card-content">
+        <?= $this->render('_form', [
+            'modelInstrument' => $modelInstrument,
+            'modelsSection' => $modelsSection,
+            'modelsItem' => $modelsItem,
+        ]) ?>
+    </div>
 </div>

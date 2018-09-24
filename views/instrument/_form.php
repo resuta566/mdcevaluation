@@ -9,9 +9,7 @@ use wbraganca\dynamicform\DynamicFormWidget;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="instrument-form">
-
-    <?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>
+<?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>
 
 <div>
        <?= $form->field($modelInstrument, 'name')->textInput(['maxlength' => true,'style'=>'width: 50%', 'placeholder'=>'Name'])->label(false) ?>
@@ -28,6 +26,7 @@ use wbraganca\dynamicform\DynamicFormWidget;
    'widgetContainer' => 'dynamicform_wrapper',
    'widgetBody' => '.container-items',
    'widgetItem' => '.section-item',
+   'limit' => 10,
    'min' => 1,
    'insertButton' => '.add-section',
    'deleteButton' => '.remove-section',
@@ -83,4 +82,5 @@ use wbraganca\dynamicform\DynamicFormWidget;
 
 <?php ActiveForm::end(); ?>
 
-</div>
+
+

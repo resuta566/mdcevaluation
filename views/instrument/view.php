@@ -49,9 +49,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <table class="table table-bordered table-striped">
    <thead>
        <tr>
-       <th> # </th>
-           <th ><span class="glyphicon glyphicon-home" style="font-size: 20px"></span> Sections</th>
-           <th style="width: 650px; height: 30px;">Items</th>
+       <th style="text-align: center"> # </th>
+           <th ><span class="glyphicon glyphicon-tasks" style="font-size: 20px"></span> <b>Sections</b></th>
+           <th style="width: 650px; height: 30px;"><span class="glyphicon glyphicon-list" style="font-size: 20px"></span> <b>Items</b></th>
        </tr>
    </thead>
    <tbody class="container-items">

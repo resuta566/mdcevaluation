@@ -17,6 +17,16 @@ use Yii;
  */
 class StudentClass extends \yii\db\ActiveRecord
 {
+    public static function getStatus() {
+        return $status = [
+            1 => 'Active',
+            0 => 'Drop',
+        ];
+    }
+
+    public function getStatusName() {
+        return static::getStatus()[$this->status];
+    }
     /**
      * {@inheritdoc}
      */

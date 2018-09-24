@@ -104,7 +104,7 @@ class InstrumentController extends Controller
             $modelsSection = Model::createMultiple(Section::classname());
             Model::loadMultiple($modelsSection, Yii::$app->request->post());
 
-            // validate person and houses models
+            // validate Instrument and Sections models
             $valid = $modelInstrument->validate();
             $valid = Model::validateMultiple($modelsSection) && $valid;
 
@@ -206,7 +206,7 @@ class InstrumentController extends Controller
                     $itemsIDs = ArrayHelper::merge($itemsIDs, array_filter(ArrayHelper::getColumn($items, 'id')));
                     foreach ($items as $indexItem => $item) {
                         $data['Item'] = $item;
-                        $modelItem = (isset($item['id']) && isset($oldItems[$item['id']])) ? $oldItems[$item['id']] : new Room;
+                        $modelItem = (isset($item['id']) && isset($oldItems[$item['id']])) ? $oldItems[$item['id']] : new Item;
                         $modelItem->load($data);
                         $modelsItem[$indexSection][$indexItem] = $modelItem;
                         $valid = $modelItem->validate();
