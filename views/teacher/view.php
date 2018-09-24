@@ -137,7 +137,7 @@ $items = [
                         ],
                     ])
                     ." <br> Select the Instrument".
-                    Html::dropDownList($instrument, 'id',
+                    Html::dropDownList($model, 'instrument_id',
       ArrayHelper::map(Instrument::find()->all(), 'id', 'name'),
       [
         'class' => 'form-control', 
