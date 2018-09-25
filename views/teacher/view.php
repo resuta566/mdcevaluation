@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
+use yii\widgets\ActiveForm;
 use yii\widgets\DetailView;
 use app\models\Teacher;
 use app\models\Instrument;
@@ -106,7 +107,7 @@ $items = [
         'label'=>'<i class="glyphicon glyphicon-off"></i> INACTIVE',
         'content'=> 
         // This is the Inactive Evaluation subjects
-                Html::beginForm(['bulk'],'post').
+       Html::beginForm(['bulk'],'post').
                     GridView::widget([
                         'dataProvider' => $dataProvider,
                         // 'filterModel' => $searchModel,
@@ -136,15 +137,14 @@ $items = [
                             'time',
                         ],
                     ])
-                    ." <br> Select the Instrument".
-                    Html::dropDownList($model, 'instrument_id',
-      ArrayHelper::map(Instrument::find()->all(), 'id', 'name'),
-      [
-        'class' => 'form-control', 
-        'prompt'=>'Choose an Instrument'
-    ])
-                    . 
-                    Html::submitButton('Evaluate', [
+                            ." <br> Select the Instrument".
+                Html::dropDownList('instrumentdropdown', null,
+                    ArrayHelper::map(Instrument::find()->all(), 'id', 'name'),
+                        [
+                            'class' => 'form-control', 
+                            'prompt'=>'Choose an Instrument'
+                        ])
+    . Html::submitButton('Evaluate', [
                         'class' => 'btn btn-info',
                         'data' => [
                             'confirm' => 'Are you sure you want to make an evaluation to this subjects?',
@@ -152,7 +152,7 @@ $items = [
                         ],
                     ]).
 
-        Html::endForm()
+                    Html::endForm()
         ,
         'active'=>true
     ],

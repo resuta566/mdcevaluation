@@ -89,7 +89,7 @@ $this->title = "Dashboard";
 								<center>
 								<div class="col-lg-3 col-md-6 col-sm-6">
 									<div class="card card-stats">
-                                            <a href="<?= \yii\helpers\Url::to(['index.php/teacher']) ?>">
+                                            <a href="<?= \yii\helpers\Url::to(['/teacher']) ?>">
                                                 <div class="card-header" data-background-color="orange">
                                                     <i class="glyphicon glyphicon-blackboard"></i>
                                                 </div>

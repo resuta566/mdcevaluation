@@ -95,6 +95,7 @@ class TeacherController extends Controller
     {   
         $searchModel = new ClassesSearchT();
         $instrument = Instrument::find()->all();
+        $eval = new Evaluation();
         $activeClass = new ClassesSearchActive();
         $dataProvider = $searchModel->search($id);
         $activeDataProvider = $activeClass->search($id);
@@ -102,6 +103,7 @@ class TeacherController extends Controller
         $classes = Classes::find()->where(['teacher_id'=>$id])->one();
         return $this->render('view', [
             'model'=> $model,
+            'eval' =>  $eval,
             'classes'=> $classes,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -132,30 +134,31 @@ class TeacherController extends Controller
     }
 
     public function actionBulk(){
-        $action=Yii::$app->request->post('action');
-        $instrument = Instrument::find('id')->where(['name'=>'Student Form'])->one();
+        $action = Yii::$app->request->post('instrumentdropdown');
+        $instrument = Instrument::find('id')->where(['id'=> $action ])->one();
         $selection=(array)Yii::$app->request->post('selection');//typecasting
+        // print_r($instrument->name);
+        // die();
         foreach($selection as $id){
          $model = Classes::findOne((int)$id);//make a typecasting
         //  echo $model->name." " ;
          $sclass = StudentClass::find()->where(['class_id'=>$model->id])->all();
          foreach ($sclass as $sc) {
-             $evaluation = new Evaluation();
-             $evalby = User::find()->where(['id' => $sc->student->user->id])->one();
-             $evalfor = User::find()->where(['id' => $model->teacher->user->id])->one();
-            //  echo $sc->student->id. " ";
-            //  echo $evalfor . " " . $evalby;
-            //  $evaluation->eval_by = $sc->id;
-            //  $evaluation->evaly_for = $model->teacher->user_id;
-            //  $evaluation->instrument_id = $instrument;
-            //  $evaluation->class_id = $model->id;
-             $evaluation->link('evalBy', $evalby);
-             $evaluation->link('evalFor', $evalfor);
-             $evaluation->link('instrument', $instrument);
-             $evaluation->link('class', $model);
-             $model->estatus = 1;
-             $model->save();
-             $evaluation->save();
+            $evaluation = new Evaluation();
+            $evalby = User::find()->where(['id' => $sc->student->user->id])->one();
+            $evalfor = User::find()->where(['id' => $model->teacher->user->id])->one();
+           //  echo $sc->student->id. " ";
+           //  echo $evalfor . " " . $evalby;
+            $evaluation->eval_by = $sc->id;
+            $evaluation->eval_for = $model->teacher->user_id;
+            $evaluation->instrument_id = $instrument->id;
+            $evaluation->class_id = $model->id;
+            $evaluation->link('evalBy', $evalby);
+            $evaluation->link('evalFor', $evalfor);
+            $evaluation->link('instrument', $instrument);
+            $evaluation->link('class', $model);
+            $model->estatus = 1;
+            $model->save();
              if(!$evaluation->save()){
                 print_r($evaluation->save());
             }
@@ -168,8 +171,9 @@ class TeacherController extends Controller
         //  echo $sclass->student->lname;
         //  $model->save();
          // or delete
+         
        }
-       return $this->redirect(['view', 'id' => $modelInstrument->id]);
+       return $this->redirect(['view', 'id' => $model->teacher->id]);
      }
 
      /**
