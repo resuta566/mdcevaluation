@@ -31,7 +31,6 @@ class EvaluationItem extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['evaluation_id', 'item_id', 'score'], 'required'],
             [['evaluation_id', 'item_id', 'score'], 'integer'],
             [['evaluation_id'], 'exist', 'skipOnError' => true, 'targetClass' => Evaluation::className(), 'targetAttribute' => ['evaluation_id' => 'id']],
             [['item_id'], 'exist', 'skipOnError' => true, 'targetClass' => Item::className(), 'targetAttribute' => ['item_id' => 'id']],

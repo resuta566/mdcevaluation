@@ -9,6 +9,9 @@ use app\models\Classes;
 use app\models\StudentClass;
 use app\models\User;
 use app\models\Teacher;
+use app\models\Section;
+use app\models\Item;
+use app\models\EvaluationItem;
 use app\models\TeacherSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -136,8 +139,20 @@ class TeacherController extends Controller
     public function actionBulk(){
         $action = Yii::$app->request->post('instrumentdropdown');
         $instrument = Instrument::find('id')->where(['id'=> $action ])->one();
+        $instrumentSection = Section::find('id')->where(['instrument_id' => $instrument])->all();
+        // foreach($instrumentSection as $iS){
+        //     echo $iS->id." " . $iS->name. " - ";
+        // $instrumentSectionItem = Item::find()->where(['section_id' => $iS->id])->all(); 
+        // // echo  $instrumentSectionItem ."<br>";
+        // echo "<br>";
+        // foreach($instrumentSectionItem as $iSt){
+        //     echo $iSt->id." - ";
+        // }
+        // }
+        //Items
+        // $instrumentSectionItem = Item::find()->where(['section_id' => $instrumentSection->id]); 
         $selection=(array)Yii::$app->request->post('selection');//typecasting
-        // print_r($instrument->name);
+        // print_r($instrumentSectionItem->count());
         // die();
         foreach($selection as $id){
          $model = Classes::findOne((int)$id);//make a typecasting
@@ -157,22 +172,46 @@ class TeacherController extends Controller
             $evaluation->link('evalFor', $evalfor);
             $evaluation->link('instrument', $instrument);
             $evaluation->link('class', $model);
-            $model->estatus = 1;
+            // $model->estatus = 1;
             $model->save();
-             if(!$evaluation->save()){
-                print_r($evaluation->save());
+            $evaluation->save();
+            
+            $evaluationId =  $evaluation->id;
+           
+            // print_r($evaluationId);
+            // die();
+            if(!$evaluation->save() &&  !$evaluation->validate()){
+                print_r($evaluation->getErrors());
+                die();
+            }else{
+                    foreach($instrumentSection as $iS){
+                        // echo $iS->id." " . $iS->name. " - ";
+                    $instrumentSectionItem = Item::find()->where(['section_id' => $iS->id])->all(); 
+                            // echo  $instrumentSectionItem ."<br>";
+                            // echo "<br>";
+                            foreach($instrumentSectionItem as $iSt){
+                                    $evalItem = new EvaluationItem;
+                                    $evalITem->evaluation_id = $evaluation->id;
+                                    $evalITem->item_id = $iSt->id;
+                                    $evalITem->link('evaluation', $evaluation);
+                                    $evalITem->link('item', $instrumentSectionItem);
+                                    $evalITem->save();
+                                    if(!$evalITem->save()){
+                                        print_r($evalITem->getErrors());
+                                        die();
+                                    }
+                            }
+                    }
+                }
+             
             }
              
             // $gago = Instrument::find($id)->where(['name'=>'Student Form'])->one();
             // echo $gago->id ." ";
             // echo  $sc->student->user->username." & ";
         }
-        
-        //  echo $sclass->student->lname;
-        //  $model->save();
-         // or delete
          
-       }
+       
        return $this->redirect(['view', 'id' => $model->teacher->id]);
      }
 
@@ -185,7 +224,9 @@ class TeacherController extends Controller
     public function actionUnlink($id)
     {
         $searchModel = new ClassesSearchT();
+        $activeClass = new ClassesSearchActive();
         $dataProvider = $searchModel->search($id);
+        $activeDataProvider = $activeClass->search($id);
         $teacher = Teacher::findOne($id);
         $user = User::find()->where(['username'=> $teacher->id])->one();
         $teacher->unlink('user',$user);
@@ -200,6 +241,7 @@ class TeacherController extends Controller
             'model' => $this->findModel($id),
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'activeDataProvider' => $activeDataProvider
     ]);
     }
      /**
@@ -211,7 +253,9 @@ class TeacherController extends Controller
     public function actionGenerate($id)
     {
         $searchModel = new ClassesSearchT();
+        $activeClass = new ClassesSearchActive();
         $dataProvider = $searchModel->search($id);
+        $activeDataProvider = $activeClass->search($id);
         $teacher = Teacher::findOne($id);
         $user = new User;
         if (!$teacher->user_id === 0){
@@ -251,6 +295,7 @@ class TeacherController extends Controller
                         'model' => $this->findModel($id),
                         'searchModel' => $searchModel,
                         'dataProvider' => $dataProvider,
+                        'activeDataProvider' => $activeDataProvider
                 ]);
 
         }

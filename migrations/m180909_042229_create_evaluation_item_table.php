@@ -16,7 +16,7 @@ class m180909_042229_create_evaluation_item_table extends Migration
             'id' => $this->primaryKey(),
             'evaluation_id' => $this->integer(),
             'item_id' => $this->integer(),
-            'score' => $this->integer(1)->notNull(),
+            'score' => $this->integer(1),
         ]);
         $this->createIndex(
             'idx-evaluation_item-evaluation_id',
