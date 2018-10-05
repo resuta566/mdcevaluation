@@ -140,7 +140,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public function getEvaluations0()
     {
-        return $this->hasMany(Evaluation::className(), ['evaly_for' => 'id']);
+        return $this->hasMany(Evaluation::className(), ['eval_for' => 'id']);
     }
 
     /**

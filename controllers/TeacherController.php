@@ -175,34 +175,28 @@ class TeacherController extends Controller
             // $model->estatus = 1;
             $model->save();
             $evaluation->save();
-            
-            $evaluationId =  $evaluation->id;
            
             // print_r($evaluationId);
             // die();
-            if(!$evaluation->save() &&  !$evaluation->validate()){
-                print_r($evaluation->getErrors());
-                die();
-            }else{
                     foreach($instrumentSection as $iS){
                         // echo $iS->id." " . $iS->name. " - ";
                     $instrumentSectionItem = Item::find()->where(['section_id' => $iS->id])->all(); 
                             // echo  $instrumentSectionItem ."<br>";
                             // echo "<br>";
-                            foreach($instrumentSectionItem as $iSt){
+                            foreach($instrumentSectionItem as $institem){
                                     $evalItem = new EvaluationItem;
-                                    $evalITem->evaluation_id = $evaluation->id;
-                                    $evalITem->item_id = $iSt->id;
-                                    $evalITem->link('evaluation', $evaluation);
-                                    $evalITem->link('item', $instrumentSectionItem);
-                                    $evalITem->save();
-                                    if(!$evalITem->save()){
-                                        print_r($evalITem->getErrors());
+                                    $evalItem->evaluation_id = $evaluation->id;
+                                    $evalItem->item_id = $institem->id;
+                                    $evalItem->link('evaluation', $evaluation);
+                                    $evalItem->link('item', $institem);
+                                    $evalItem->save();
+                                    if(!$evalItem->save()){
+                                        print_r($evalItem->getErrors());
                                         die();
                                     }
                             }
                     }
-                }
+                
              
             }
              

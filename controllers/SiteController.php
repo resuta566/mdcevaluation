@@ -91,13 +91,21 @@ class SiteController extends Controller
         //                 $user->save();
         // Yii::$app->db->schema->getTableSchema('teacher');
         if(Yii::$app->user->isGuest) {
+
             return $this->render('index');
+
         }else if (Yii::$app->user->identity->role==User::ROLE_ADMIN) {
+
             return $this->render('panels/_admin');
+
          }else if (Yii::$app->user->identity->role==User::ROLE_STUDENT) {
+            
             return $this->render('panels/_student');
+
          }else if (Yii::$app->user->identity->role==User::ROLE_TEACHER) {
+
             return $this->render('panels/_teacher');
+
          }else{
             return $this->render('index');
          }

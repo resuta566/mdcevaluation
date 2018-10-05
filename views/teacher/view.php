@@ -147,7 +147,7 @@ $items = [
     . Html::submitButton('Evaluate', [
                         'class' => 'btn btn-info',
                         'data' => [
-                            'confirm' => 'Are you sure you want to make an evaluation to this subjects?',
+                            'confirm' => 'Are you sure you want to make an evaluation to this subjects? Please be inform that this action cannot be undone.',
                             'method' => 'post',
                         ],
                     ]).
