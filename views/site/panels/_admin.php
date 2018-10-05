@@ -59,6 +59,12 @@ $this->title = "Admin Dashboard";
 										<p>Instrument</p>
 									</a>
 								</li>
+								<li>
+									<a href="<?= \yii\helpers\Url::to(['/evaluation-item']) ?>">
+										<i class="glyphicon glyphicon-book"> </i>
+										<p>Evaluation Item</p>
+									</a>
+								</li>
 							</ul>
 						</div>
 					</div>

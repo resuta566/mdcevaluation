@@ -5,6 +5,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use app\assets\MaterialAsset;
 use app\models\Teacher;
+use app\models\Evaluation;
 
 MaterialAsset::register($this);
 $this->title = "Dashboard";
@@ -85,17 +86,22 @@ $this->title = "Dashboard";
 						<p class="category">Student Dashboard</p>
 					</div>
 								<div class="panel-body">
-		<?php foreach (app\models\Evaluation::find()->where(['eval_by' => Yii::$app->user->identity->id])->all() as $usereval => $eval): ?>
+								<?php $evaluation = Evaluation::find()->where(['eval_by' => Yii::$app->user->identity->id])->all();  ?>
+								<?php if(!$evaluation){?>
+										<h3>There is Evaluation yet.</h3>
+										<small>Please wait for the admin to submit evaluation for you.</small>
+								<?php } else{ ?>
+									<?php foreach ($evaluation as $usereval => $eval): ?>
 								<center> 
 								<div class="col-lg-3 col-md-6 col-sm-6">
 									<div class="card card-stats">
-                                            <a href="<?= \yii\helpers\Url::to(['/teacher']) ?>">
+                                            <a href="<?= \yii\helpers\Url::to(['evaluation/evaluate', 'id' => $eval->id ]) ?>">
                                                 <div class="card-header" data-background-color="orange">
                                                     <i class="glyphicon glyphicon-blackboard"></i>
                                                 </div>
                                                 <div class="card-content">
-                                                    <p class="category"><?= $eval->evalFor->teacher->fullName ?></p>
-                                                    <h4 class="title"><?= $eval->class->name ?></h4>
+                                                    <h5 class="title"><?= $eval->evalFor->teacher->fullName ?></h5>
+                                                    <p class="category"><?= $eval->class->name ?></p>
                                                 </div>
                                                 <div class="card-footer">
                                                     <div class="stats">
@@ -106,7 +112,9 @@ $this->title = "Dashboard";
 										
                         			</div>
 									</center>
-		<?php endforeach; ?>
+							<?php endforeach; ?>
+								<?php }?>
+		
 								</div>
 						  	</div>
 				</div>

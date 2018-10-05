@@ -3,7 +3,9 @@
 namespace app\controllers;
 
 use Yii;
+use yii\base\Model;
 use app\models\Evaluation;
+use app\models\EvaluationItem;
 use app\models\EvaluationSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -92,6 +94,43 @@ class EvaluationController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+        ]);
+    }
+
+    /**
+     * This will show the Items and give the Evaluator to score the Evaluatee.
+     * If the giving of score is sucessfull this will redirect to their Dashboard.
+     */
+    public function actionEvaluate($id)
+    {
+        $model = Evaluation::find($id)->one();
+        $evalItems = EvaluationItem::find()->where(['evaluation_id' => $model->id])->all();
+
+        if (!isset($evalItems)) {
+            throw new NotFoundHttpException("The item was not found.");
+        }
+        if (Model::loadMultiple( $evalItems, Yii::$app->request->post()) && Model::validateMultiple($evalItems)) {
+          
+                foreach($evalItems as $evalItem => $eItem)
+                {
+                    // $eItem->scenario = 'update';
+
+                    if (!($flag = $eItem->save(false))) {
+                        break;
+                    }
+
+                    $eItem->save();
+
+                }
+
+                return $this->redirect(['/']);
+            
+        }
+        
+
+        return $this->render('evaluate', [
+            'model' => $model,
+            'evalItems' => $evalItems,
         ]);
     }
 
