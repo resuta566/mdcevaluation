@@ -10,6 +10,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\StudentClass;
 use app\models\StudentClassSearchS;
+use app\models\User;
+use yii\filters\AccessControl;
+use app\components\AccessRule;
 
 /**
  * ClassesController implements the CRUD actions for Classes model.
@@ -22,6 +25,25 @@ class ClassesController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'ruleConfig' => [
+                    'class' => AccessRule::className(),
+                ],
+                'only' => ['index','view','evaluate'],
+                'rules'=>[
+                    [
+                        'actions'=>['login'],
+                        'allow' => true,
+                        'roles' => ['@']
+                    ],
+                    [
+                        'actions' => ['index','view','evaluate'],
+                        'allow' => true,
+                        'roles' => [User::ROLE_ADMIN]
+                    ]
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

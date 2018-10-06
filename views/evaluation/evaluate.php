@@ -8,7 +8,6 @@ use yii\bootstrap\ActiveForm;
 /* @var $model app\models\Evaluation */
 
 $this->title = 'Evaluation';
-$this->params['breadcrumbs'][] = ['label' => 'Evaluations', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="evaluation-evaluate">

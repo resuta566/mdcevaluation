@@ -24,6 +24,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'tableOptions' => [
+            'class' => 'table table-condensed',
+        ],
         // 'filterModel' => $searchModel,
         'columns' => [
 
@@ -39,6 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                        'target' => '_blank']
                        );
                    },
+                   'contentOptions' => [ 'style' => 'width: 40px' ],
                ],
             // 'holder',
             // 'password',

@@ -34,14 +34,6 @@ class ItemController extends Controller
                         'actions'=>['login'],
                         'allow' => true,
                         'roles' => ['@']
-                    ],[
-                        'actions' => ['index'],
-                        'allow' => true,
-                        'roles' => [User::ROLE_STUDENT]
-                    ],[
-                        'actions' => ['index'],
-                        'allow' => true,
-                        'roles' => [User::ROLE_TEACHER]
                     ],
                     [
                         'actions' => ['index','delete','about'],

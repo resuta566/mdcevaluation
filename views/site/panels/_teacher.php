@@ -77,7 +77,6 @@ $this->title = "Dashboard";
 									</ul>
 								</div>
 	</nav>
-		<div class="content">
 				<div class="container-fluid">
 						<div class="card">
 					<div class="card-header" data-background-color="blue">
@@ -108,7 +107,6 @@ $this->title = "Dashboard";
 									</center>
 								</div>
 						  	</div>
-				</div>
 			</div>
 	</div>
 

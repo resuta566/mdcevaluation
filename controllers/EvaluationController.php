@@ -10,6 +10,9 @@ use app\models\EvaluationSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\User;
+use yii\filters\AccessControl;
+use app\components\AccessRule;
 
 /**
  * EvaluationController implements the CRUD actions for Evaluation model.
@@ -22,6 +25,40 @@ class EvaluationController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'ruleConfig' => [
+                    'class' => AccessRule::className(),
+                ],
+                'only' => ['index','view','evaluate'],
+                'rules'=>[
+                    [
+                        'actions'=>['login'],
+                        'allow' => true,
+                        'roles' => ['@']
+                    ],
+                    [
+                        'actions' => ['evaluate'],
+                        'allow' => true,
+                        'roles' => [User::ROLE_STUDENT]
+                    ],
+                    [
+                        'actions' => ['evaluate'],
+                        'allow' => true,
+                        'roles' => [User::ROLE_TEACHER]
+                    ],
+                    [
+                        'actions' => ['evaluate'],
+                        'allow' => true,
+                        'roles' => [User::ROLE_HEAD]
+                    ],
+                    [
+                        'actions' => ['index','view','evaluate'],
+                        'allow' => true,
+                        'roles' => [User::ROLE_ADMIN]
+                    ]
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

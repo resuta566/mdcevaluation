@@ -24,12 +24,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'tableOptions' => [
+            'class' => 'table table-condensed',
+        ],
         // 'filterModel' => $searchModel,
         'columns' => [
 
             // 'id',
             [ 'attribute' => 
-            'id', 
+            'name', 
             'label' => 'Name',
             'format' => 'raw', 
             'value' => 
@@ -39,6 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'target' => '_blank']
                 );
             },
+            'contentOptions' => [ 'style' => 'width: 350px' ],
         ],
             'description:ntext',
 

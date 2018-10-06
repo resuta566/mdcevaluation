@@ -8,6 +8,7 @@ use app\models\HeadSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\User;
 use yii\filters\AccessControl;
 use app\components\AccessRule;
 
@@ -23,32 +24,24 @@ class HeadController extends Controller
     {
         return [
             'access' => [
-            'class' => AccessControl::className(),
-            'ruleConfig' => [
-                'class' => AccessRule::className(),
-            ],
-            'only' => ['index','view','about'],
-            'rules'=>[
-                [
-                    'actions'=>['login'],
-                    'allow' => true,
-                    'roles' => ['@']
-                ],[
-                    'actions' => ['index'],
-                    'allow' => true,
-                    'roles' => [User::ROLE_STUDENT]
-                ],[
-                    'actions' => ['index'],
-                    'allow' => true,
-                    'roles' => [User::ROLE_TEACHER]
+                'class' => AccessControl::className(),
+                'ruleConfig' => [
+                    'class' => AccessRule::className(),
                 ],
-                [
-                    'actions' => ['index','delete','about'],
-                    'allow' => true,
-                    'roles' => [User::ROLE_ADMIN]
-                ]
+                'only' => ['index','view','evaluate'],
+                'rules'=>[
+                    [
+                        'actions'=>['login'],
+                        'allow' => true,
+                        'roles' => ['@']
+                    ],
+                    [
+                        'actions' => ['index','view','evaluate'],
+                        'allow' => true,
+                        'roles' => [User::ROLE_ADMIN]
+                    ]
+                ],
             ],
-        ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

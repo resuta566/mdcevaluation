@@ -6,18 +6,17 @@ use yii\web\AssetBundle;
 class MaterialAsset extends AssetBundle
 {
     public $lol = '@views';
-    public $sourcePath = '@vendor/ramosisw/';
+    public $sourcePath = '@vendor/ramosisw/yii2-material-dashboard/assets';
     public $css = [
-        'yii2-material-dashboard/assets/css/material-dashboard.css'
+        'css/material-dashboard.css'
     
     ];
     public $js = [
-        'yii2-material-dashboard/assets/js/core/jquery.min.js',
-        'yii2-material-dashboard/assets/js/core/popper.min.js',
-        'yii2-material-dashboard/assets/js/core/bootstrap-material-design.min.js',
-        'yii2-material-dashboard/assets/js/plugins/perfect-scrollbar.jquery.min.js',
-        'yii2-material-dashboard/assets/js/plugins/bootstrap-notify.js',
-        'yii2-material-dashboard/assets/js/material-dashboard.min.js'
+        'js/material.min.js',
+        'js/chartist.min.js',
+        'js/bootstrap-notify.js',
+        'js/material-dashboard.js',
+        'js/superfish.js'
 
     ];
     public $depends = [

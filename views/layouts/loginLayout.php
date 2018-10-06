@@ -8,11 +8,11 @@ use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use app\assets\AppAsset;
-use app\assets\MaterialAsset;
+use ramosisw\CImaterial\web\MaterialAsset;
 if (class_exists('ramosisw\CImaterial\web\MaterialAsset')) {
     ramosisw\CImaterial\web\MaterialAsset::register($this);
 }
-MaterialAsset::register($this);
+AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -28,10 +28,10 @@ MaterialAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
-<div class="mdcbg">
-<?= ramosisw\CImaterial\widgets\Alert::widget() ?>
-        <?= $content ?>
-    </div>
+    <div class="content">
+        <?= ramosisw\CImaterial\widgets\Alert::widget() ?>
+                    <?= $content ?>
+        </div>
 
 
 <?php $this->endBody() ?>
