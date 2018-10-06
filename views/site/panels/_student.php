@@ -87,8 +87,8 @@ $this->title = "Dashboard";
 								<div class="panel-body">
 								<?php $evaluation = Evaluation::find()->where(['eval_by' => Yii::$app->user->identity->id])->all();  ?>
 								<?php if(!$evaluation){?>
-										<h3>There is Evaluation yet.</h3>
-										<small>Please wait for the admin to submit evaluation for you.</small>
+										<h3>There is no Evaluation yet.</h3>
+										<small>Please wait for the admin to create an evaluation form for you.</small>
 								<?php } else{ ?>
 									<?php foreach ($evaluation as $usereval => $eval): ?>
 								<center> 

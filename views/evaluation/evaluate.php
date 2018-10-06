@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use app\models\Instrument;
+use app\models\Section;
 
 
 /* @var $this yii\web\View */
@@ -15,36 +17,68 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
    <?php $form = ActiveForm::begin(); ?>
-   <table class="table table-bordered table-hover">
-   <thead>
-       <tr class="table-primary">
-           <th ><span class="glyphicon glyphicon-tasks" style="font-size: 20px"></span> <b>Statement</b></th>
-           <th style="width: 250px; height: 30px;"><span class="glyphicon glyphicon-list" style="font-size: 20px"></span> <b>Score</b></th>
-       </tr>
-   </thead>
-   <tbody class="container-items">
-    <?php foreach($evalItems as $evalItem => $eItem): ?>
-    <tr>
-    <td>
-    <?= $eItem->item->statement; ?>
-    </td>
-    <td>
-    <?= $form->field($eItem, "[{$evalItem}]score")->inline(true)->radioList([
-        '1'=>'1',
-        '2'=>'2',
-        '3'=>'3',
-        '4'=>'4',
-        '5'=>'5'
-            ],
-            [
-                'style'=>'height:40px'
-             ]) 
-                ?>
-    </td>
-     </tr>
+   
+   <?php
+    $instrument = Instrument::find()->where(['id' => $model->instrument_id])->one(); 
+    $sections = Section::find()->where(['instrument_id' => $instrument->id])->all();
+   ?>
+    <?php foreach($sections as $section => $sec): ?>
+    <h2><?= $sec->name; ?></h2> <br>
+
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr class="table-primary">
+                            <th ><span class="glyphicon glyphicon-tasks" style="font-size: 20px"></span> <b>Statement</b></th>
+                            <th style="width: 250px; height: 30px;"><span class="glyphicon glyphicon-list" style="font-size: 20px"></span> <b>Score</b></th>
+                        </tr>
+                    </thead>
+                    <tbody class="container-items">
+                    <?php
+                    
+                    $items = app\models\Item::find()->where(['section_id' => $sec->id])->all();
+
+                    ?>
+                    <?php foreach($items as $evalItem => $eItem): ?>
+                    <?= $res = $eItem->id; ?> 
+                    <tr>
+                                <td>
+                                <strong><?= $eItem->statement; ?></strong>
+                                </td>
+                                <td>
+                                   
+                            
+                                </td>
+                            </tr>
+                   
+                        
+                    <?php endforeach; ?>
+                    <!-- <?php foreach($evalItems as $evalItem => $eItem): ?>
+                            <tr>
+                                <td>
+                                <strong><?= $eItem->item->statement; ?></strong>
+                                </td>
+                                <td>
+                                   
+                                <?= $form->field($eItem, "[{$evalItem}]score")->inline(true)->radioList([
+                                        '1'=>'1',
+                                        '2'=>'2',
+                                        '3'=>'3',
+                                        '4'=>'4',
+                                        '5'=>'5'
+                                            ],
+                                            [
+                                                'style'=>'height:40px;'
+                                            ]) 
+                                                ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?> -->
+                    </tbody>
+             </table>
+
+
     <?php endforeach; ?>
-   </tbody>
-    </table>
+
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>

@@ -152,59 +152,56 @@ class TeacherController extends Controller
         //Items
         // $instrumentSectionItem = Item::find()->where(['section_id' => $instrumentSection->id]); 
         $selection=(array)Yii::$app->request->post('selection');//typecasting
-        // print_r($instrumentSectionItem->count());
-        // die();
         foreach($selection as $id){
          $model = Classes::findOne((int)$id);//make a typecasting
-        //  echo $model->name." " ;
          $sclass = StudentClass::find()->where(['class_id'=>$model->id])->all();
-         foreach ($sclass as $sc) {
-            $evaluation = new Evaluation();
-            $evalby = User::find()->where(['id' => $sc->student->user->id])->one();
-            $evalfor = User::find()->where(['id' => $model->teacher->user->id])->one();
-           //  echo $sc->student->id. " ";
-           //  echo $evalfor . " " . $evalby;
-            $evaluation->eval_by = $sc->id;
-            $evaluation->eval_for = $model->teacher->user_id;
-            $evaluation->instrument_id = $instrument->id;
-            $evaluation->class_id = $model->id;
-            $evaluation->link('evalBy', $evalby);
-            $evaluation->link('evalFor', $evalfor);
-            $evaluation->link('instrument', $instrument);
-            $evaluation->link('class', $model);
-            // $model->estatus = 1;
-            $model->save();
-            $evaluation->save();
-           
-            // print_r($evaluationId);
-            // die();
-                    foreach($instrumentSection as $iS){
-                        // echo $iS->id." " . $iS->name. " - ";
-                    $instrumentSectionItem = Item::find()->where(['section_id' => $iS->id])->all(); 
-                            // echo  $instrumentSectionItem ."<br>";
-                            // echo "<br>";
-                            foreach($instrumentSectionItem as $institem){
-                                    $evalItem = new EvaluationItem;
-                                    $evalItem->evaluation_id = $evaluation->id;
-                                    $evalItem->item_id = $institem->id;
-                                    $evalItem->link('evaluation', $evaluation);
-                                    $evalItem->link('item', $institem);
-                                    $evalItem->save();
-                                    if(!$evalItem->save()){
-                                        print_r($evalItem->getErrors());
-                                        die();
-                                    }
+            foreach ($sclass as $sc) {
+                $evaluation = new Evaluation();
+                $evalby = User::find()->where(['id' => $sc->student->user->id])->one();
+                $evalfor = User::find()->where(['id' => $model->teacher->user->id])->one();
+                $evaluation->eval_by = $sc->id;
+                $evaluation->eval_for = $model->teacher->user_id;
+                $evaluation->instrument_id = $instrument->id;
+                $evaluation->class_id = $model->id;
+                $evaluation->link('evalBy', $evalby);
+                $evaluation->link('evalFor', $evalfor);
+                $evaluation->link('instrument', $instrument);
+                $evaluation->link('class', $model);
+                // $model->estatus = 1;
+                $model->save();
+                $evaluation->save();
+            
+                // print_r($evaluationId);
+                // die();
+                            foreach($instrumentSection as $iS){
+                                // echo $iS->id." " . $iS->name. " - ";
+                                $instrumentSectionItem = Item::find()->where(['section_id' => $iS->id])->all(); 
+                                        // echo  $instrumentSectionItem ."<br>";
+                                        // echo "<br>";
+                                        foreach($instrumentSectionItem as $institem){
+                                                $evalItem = new EvaluationItem;
+                                                $evalItem->evaluation_id = $evaluation->id;
+                                                $evalItem->item_id = $institem->id;
+                                                $evalItem->link('evaluation', $evaluation);
+                                                $evalItem->link('item', $institem);
+                                                $evalItem->save();
+                                                if(!$evalItem->save()){
+                                                    print_r($evalItem->getErrors());
+                                                    die();
+                                                }
+                                        }
                             }
-                    }
+                    
                 
-             
-            }
-             
-            // $gago = Instrument::find($id)->where(['name'=>'Student Form'])->one();
-            // echo $gago->id ." ";
-            // echo  $sc->student->user->username." & ";
+                }
         }
-         
+        if(!$evalItem->save())
+        {
+        Yii::$app->session->setFlash('danger',
+         "Evaluation can't be submitted! Check if there is student for the class");
+        }
+        Yii::$app->session->setFlash('success',
+        "Evaluation has been submitted to all the students of the subjects you selected");
        
        return $this->redirect(['view', 'id' => $model->teacher->id]);
      }
@@ -231,12 +228,12 @@ class TeacherController extends Controller
         Yii::$app->session->setFlash('danger', 
         ' '.Teacher::findOne($id)->getFullName()."'s account has been deleted");
                     
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'activeDataProvider' => $activeDataProvider
-    ]);
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'activeDataProvider' => $activeDataProvider
+            ]);
     }
      /**
      * Generate a single Teacher user.
