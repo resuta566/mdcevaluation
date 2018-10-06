@@ -113,7 +113,7 @@ class ComposerStaticInitd099cc876a08fd28c5ab85ac0f855acd
         ),
         'yii\\debug\\' => 
         array (
-            0 => __DIR__ . '/..' . '/yiisoft/yii2-debug',
+            0 => __DIR__ . '/..' . '/yiisoft/yii2-debug/src',
         ),
         'yii\\composer\\' => 
         array (

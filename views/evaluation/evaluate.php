@@ -15,9 +15,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
    <?php $form = ActiveForm::begin(); ?>
-   <table class="table table-bordered table-striped">
+   <table class="table table-bordered table-hover">
    <thead>
-       <tr>
+       <tr class="table-primary">
            <th ><span class="glyphicon glyphicon-tasks" style="font-size: 20px"></span> <b>Statement</b></th>
            <th style="width: 250px; height: 30px;"><span class="glyphicon glyphicon-list" style="font-size: 20px"></span> <b>Score</b></th>
        </tr>

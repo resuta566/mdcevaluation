@@ -35,8 +35,11 @@ Extends [Yii InputWidget](https://github.com/yiisoft/yii2/blob/master/framework/
 ### [TranslationTrait](https://github.com/kartik-v/yii2-krajee-base/blob/master/src/TranslationTrait.php)
 A trait for handling translation functionality using Yii's i18n components.
 
+### [BootstrapInterface](https://github.com/kartik-v/yii2-krajee-base/blob/master/src/BootstrapInterface.php)
+The interface that defines the constants and method signatures for bootstrap 3.x and 4.x versions that will be implemented in all classes that use `BootstrapTrait`.
+
 ### [BootstrapTrait](https://github.com/kartik-v/yii2-krajee-base/blob/master/src/BootstrapTrait.php)
-A trait for bootstrap 3.x and 4.x version parsing functionality for Krajee extensions.
+A trait for bootstrap 3.x and 4.x version parsing functionality for Krajee extensions (the class using this trait must implement `BootstrapInterface`).
 
 ### [AddonTrait](https://github.com/kartik-v/yii2-krajee-base/blob/master/src/AddonTrait.php)
 A trait for rendering bootstrap 3.x or 4.x input group addons. 
@@ -81,4 +84,4 @@ to the ```require``` section of your `composer.json` file.
 
 ## License
 
-**yii2-krajee-base** is released under the BSD 3-Clause License. See the bundled `LICENSE.md` for details.
+**yii2-krajee-base** is released under the BSD-3-Clause License. See the bundled `LICENSE.md` for details.

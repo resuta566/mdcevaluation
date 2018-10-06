@@ -1,6 +1,36 @@
 Change Log: `yii2-krajee-base`
 ==============================
 
+## Version 1.9.9
+
+**Date:** 27-Sep-2018
+
+- Enhance `BootstrapTrait::getCssClass` method.
+
+## Version 1.9.8
+
+**Date:** 27-Sep-2018
+
+- Bump up version.
+
+## Version 1.9.7
+
+**Date:** 26-Sep-2018
+
+- (enh #100): Configurable conversion classes between Bootstrap Versions.
+
+## Version 1.9.6
+
+**Date:** 22-Sep-2018
+
+- Implement `BootstrapInterface` and `bsColCssPrefixes`.
+
+## Version 1.9.5
+
+**Date:** 20-Sep-2018
+
+- Enhance `Config` to include `Config::hasCssClass` method.
+
 ## Version 1.9.4
 
 **Date:** 05-Sep-2018
