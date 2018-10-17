@@ -195,7 +195,7 @@ class TeacherController extends Controller
                 
                 }
         }
-        if(!$evalItem->save())
+        if(!$evalItem->save() || !$evaluation->save())
         {
         Yii::$app->session->setFlash('danger',
          "Evaluation can't be submitted! Check if there is student for the class");

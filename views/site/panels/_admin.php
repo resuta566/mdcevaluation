@@ -8,6 +8,7 @@ use app\models\Teacher;
 use app\models\Student;
 use app\models\Instrument;
 use app\models\User;
+use app\models\Head;
 
 MaterialAsset::register($this);
 $this->title = "Admin Dashboard";
@@ -45,6 +46,11 @@ $this->title = "Admin Dashboard";
 											<a href="<?= \yii\helpers\Url::to(['/teacher']) ?>">
 												<i class="glyphicon glyphicon-blackboard"> </i>
 												<p>Teachers</p>
+											</a>
+										</li><li>
+											<a href="<?= \yii\helpers\Url::to(['/head']) ?>">
+												<i class="glyphicon glyphicon-bookmark"> </i>
+												<p>Heads/Deans</p>
 											</a>
 										</li>
 										<li>
@@ -126,7 +132,7 @@ $this->title = "Admin Dashboard";
 													</a>
 												</div>
 												</div>
-											<div class="col-lg-3 col-md-6 col-sm-6">
+												<div class="col-lg-3 col-md-6 col-sm-6">
 												<div class="card card-stats">
 													<a href="<?= \yii\helpers\Url::to(['/teacher']) ?>">
 														<div class="card-header" data-background-color="orange">
@@ -135,6 +141,23 @@ $this->title = "Admin Dashboard";
 														<div class="card-content">
 															<p class="category">Teachers</p>
 															<h3 class="title"><?= Teacher::find()->count(); ?></h3>
+														</div>
+														<div class="card-footer">
+															<div class="stats">
+																<i class="glyphicon glyphicon-briefcase"></i> Active
+															</div>
+														</div>
+													</a>
+												</div>
+												</div><div class="col-lg-3 col-md-6 col-sm-6">
+												<div class="card card-stats">
+													<a href="<?= \yii\helpers\Url::to(['/head']) ?>">
+														<div class="card-header" data-background-color="purple">
+															<i class="glyphicon glyphicon-bookmark"></i>
+														</div>
+														<div class="card-content">
+															<p class="category">Head/Deans</p>
+															<h3 class="title"><?= Head::find()->count(); ?></h3>
 														</div>
 														<div class="card-footer">
 															<div class="stats">

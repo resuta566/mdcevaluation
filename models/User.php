@@ -58,6 +58,21 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return static::getRole()[$this->role];
     }
 
+    public static function getDepartment() {
+        return $department = [
+            1 => 'CAST',
+            2 => 'COE',
+            3 => 'CABM-H',
+            4 => 'CABM-B',
+            5 => 'CON',
+            6 => 'CCJ',
+        ];
+    }
+
+    public function getDepartmentname() {
+        return static::getDepartment()[$this->department];
+    }
+
     public static function getStatus() {
         return $status = [
             10 => 'Active',

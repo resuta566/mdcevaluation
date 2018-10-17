@@ -20,11 +20,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="card">
         <div class="card-header" data-background-color="blue">
             <h1><?= Html::encode($this->title) ?></h1>
-            <p class="category">Teacher Details</p>
+            <p class="simple-text">Teacher Details</p>
         </div>
     <div class="card-content">
-    <p>
-        <!-- <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?> -->
+    <div class="row">
+    <div class="pull-left">
         
         <?php if($model->user_id==0){ ?>
         <?=  
@@ -47,7 +47,12 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
                 <?php }?>
        
-    </p>
+    </div>
+    <div class="col-md-4 col-md-push-8">
+    <p><strong>SCORE:</strong></p>
+    </div>
+    </div>
+    
     <table class="table">
     <p><b>Teacher Details</b></p>
     <tr>
@@ -65,42 +70,8 @@ $this->params['breadcrumbs'][] = $this->title;
        
     </tr>
     </table>
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            // 'id',
-            // 'lname',
-            // 'fname',
-            // 'mname',
-            // 'gender',
-            //'user_id',
-        ],
-    ]) ?>
      <h2><b>Subjects</b>
      </h2>
-<!-- <?=  
-        Html::a('Evaluate', ['evaluate', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to make an evaluation to this subjects?',
-                'method' => 'post',
-            ],
-        ]) ?>
-        <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        // 'filterModel' => $searchModel,
-        
-        'columns' => [
-            
-            ['class' => 'yii\grid\CheckboxColumn'],
-            
-
-            'name',
-            'description',
-            'day',
-            'time',
-        ],
-    ]); ?> -->
     <?php 
 $items = [
     [

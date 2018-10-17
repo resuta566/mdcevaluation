@@ -44,14 +44,17 @@ AppAsset::register($this);
 			
 
 		 <?php if(Yii::$app->user->identity->role==User::ROLE_ADMIN){ ?>
-        <?= '<a href="../index.php" class="simple-text">'.
-            Yii::$app->user->identity->teacher->fullName . '</a>'; ?>
+			<a href="<?= \yii\helpers\Url::to(['/']) ?>" class="simple-text">
+		<?= Yii::$app->user->identity->teacher->fullName . '</a>'; ?>
+		</a>
         <?php }else if(Yii::$app->user->identity->role==User::ROLE_STUDENT){?>
-		<?= '<a href="../index.php" class="simple-text">'.
-            Yii::$app->user->identity->student->fullName . '</a>'; ?>
+			<a href="<?= \yii\helpers\Url::to(['/']) ?>" class="simple-text">
+		<?= Yii::$app->user->identity->student->fullName . '</a>'; ?>
+		</a>
 		<?php }else if(Yii::$app->user->identity->role==User::ROLE_TEACHER){?>
-		<?= '<a href="../index.php" class="simple-text">'.
-            Yii::$app->user->identity->teacher->fullName . '</a>'; ?>
+			<a href="<?= \yii\helpers\Url::to(['/']) ?>" class="simple-text">
+		<?= Yii::$app->user->identity->teacher->fullName . '</a>'; ?>
+		</a>
 		<?php }?>
 						</div>
 
@@ -63,6 +66,7 @@ AppAsset::register($this);
                     ['label' => 'Dashboard', 'icon' => 'home', 'url' => ['/']],
                     ['label' => 'Users', 'icon' => 'user', 'url' => ['/user']],
                     ['label' => 'Teachers', 'icon' => 'blackboard', 'url' => ['/teacher']],
+                    ['label' => 'Heads/Deans', 'icon' => 'bookmark', 'url' => ['/head']],
                     ['label' => 'Students', 'icon' => 'education', 'url' => ['/student']],
                     ['label' => 'Instruments', 'icon' => 'book', 'url' => ['/instrument']],
                 ],

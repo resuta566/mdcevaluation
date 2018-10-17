@@ -140,7 +140,7 @@ class EvaluationController extends Controller
      */
     public function actionEvaluate($id)
     {
-        $model = Evaluation::find($id)->one();
+        $model = $this->findModel($id);
         $evalItems = EvaluationItem::find()->where(['evaluation_id' => $model->id])->all();
 
         if (!isset($evalItems)) {
