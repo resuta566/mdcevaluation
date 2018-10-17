@@ -28,7 +28,7 @@ class StudentController extends Controller
                 'ruleConfig' => [
                     'class' => AccessRule::className(),
                 ],
-                'only' => ['index','view','generate'],
+                'only' => ['index','view','generate','list','generateBulk'],
                 'rules'=>[
                     [
                         'actions'=>['login'],
@@ -36,7 +36,7 @@ class StudentController extends Controller
                         'roles' => ['@']
                     ],
                     [
-                        'actions' => ['index','view','generate'],
+                        'actions' => ['index','view','generate','list'],
                         'allow' => true,
                         'roles' => [User::ROLE_ADMIN]
                     ]
@@ -63,6 +63,20 @@ class StudentController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'model' => $model,
+        ]);
+    }
+
+    public function actionList()
+    {
+        $this->layout = "alayout";
+        $model = Student::find()->orderBy('id')->all();
+        $searchModel = new StudentSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('list', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'model' => $model,
@@ -102,15 +116,13 @@ class StudentController extends Controller
     }
 
     /**
-     * Generate a user for the student
+     * Generate one user for the student
      * 
      */
     public function actionGenerate($id)
     {
+        $userDept = Yii::$app->request->post('userDepartment');
         $student = Student::findOne($id);
-        $userV = User::findAll('roles');
-        // print_r($userV);
-        // die();
         $user = new User;
         if (!$student->user_id === 0){
             Yii::$app->session->setFlash('danger', 
@@ -125,6 +137,7 @@ class StudentController extends Controller
                         $user->setPassword(Student::findOne($id)->getStudentPass());
                         $user->role = 15;
                         $user->status = 10;
+                        $user->department = $userDept;
                         $user->save();
                     if(!$user->save()){
                         Yii::$app->session->setFlash('danger', 
@@ -149,7 +162,58 @@ class StudentController extends Controller
                     'model' => $this->findModel($id),
             ]);
 
+        }
     }
+    /**
+     * 
+     * Generate Users based on how many Student you select
+     * 
+     */
+    public function actionGeneratebulk()
+    {
+        $userDept = Yii::$app->request->post('userDepartment');
+        $selection=(array)Yii::$app->request->post('selection');
+        foreach($selection as $studid){
+            $student = Student::find()->where(['id' => $studid])->one();
+            $user = new User;
+            if (!$student->user_id === 0){
+                Yii::$app->session->setFlash('danger', 
+                ' '.$student->getFullName()." has an account already.");
+                return $this->redirect('list');
+        
+                    }else{
+            
+                            $user->username = $student->getStudentUser();
+                            $user->setPassword($student->getStudentPass());
+                            $user->role = 15;
+                            $user->status = 10;
+                            $user->department = $userDept;
+                            $user->save();
+                            if(!$user->save()){
+                                Yii::$app->session->setFlash('danger', 
+                                " One of the Student you select has already has an account");
+                            }else{
+                                
+                                Yii::$app->session->setFlash('success', 
+                                "Accounts has been generated successfully");
+                                $student->link('user', $user);
+                            }
+                            
+                            if(!$student->save()){
+                                Yii::$app->session->setFlash('error', 
+                                "Students Accounts has not been connected to their User Account");
+                            }else{
+                            $student->save();
+                            Yii::$app->session->setFlash('info',
+                           "Students has been connected to their User Account");
+                            }
+                    }
+                    
+
+        }
+        return $this->redirect('list');
+        // print_r($selection);
+        // die();
     }
 
     /**

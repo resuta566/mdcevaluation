@@ -10,21 +10,40 @@ $this->title = $model->getFullName();
 $this->params['breadcrumbs'][] = ['label' => 'Students', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="student-view">
+<div class="card">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+    <div class="card-header" data-background-color="blue">
+            <h1><?= Html::encode($this->title) ?></h1>
+            <p class="simple-text">Student Details</p>
+        </div>
+        <div class="card-content">
+    <div class="row">
+    <div class="pull-left">
 
          <?php if($model->user_id==0){ ?>
-        <?=  
-        Html::a('Generate', ['generate', 'id' => $model->id], [
-            'class' => 'btn btn-success',
-            'data' => [
-                'confirm' => 'Are you sure you want to generate user for this student?',
-                'method' => 'post',
-            ],
-        ]) ?>
+            <?=Html::beginForm(['generate', 'id' => $model->id],'post');?>
+             <?php
+                $dept_list = array(
+                    1 => 'CAST',
+                    2 => 'COE',
+                    3 => 'CABM-H',
+                    4 => 'CABM-B',
+                    5 => 'CON',
+                    6 => 'CCJ'
+                );
+                ?>
+             <?=  Html::dropDownList('userDepartment', null, $dept_list,
+                        [
+                            'class' => 'form-control', 
+                            'prompt'=>'Choose a Department'
+                        ]) ?>
+              <?=   Html::submitButton('Generate', [
+                        'class' => 'btn btn-info',
+                        'data' => [
+                            'confirm' => 'Are you sure you want to generate user for this teacher?',
+                            'method' => 'post',
+                        ],
+                    ]) ?>
         <?php }else{?>
         
             <?=  
@@ -36,8 +55,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
                 <?php }?>
-    </p>
-
+    </div>
+</div>
     <table class="table">
     <p><b>Student Details</b></p>
     <tr>
@@ -68,5 +87,5 @@ $this->params['breadcrumbs'][] = $this->title;
             //'user_id',
         ],
     ]) ?> -->
-
+</div>
 </div>

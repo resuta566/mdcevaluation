@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
         <?php echo $this->render('_search', ['model' => $searchModel]); ?>
         <br>
-        <?= Html::a('Generate Many', ['list'], ['class' => 'btn btn-info']) ?>
+     <?= Html::beginForm(['generatebulk'],'post'); ?>
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'tableOptions' => [
@@ -38,6 +38,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 // 'filterModel' => $searchModel,
                 'columns' => [
+                    [
+                        'class' => 'yii\grid\CheckboxColumn',
+
+                ],
                         [ 'attribute' => 
                                 'id', 
                                 'label' => 'Username/ID Number',
@@ -64,5 +68,30 @@ $this->params['breadcrumbs'][] = $this->title;
                     // ],
                 ],
             ]); ?>
+             <br>
+             <?php
+                $dept_list = array(
+                    1 => 'CAST',
+                    2 => 'COE',
+                    3 => 'CABM-H',
+                    4 => 'CABM-B',
+                    5 => 'CON',
+                    6 => 'CCJ'
+                );
+                ?>
+             <?=  Html::dropDownList('userDepartment', null, $dept_list,
+                        [
+                            'class' => 'form-control', 
+                            'prompt'=>'Choose a Department'
+                        ]) ?>
+            <br>
+            <?= Html::submitButton('GENERATE', [
+                        'class' => 'btn btn-info',
+                        'data' => [
+                            'confirm' => 'Are you sure you want to generate users for this Students?',
+                            'method' => 'post',
+                        ],
+                    ]); ?>
+            <?= Html::endForm(); ?>
         </div>
 </div>

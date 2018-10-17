@@ -49,7 +49,7 @@ class TeacherController extends Controller
                 'ruleConfig' => [
                     'class' => AccessRule::className(),
                 ],
-                'only' => ['index','view','generate','unlink','bulk'],
+                'only' => ['index','view','generate','unlink','bulk','generatebulk','list'],
                 'rules'=>[
                     [
                         'actions'=>['login'],
@@ -57,7 +57,7 @@ class TeacherController extends Controller
                         'roles' => ['@']
                     ],
                     [
-                        'actions' => ['index','view','generate','unlink','bulk'],
+                        'actions' => ['index','view','generate','unlink','bulk','generatebulk','list'],
                         'allow' => true,
                         'roles' => [User::ROLE_ADMIN]
                     ]
@@ -83,6 +83,18 @@ class TeacherController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionList()
+    {
+        $this->layout = "alayout";
+        $searchModel = new TeacherSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('list', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -243,6 +255,7 @@ class TeacherController extends Controller
      */
     public function actionGenerate($id)
     {
+        $userDept = Yii::$app->request->post('userDepartment');
         $searchModel = new ClassesSearchT();
         $activeClass = new ClassesSearchActive();
         $dataProvider = $searchModel->search($id);
@@ -262,6 +275,7 @@ class TeacherController extends Controller
                             $user->setPassword(Teacher::findOne($id)->getTeacherPass());
                             $user->role = 20;
                             $user->status = 10;
+                            $user->department = $userDept;
                             $user->save();
                         if(!$user->save()){
                             Yii::$app->session->setFlash('danger', 
@@ -293,6 +307,55 @@ class TeacherController extends Controller
         
         
     }
+
+
+    public function actionGeneratebulk()
+    {
+        $userDept = Yii::$app->request->post('userDepartment');
+        $selection=(array)Yii::$app->request->post('selection');
+        foreach($selection as $studid){
+            $teacher = Teacher::find()->where(['id' => $studid])->one();
+            $user = new User;
+            if (!$teacher->user_id === 0){
+                Yii::$app->session->setFlash('danger', 
+                ' '.$teacher->getFullName()." has an account already.");
+                return $this->redirect('list');
+        
+                    }else{
+            
+                            $user->username = $teacher->getTeacherUser();
+                            $user->setPassword($teacher->getTeacherPass());
+                            $user->role = 20;
+                            $user->status = 10;
+                            $user->department = $userDept;
+                            $user->save();
+                            if(!$user->save()){
+                                Yii::$app->session->setFlash('danger', 
+                                " One of the Teachers you select has already has an account");
+                            }else{
+                                
+                                Yii::$app->session->setFlash('success', 
+                                "Accounts has been generated successfully");
+                                $teacher->link('user', $user);
+                            }
+                            
+                            if(!$teacher->save()){
+                                Yii::$app->session->setFlash('error', 
+                                "Teacher Accounts has not been connected to their User Account");
+                            }else{
+                            $teacher->save();
+                            Yii::$app->session->setFlash('info',
+                           "Teachers has been connected to their User Account");
+                            }
+                    }
+                    
+
+        }
+        return $this->redirect('list');
+        // print_r($selection);
+        // die();
+    }
+
 
     public function actionStop()
     {

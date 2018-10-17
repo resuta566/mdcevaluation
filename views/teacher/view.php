@@ -27,32 +27,56 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="pull-left">
         
         <?php if($model->user_id==0){ ?>
-        <?=  
+            <?=Html::beginForm(['generate', 'id' => $model->id],'post');?>
+             <?php
+                $dept_list = array(
+                    1 => 'CAST',
+                    2 => 'COE',
+                    3 => 'CABM-H',
+                    4 => 'CABM-B',
+                    5 => 'CON',
+                    6 => 'CCJ'
+                );
+                ?>
+             <?=  Html::dropDownList('userDepartment', null, $dept_list,
+                        [
+                            'class' => 'form-control', 
+                            'prompt'=>'Choose a Department'
+                        ]) ?>
+              <?=   Html::submitButton('Generate', [
+                        'class' => 'btn btn-info',
+                        'data' => [
+                            'confirm' => 'Are you sure you want to generate user for this teacher?',
+                            'method' => 'post',
+                        ],
+                    ]) ?>
+        <!-- <?=  
         Html::a('Generate', ['generate', 'id' => $model->id], [
             'class' => 'btn btn-success',
             'data' => [
                 'confirm' => 'Are you sure you want to generate user for this teacher?',
                 'method' => 'post',
             ],
-        ]) ?>
+        ]) ?> -->
+        <?= Html::endForm();?>
         <?php }else{?>
         
             <?=  
         Html::a('Unlink', ['unlink', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to Unlink and Delete the User of this teacher?',
+                'confirm' => 'WARNING! Unlinking the account will delete the user and the evaluation data of this teacher',
                 'method' => 'post',
             ],
         ]) ?>
                 <?php }?>
        
     </div>
-    <div class="col-md-4 col-md-push-8">
+    <div class="pull-right">
     <p><strong>SCORE:</strong></p>
     </div>
     </div>
-    
+    <br>
     <table class="table">
     <p><b>Teacher Details</b></p>
     <tr>
