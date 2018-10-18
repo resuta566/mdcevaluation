@@ -100,6 +100,19 @@ class TeacherController extends Controller
         ]);
     }
 
+
+    public function actionScore($id)
+    {
+        $model = Teacher::findOne($id);
+        $user = User::find()->where(['id' => $model->user_id])->one();
+        $evaluation = Evaluation::find()->where(['eval_for' => $user->id])->all();
+        // $instruSection = Section::find()->where(['instrument_id' => $evaluation->instrument->id]);
+        return $this->render('score',[
+            'model' => $model,
+            'evaluation' => $evaluation,
+            
+            ]);
+    }
     /**
      * Displays a single Teacher model.
      * @param integer $id

@@ -73,7 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
        
     </div>
     <div class="pull-right">
-    <p><strong>SCORE:</strong></p>
+    <?= Html::a('Score', ['score', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
     </div>
     </div>
     <br>
@@ -108,8 +108,10 @@ $items = [
                         // 'filterModel' => $searchModel,
                         'columns' => [
                             [
-                                    'class' => 'yii\grid\CheckboxColumn',
-
+                                'class' => 'yii\grid\CheckboxColumn',
+                                'checkboxOptions' => [
+                                    'id' => 'jems'
+                                ]
                             ],
                             [
                                 'attribute' => 'estatus',

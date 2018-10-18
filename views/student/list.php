@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="card">
     <div class="card-header" data-background-color="blue">
             <h1 class="title"><?= Html::encode($this->title) ?></h1>
-            <p class="simple-text">List of Students of the Evaluation</p>
+            <p class="simple-text">List of Students of the that has no User yet.</p>
     </div>
         <div style="margin: 20px">
         <?php
@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         echo "<div id='modalContent'></div>";
                 Modal::end();
         ?>
-        <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+        <?php echo $this->render('_listsearch', ['model' => $searchModel]); ?>
         <br>
      <?= Html::beginForm(['generatebulk'],'post'); ?>
             <?= GridView::widget([
@@ -40,8 +40,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'columns' => [
                     [
                         'class' => 'yii\grid\CheckboxColumn',
-
-                ],
+                        'checkboxOptions' => [
+                            'id' => 'gg'
+                        ]
+                    ],
                         [ 'attribute' => 
                                 'id', 
                                 'label' => 'Username/ID Number',

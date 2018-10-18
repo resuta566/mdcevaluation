@@ -6,6 +6,7 @@ use Yii;
 use app\models\Student;
 use app\models\User;
 use app\models\StudentSearch;
+use app\models\StudentSearchList;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -61,7 +62,7 @@ class StudentController extends Controller
         $model = Student::find()->orderBy('id')->all();
         $searchModel = new StudentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $dataProvider->pagination->pageSize= 100;
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -73,9 +74,9 @@ class StudentController extends Controller
     {
         $this->layout = "alayout";
         $model = Student::find()->orderBy('id')->all();
-        $searchModel = new StudentSearch();
+        $searchModel = new StudentSearchList();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $dataProvider->pagination->pageSize= 100;
         return $this->render('list', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

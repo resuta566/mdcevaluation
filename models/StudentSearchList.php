@@ -8,9 +8,9 @@ use yii\data\ActiveDataProvider;
 use app\models\Student;
 
 /**
- * StudentSearch represents the model behind the search form of `app\models\Student`.
+ * StudentSearchList represents the model behind the search form of `app\models\Student`.
  */
-class StudentSearch extends Student
+class StudentSearchList extends Student
 {
     public $studentSearch;
     /**
@@ -42,7 +42,7 @@ class StudentSearch extends Student
      */
     public function search($params)
     {
-        $query = Student::find()->where(['not',['user_id' => NULL]]);
+        $query = Student::find()->where(['user_id' => null ]);
 
         // add conditions that should always apply here
 

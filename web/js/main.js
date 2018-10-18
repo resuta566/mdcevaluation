@@ -37,3 +37,18 @@ $(".dynamicform_inner").on("beforeDelete", function(e, item) {
     }
     return true;
 });
+
+
+var checks = document.querySelectorAll("#jems");
+var max = 2;
+for (var i = 0; i < checks.length; i++)
+  checks[i].onclick = selectiveCheck;
+function selectiveCheck (event) {
+  var checkedChecks = document.querySelectorAll("#jems:checked");
+  if (checkedChecks.length >= max + 1){
+    alert("You can only select a maximum of "+max+" checkboxes");
+    return false;
+  }
+  
+    
+}
