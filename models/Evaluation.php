@@ -14,11 +14,11 @@ use Yii;
  * @property int $class_id
  * @property string $date
  *
+ * @property Classes $class
  * @property User $evalBy
  * @property User $evalFor
  * @property Instrument $instrument
- * @property Classes $class
- * @property EvaluationItem[] $evaluationItems
+ * @property EvaluationSection[] $evaluationSections
  */
 class Evaluation extends \yii\db\ActiveRecord
 {
@@ -36,13 +36,12 @@ class Evaluation extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['eval_by', 'eval_for', 'instrument_id', 'class_id'], 'required'],
             [['eval_by', 'eval_for', 'instrument_id', 'class_id'], 'integer'],
-            [['date'], 'safe'],
+            [['date','stat'], 'safe'],
+            [['class_id'], 'exist', 'skipOnError' => true, 'targetClass' => Classes::className(), 'targetAttribute' => ['class_id' => 'id']],
             [['eval_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['eval_by' => 'id']],
             [['eval_for'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['eval_for' => 'id']],
             [['instrument_id'], 'exist', 'skipOnError' => true, 'targetClass' => Instrument::className(), 'targetAttribute' => ['instrument_id' => 'id']],
-            [['class_id'], 'exist', 'skipOnError' => true, 'targetClass' => Classes::className(), 'targetAttribute' => ['class_id' => 'id']],
         ];
     }
 
@@ -58,7 +57,16 @@ class Evaluation extends \yii\db\ActiveRecord
             'instrument_id' => 'Instrument ID',
             'class_id' => 'Class ID',
             'date' => 'Date',
+            'stat' => 'Stat'
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getClass()
+    {
+        return $this->hasOne(Classes::className(), ['id' => 'class_id']);
     }
 
     /**
@@ -88,16 +96,8 @@ class Evaluation extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getClass()
+    public function getEvaluationSections()
     {
-        return $this->hasOne(Classes::className(), ['id' => 'class_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getEvaluationItems()
-    {
-        return $this->hasMany(EvaluationItem::className(), ['evaluation_id' => 'id']);
+        return $this->hasMany(EvaluationSection::className(), ['evaluation_id' => 'id']);
     }
 }

@@ -11,6 +11,7 @@ use app\models\User;
 use app\models\Teacher;
 use app\models\Section;
 use app\models\Item;
+use app\models\EvaluationSection;
 use app\models\EvaluationItem;
 use app\models\TeacherSearch;
 use yii\web\Controller;
@@ -199,15 +200,20 @@ class TeacherController extends Controller
                 // print_r($evaluationId);
                 // die();
                             foreach($instrumentSection as $iS){
+                                $evalSection = new EvaluationSection;
+                                $evalSection->evaluation_id = $evaluation->id;
+                                $evalSection->section_id = $iS->id;
+                                $evalSection->link('evaluation', $evaluation);
+                                $evalSection->link('section', $iS);
                                 // echo $iS->id." " . $iS->name. " - ";
                                 $instrumentSectionItem = Item::find()->where(['section_id' => $iS->id])->all(); 
                                         // echo  $instrumentSectionItem ."<br>";
                                         // echo "<br>";
                                         foreach($instrumentSectionItem as $institem){
                                                 $evalItem = new EvaluationItem;
-                                                $evalItem->evaluation_id = $evaluation->id;
+                                                $evalItem->evaluation_section_id = $evalSection->id;
                                                 $evalItem->item_id = $institem->id;
-                                                $evalItem->link('evaluation', $evaluation);
+                                                $evalItem->link('evaluationSection', $evalSection);
                                                 $evalItem->link('item', $institem);
                                                 $evalItem->save();
                                                 if(!$evalItem->save()){

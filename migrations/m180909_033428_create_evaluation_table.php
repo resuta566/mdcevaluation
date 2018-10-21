@@ -32,13 +32,13 @@ class m180909_033428_create_evaluation_table extends Migration
             'fk-evaluation-eval_by',
             'evaluation','eval_by',
             'user', 'id',
-            'CASCADE'
+            'SET NULL'
         );
         $this->addForeignKey(
             'fk-evaluation-eval_for',
             'evaluation','eval_for',
             'user', 'id',
-            'CASCADE'
+            'SET NULL'
         );
         $this->createIndex(
             'idx-evaluation-instrument_id',
@@ -48,7 +48,7 @@ class m180909_033428_create_evaluation_table extends Migration
             'fk-evaluation-instrument',
             'evaluation','instrument_id',
             'instrument', 'id',
-            'CASCADE'
+            'SET NULL'
         );
         $this->createIndex(
             'idx-evaluation-class_id',
@@ -58,7 +58,7 @@ class m180909_033428_create_evaluation_table extends Migration
             'fk-evaluation-classes',
             'evaluation','class_id',
             'classes', 'id',
-            'CASCADE'
+            'SET NULL'
         );
     }
 

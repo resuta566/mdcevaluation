@@ -27,7 +27,7 @@ class m180909_032214_create_section_table extends Migration
             'fk-section-instrument',
             'section','instrument_id',
             'instrument', 'id',
-            'CASCADE'
+            'SET NULL'
         );
     }
 

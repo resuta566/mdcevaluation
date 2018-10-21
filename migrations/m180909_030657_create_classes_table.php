@@ -19,7 +19,7 @@ class m180909_030657_create_classes_table extends Migration
             'day' => $this->string(100)->notNull(),
             'time' => $this->string(100)->notNull(),
             'teacher_id' => $this->integer(),
-            'estatus' => $this->integer(1)
+            'estatus' => $this->integer(1)->notNull()->defaultValue(0),
         ]);
         $this->createIndex(
             'idx-classes-teacher_id',
@@ -30,7 +30,7 @@ class m180909_030657_create_classes_table extends Migration
             'fk-classes-teacher',
             'classes','teacher_id',
             'teacher', 'id',
-            'CASCADE'
+            'SET NULL'
         );
     }
 

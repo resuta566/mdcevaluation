@@ -4,19 +4,19 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\EvaluationItemSearch */
+/* @var $searchModel app\models\EvaluationSectionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Evaluationitems';
+$this->title = 'Evaluation Sections';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="evaluationitem-index">
+<div class="evaluation-section-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Evaluationitem', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Evaluation Section', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -27,8 +27,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'evaluation_id',
-            'item_id',
-            'score',
+            'section_id',
+            'comment',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

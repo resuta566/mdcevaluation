@@ -30,7 +30,7 @@ class m180909_013720_create_teacher_table extends Migration
             'fk-teacher-user',
             'teacher','user_id',
             'user', 'id',
-            'CASCADE'
+            'SET NULL'
         );
 
     }

@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\EvaluationItem;
+use app\models\EvaluationSection;
 
 /**
- * EvaluationItemSearch represents the model behind the search form of `app\models\EvaluationItem`.
+ * EvaluationSectionSearch represents the model behind the search form of `app\models\EvaluationSection`.
  */
-class EvaluationItemSearch extends EvaluationItem
+class EvaluationSectionSearch extends EvaluationSection
 {
     /**
      * {@inheritdoc}
@@ -18,7 +18,8 @@ class EvaluationItemSearch extends EvaluationItem
     public function rules()
     {
         return [
-            [['id', 'evaluation_section_id', 'item_id', 'score'], 'integer'],
+            [['id', 'evaluation_id'], 'integer'],
+            [['comment'], 'safe'],
         ];
     }
 
@@ -40,7 +41,7 @@ class EvaluationItemSearch extends EvaluationItem
      */
     public function search($params)
     {
-        $query = EvaluationItem::find();
+        $query = EvaluationSection::find();
 
         // add conditions that should always apply here
 
@@ -59,10 +60,10 @@ class EvaluationItemSearch extends EvaluationItem
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'evaluation_section_id' => $this->evaluation_section_id,
-            'item_id' => $this->item_id,
-            'score' => $this->score,
+            'evaluation_id' => $this->evaluation_id,
         ]);
+
+        $query->andFilterWhere(['like', 'comment', $this->comment]);
 
         return $dataProvider;
     }

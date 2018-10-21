@@ -13,9 +13,24 @@ use wbraganca\dynamicform\DynamicFormWidget;
 $this->title = 'Evaluate '. app\models\Teacher::find()->where(['user_id' => $model->evalFor->id ])->one()->fullName;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>
+<?php $form = ActiveForm::begin(); ?>
 
 <br>
+<?php DynamicFormWidget::begin([
+   'widgetContainer' => 'dynamicform_wrapper',
+   'widgetBody' => '.container-items',
+   'widgetItem' => '.section-item',
+   'limit' => 10,
+   'min' => 1,
+   'insertButton' => '.add-section',
+   'deleteButton' => '.remove-section',
+   'model' => $modelSection[0],
+   'formId' => 'dynamic-form',
+   'formFields' => [
+       'name',
+       'description',
+   ],
+]); ?>
 <table class="table table-bordered table-striped">
    <thead>
        <tr>
@@ -26,12 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
    <tr class="section-item">
            <td class="vcenter">
    <?php foreach ($evalSections as $indexSection => $modelSection): ?>
-   <?php
-                   // necessary for update action.
-                   if (! $modelSection->isNewRecord) {
-                       echo Html::activeHiddenInput($modelSection, "[{$indexSection}]id");
-                   }
-               ?>
+   <?= $modelSection->section->name; ?>
            <?= $this->render('_evalFormItem', [
                    'form' => $form,
                    'modelSection' => $modelSection,
@@ -45,8 +55,9 @@ $this->params['breadcrumbs'][] = $this->title;
      </tr>
    </tbody>
 </table>
+<?php DynamicFormWidget::end(); ?>
 <div class="form-group">
-   <?= Html::submitButton($model->isNewRecord ? 'Create' : 'SAVE', ['class' => 'btn btn-success']) ?>
+   <?= Html::submitButton('SAVE', ['class' => 'btn btn-success']) ?>
 </div>
 
 <?php ActiveForm::end(); ?>

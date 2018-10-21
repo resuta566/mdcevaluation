@@ -16,11 +16,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="card">
 <div class="card-header" data-background-color="blue">
     <h1 class="title"><?= Html::encode($this->title) ?></h1>
-    <p class="category">List of <?= Html::encode($this->title) ?> of the Evaluation</p>
+    <p class="category">List of <?= Html::encode($this->title) ?> of the Evaluation that has no user yet.</p>
     
 </div>
 <div style="margin: 20px">
-<?php echo $this->render('_search', ['model' => $searchModel]); ?>
+<?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 <?= Html::beginForm(['generatebulk'],'post'); ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Evaluationitem */
+/* @var $model app\models\EvaluationSection */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Evaluationitems', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Evaluation Sections', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="evaluationitem-view">
+<div class="evaluation-section-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -30,8 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'evaluation_id',
-            'item_id',
-            'score',
+            'section_id',
+            'comment',
         ],
     ]) ?>
 

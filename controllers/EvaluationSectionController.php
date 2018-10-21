@@ -3,25 +3,20 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\ModelForm as Model;
+use yii\base\Model;
 use yii\helpers\ArrayHelper;
 use app\models\Evaluation;
-use app\models\Instrument;
-use app\models\Section;
-use app\models\EvaluationSection;
 use app\models\EvaluationItem;
-use app\models\EvaluationSearch;
+use app\models\EvaluationSection;
+use app\models\EvaluationSectionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\models\User;
-use yii\filters\AccessControl;
-use app\components\AccessRule;
 
 /**
- * EvaluationController implements the CRUD actions for Evaluation model.
+ * EvaluationSectionController implements the CRUD actions for EvaluationSection model.
  */
-class EvaluationController extends Controller
+class EvaluationSectionController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -29,40 +24,6 @@ class EvaluationController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'ruleConfig' => [
-                    'class' => AccessRule::className(),
-                ],
-                'only' => ['index','view','evaluate'],
-                'rules'=>[
-                    [
-                        'actions'=>['login'],
-                        'allow' => true,
-                        'roles' => ['@']
-                    ],
-                    [
-                        'actions' => ['evaluate'],
-                        'allow' => true,
-                        'roles' => [User::ROLE_STUDENT]
-                    ],
-                    [
-                        'actions' => ['evaluate'],
-                        'allow' => true,
-                        'roles' => [User::ROLE_TEACHER]
-                    ],
-                    [
-                        'actions' => ['evaluate'],
-                        'allow' => true,
-                        'roles' => [User::ROLE_HEAD]
-                    ],
-                    [
-                        'actions' => ['index','view','evaluate'],
-                        'allow' => true,
-                        'roles' => [User::ROLE_ADMIN]
-                    ]
-                ],
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -73,12 +34,12 @@ class EvaluationController extends Controller
     }
 
     /**
-     * Lists all Evaluation models.
+     * Lists all EvaluationSection models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new EvaluationSearch();
+        $searchModel = new EvaluationSectionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -88,7 +49,7 @@ class EvaluationController extends Controller
     }
 
     /**
-     * Displays a single Evaluation model.
+     * Displays a single EvaluationSection model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -101,13 +62,13 @@ class EvaluationController extends Controller
     }
 
     /**
-     * Creates a new Evaluation model.
+     * Creates a new EvaluationSection model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Evaluation();
+        $model = new EvaluationSection();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -119,13 +80,13 @@ class EvaluationController extends Controller
     }
 
     /**
-     * Updates an existing Evaluation model.
+     * Updates an existing EvaluationSection model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdates($id)
+    public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
@@ -144,48 +105,39 @@ class EvaluationController extends Controller
      */
     public function actionEvaluate($id)
     {
-        $model = $this->findModel($id);
-        $instrument = Instrument::find()->where(['id' => $model->instrument_id])->one();
-        $sections = Section::find()->where(['instrument_id' => $instrument->id ])->all();
-        // echo $model->id;
-        // die();
-        $evalSections = $model->evaluationSections;
+        $evaluation = Evaluation::find()->where(['id' => $id])->one();
+        $evalSections = EvaluationSection::find()->where(['evaluation_id' => $evaluation->id])->all();
         $evalItems = [];
         $oldItems = [];
         if (!empty($evalSections)) {
             foreach ($evalSections as $indexSection => $modelSection) {
-                
                 $items = $modelSection->evaluationItems;
                 $evalItems[$indexSection] = $items;
                 $oldItems = ArrayHelper::merge(ArrayHelper::index($items, 'id'), $oldItems);
-          
             }
-            
         }
 
-            
-        if (Yii::$app->request->post()) {
-            
+        if ($evaluation->load(Yii::$app->request->post())) {
+           
             // reset
             $evalItems = [];
 
             $oldSectionIDs = ArrayHelper::map($evalSections, 'id', 'id');
-            $evalSections = Model::createMultiple(EvaluationSection::classname(), $evalSections);
+            $evalSections = Model::createMultiple(Section::classname(), $evalSections);
             Model::loadMultiple($evalSections, Yii::$app->request->post());
             $deletedSectionIDs = array_diff($oldSectionIDs, array_filter(ArrayHelper::map($evalSections, 'id', 'id')));
 
-            // validate Evaluation and EvaluationSection models
-            $valid = $model->validate();
+            // validate Instrument and Section models
+            $valid = $evaluation->validate();
             $valid = Model::validateMultiple($evalSections) && $valid;
 
             $itemsIDs = [];
-            if (isset($_POST['EvaluationItem'][0][0])) {
-                foreach ($_POST['EvaluationItem'] as $indexSection => $items) {
+            if (isset($_POST['Item'][0][0])) {
+                foreach ($_POST['Item'] as $indexSection => $items) {
                     $itemsIDs = ArrayHelper::merge($itemsIDs, array_filter(ArrayHelper::getColumn($items, 'id')));
-                    // die($itemsIDs);
                     foreach ($items as $indexItem => $item) {
-                        $data['EvaluationItem'] = $item;
-                        $modelItem = (isset($item['id']) && isset($oldItems[$item['id']])) ? $oldItems[$item['id']] : new EvaluationItem;
+                        $data['Item'] = $item;
+                        $modelItem = (isset($item['id']) && isset($oldItems[$item['id']])) ? $oldItems[$item['id']] : new Item;
                         $modelItem->load($data);
                         $evalItems[$indexSection][$indexItem] = $modelItem;
                         $valid = $modelItem->validate();
@@ -199,25 +151,23 @@ class EvaluationController extends Controller
             if ($valid) {
                 $transaction = Yii::$app->db->beginTransaction();
                 try {
-                    if ($flag = $model->save(false)) {
+                    if ($flag = $evaluation->save(false)) {
 
-                        // if (! empty($deletedItemsIDs)) {
-                        //     // EvaluationItem::deleteAll(['id' => $deletedItemsIDs]);
-                        //     echo "YEAH 1";
-                        //     die();
-                        // }
+                        if (! empty($deletedItemsIDs)) {
+                            EvaluationItem::deleteAll(['id' => $deletedItemsIDs]);
+                        }
 
-                        // if (! empty($deletedSectionIDs)) {
-                        //     // EvaluationsSection::deleteAll(['id' => $deletedSectionIDs]);
-                        //     echo "YEAH 2";
-                        //     die();
-                        // }
-                        
+                        if (! empty($deletedSectionIDs)) {
+                            EvaluationSection::deleteAll(['id' => $deletedSectionIDs]);
+                        }
+
                         foreach ($evalSections as $indexSection => $modelSection) {
 
                             if ($flag === false) {
                                 break;
                             }
+
+                            // $modelSection->instrument_id = $evaluation->id;
 
                             if (!($flag = $modelSection->save(false))) {
                                 break;
@@ -225,6 +175,7 @@ class EvaluationController extends Controller
 
                             if (isset($evalItems[$indexSection]) && is_array($evalItems[$indexSection])) {
                                 foreach ($evalItems[$indexSection] as $indexItem => $modelItem) {
+                                    // $modelItem->section_id = $modelSection->id;
                                     if (!($flag = $modelItem->save(false))) {
                                         break;
                                     }
@@ -233,25 +184,29 @@ class EvaluationController extends Controller
                         }
                     }
 
+                    if ($flag) {
                         $transaction->commit();
-                        return $this->redirect(['/']);
-                    
+                        return $this->redirect(['view', 'id' => $evaluation->id]);
+                    } else {
+                        $transaction->rollBack();
+                    }
                 } catch (Exception $e) {
                     $transaction->rollBack();
                 }
             }
         }
-
-    return $this->render('evaluate', [
-        'model' => $model,
-        'evalSections' => $evalSections,
-        'evalItems' => $evalItems
-    ]);
-
+        
+        print_r($evaluation->save());
+        die();
+        return $this->render('evaluation', [
+            'model' => $evaluation,
+            'evalSections' =>  $evalSections,
+            'evalItems' =>  $evalItems
+        ]);
     }
 
     /**
-     * Deletes an existing Evaluation model.
+     * Deletes an existing EvaluationSection model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -265,15 +220,15 @@ class EvaluationController extends Controller
     }
 
     /**
-     * Finds the Evaluation model based on its primary key value.
+     * Finds the EvaluationSection model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Evaluation the loaded model
+     * @return EvaluationSection the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Evaluation::findOne($id)) !== null) {
+        if (($model = EvaluationSection::findOne($id)) !== null) {
             return $model;
         }
 

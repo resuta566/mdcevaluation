@@ -26,7 +26,7 @@ class m180909_032221_create_item_table extends Migration
             'fk-item-section',
             'item','section_id',
             'section', 'id',
-            'CASCADE'
+            'SET NULL'
         );
     }
 

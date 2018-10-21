@@ -8,11 +8,11 @@ use Yii;
  * This is the model class for table "evaluation_item".
  *
  * @property int $id
- * @property int $evaluation_id
+ * @property int $evaluation_section_id
  * @property int $item_id
  * @property int $score
  *
- * @property Evaluation $evaluation
+ * @property EvaluationSection $evaluationSection
  * @property Item $item
  */
 class EvaluationItem extends \yii\db\ActiveRecord
@@ -31,8 +31,8 @@ class EvaluationItem extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['evaluation_id', 'item_id', 'score'], 'integer'],
-            [['evaluation_id'], 'exist', 'skipOnError' => true, 'targetClass' => Evaluation::className(), 'targetAttribute' => ['evaluation_id' => 'id']],
+            [['evaluation_section_id', 'item_id', 'score'], 'integer'],
+            [['evaluation_section_id'], 'exist', 'skipOnError' => true, 'targetClass' => EvaluationSection::className(), 'targetAttribute' => ['evaluation_section_id' => 'id']],
             [['item_id'], 'exist', 'skipOnError' => true, 'targetClass' => Item::className(), 'targetAttribute' => ['item_id' => 'id']],
         ];
     }
@@ -44,7 +44,7 @@ class EvaluationItem extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'evaluation_id' => 'Evaluation ID',
+            'evaluation_section_id' => 'Evaluation Section ID',
             'item_id' => 'Item ID',
             'score' => 'Score',
         ];
@@ -53,9 +53,9 @@ class EvaluationItem extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getEvaluation()
+    public function getEvaluationSection()
     {
-        return $this->hasOne(Evaluation::className(), ['id' => 'evaluation_id']);
+        return $this->hasOne(EvaluationSection::className(), ['id' => 'evaluation_section_id']);
     }
 
     /**

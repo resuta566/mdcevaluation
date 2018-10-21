@@ -3,19 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Evaluationitem;
+use app\models\EvaluationItem;
 use app\models\EvaluationItemSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\components\AccessRule;
-use yii\filters\AccessControl;
-use app\models\User;
 
 /**
- * EvaluationItemController implements the CRUD actions for Evaluationitem model.
+ * EvaluationitemController implements the CRUD actions for EvaluationItem model.
  */
-class EvaluationItemController extends Controller
+class EvaluationitemController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -23,25 +20,6 @@ class EvaluationItemController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'ruleConfig' => [
-                    'class' => AccessRule::className(),
-                ],
-                'only' => ['index','view','create','update','delete'],
-                'rules'=>[
-                    [
-                        'actions'=>['login'],
-                        'allow' => true,
-                        'roles' => ['@']
-                    ],
-                    [
-                        'actions' => ['index','view','about'],
-                        'allow' => true,
-                        'roles' => [User::ROLE_ADMIN]
-                    ]
-                ],
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -52,7 +30,7 @@ class EvaluationItemController extends Controller
     }
 
     /**
-     * Lists all Evaluationitem models.
+     * Lists all EvaluationItem models.
      * @return mixed
      */
     public function actionIndex()
@@ -67,7 +45,7 @@ class EvaluationItemController extends Controller
     }
 
     /**
-     * Displays a single Evaluationitem model.
+     * Displays a single EvaluationItem model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -80,13 +58,13 @@ class EvaluationItemController extends Controller
     }
 
     /**
-     * Creates a new Evaluationitem model.
+     * Creates a new EvaluationItem model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Evaluationitem();
+        $model = new EvaluationItem();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -98,7 +76,7 @@ class EvaluationItemController extends Controller
     }
 
     /**
-     * Updates an existing Evaluationitem model.
+     * Updates an existing EvaluationItem model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -117,9 +95,8 @@ class EvaluationItemController extends Controller
         ]);
     }
 
-
     /**
-     * Deletes an existing Evaluationitem model.
+     * Deletes an existing EvaluationItem model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -133,15 +110,15 @@ class EvaluationItemController extends Controller
     }
 
     /**
-     * Finds the Evaluationitem model based on its primary key value.
+     * Finds the EvaluationItem model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Evaluationitem the loaded model
+     * @return EvaluationItem the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Evaluationitem::findOne($id)) !== null) {
+        if (($model = EvaluationItem::findOne($id)) !== null) {
             return $model;
         }
 

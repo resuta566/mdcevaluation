@@ -30,7 +30,7 @@ class m180909_023743_create_student_table extends Migration
             'fk-student-user',
             'student','user_id',
             'user', 'id',
-            'CASCADE'
+            'SET NULL'
         );
     }
 

@@ -19,7 +19,7 @@ class m180908_235640_create_user_table extends Migration
             'authkey' => $this->string(225),
             'role' => $this->integer(1)->notNull(),
             'status' => $this->integer(1)->notNull(),
-            'department' => $this->integer(1),
+            'department' => $this->integer(1)->notNull(),
 
         ]);
     }

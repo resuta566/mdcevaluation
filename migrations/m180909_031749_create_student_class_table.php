@@ -27,7 +27,7 @@ class m180909_031749_create_student_class_table extends Migration
             'fk-student_class-student',
             'student_class','student_id',
             'student', 'id',
-            'CASCADE'
+            'SET NULL'
         );
 
         $this->createIndex(
@@ -39,7 +39,7 @@ class m180909_031749_create_student_class_table extends Migration
             'fk-student_class-classes',
             'student_class','class_id',
             'classes', 'id',
-            'CASCADE'
+            'SET NULL'
         );
     }
 

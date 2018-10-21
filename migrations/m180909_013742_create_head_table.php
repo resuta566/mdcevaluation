@@ -30,7 +30,7 @@ class m180909_013742_create_head_table extends Migration
             'fk-head-user',
             'head','user_id',
             'user', 'id',
-            'CASCADE'
+            'SET NULL'
         );
     }
 
