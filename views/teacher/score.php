@@ -5,6 +5,9 @@ use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use yii\widgets\DetailView;
 use app\models\Teacher;
+use app\models\Evaluation;
+use app\models\EvaluationSection;
+use app\models\EvaluationItem;
 use app\models\Instrument;
 use app\models\Section;
 use app\models\Classes;
@@ -24,5 +27,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 <p class="simple-text">Teacher Details</p>
      </div>
      <div class="card-content">
+     <?php $evaluation = Evaluation::find()->where(['eval_for' => $model->user_id])->all() ?>
+        <?php foreach($evaluation as $indexEvaluation => $eval){?>
+            <?php $evaluationSection = EvaluationSection::find()->where(['evaluation_id' => $eval->id])->all()?>
+            <?php foreach($evaluationSection as $indexEvaluationSection => $evalSection){?>
+                <?php $evaluationItem = EvaluationItem::find()->where(['evaluation_section_id' => $evalSection->id])?>
+                <?php foreach($evaluationItem->all() as $indexEvaluationItem => $evalItem){?>
+                    <?= "". $evalItem->score ?>
+                <?php } ?>
+            <?php } ?>
+     <?php } ?>
      </div>
 </div>
