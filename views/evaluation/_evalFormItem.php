@@ -8,7 +8,7 @@ use wbraganca\dynamicform\DynamicFormWidget;
     <thead>
         <tr>
             <th>Statement</th>
-            <th>Score</th>
+            <th style="width: 25%">Score</th>
         </tr>
     </thead>
     <tbody class="container-item">
