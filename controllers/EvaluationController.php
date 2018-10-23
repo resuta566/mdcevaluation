@@ -57,7 +57,7 @@ class EvaluationController extends Controller
                         'roles' => [User::ROLE_HEAD]
                     ],
                     [
-                        'actions' => ['index','view','evaluate'],
+                        'actions' => ['evaluate'],
                         'allow' => true,
                         'roles' => [User::ROLE_ADMIN]
                     ]
@@ -162,6 +162,10 @@ class EvaluationController extends Controller
             }
             
         }
+        if($model->evalBy->id !== Yii::$app->user->id){
+            throw new \yii\web\HttpException(401, 'You are Forbidden to Evaluate this Teacher for it is not yours to evaluate!');
+        }
+        
 
             
         if (Yii::$app->request->post()) {
@@ -214,6 +218,7 @@ class EvaluationController extends Controller
                         // }
                         
                         foreach ($evalSections as $indexSection => $modelSection) {
+                            
 
                             if ($flag === false) {
                                 break;
@@ -225,6 +230,7 @@ class EvaluationController extends Controller
 
                             if (isset($evalItems[$indexSection]) && is_array($evalItems[$indexSection])) {
                                 foreach ($evalItems[$indexSection] as $indexItem => $modelItem) {
+                                    
                                     if (!($flag = $modelItem->save(false))) {
                                         break;
                                     }

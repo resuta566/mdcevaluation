@@ -44,11 +44,11 @@ $this->params['breadcrumbs'][] = $this->title;
             </thead>
             <tbody class="container-items">
                         <?php foreach($sect->all() as $se => $s):?>
-                            <?php $sectItems = Item::find()->where(['section_id' => $s->id])->all() ?>
+                            <?php $sectItems = Item::find()->where(['section_id' => $s->id]) ?>
                             <?php $sectScroore = 0; ?>
                             <tr>
                                 <td>
-                                <?= $s->name?> 
+                                <?= $s->name." Count-". $sectItems->count();?> 
                                     <table class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         </tr>
                                     </thead>
                                         <tbody>
-                                            <?php foreach($sectItems as $secI => $sI):?>
+                                            <?php foreach($sectItems->all() as $secI => $sI):?>
                                             <tr>
                                                 <td for="statement">  
                                                     <?= $sI->statement  ?>
@@ -142,7 +142,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                             </tr>
                                             <?php endforeach; ?>
                                             
-                                            <?php $sectScroore = 0; ?>
                                             <?php $sectionScore[$se] = $sectScore?>
                                             <?php $sectScroore = number_format((float) $sectionScore[$se]/$sect->count(),2, '.', '');?>
                                             <?php echo "SCORE: ". $sectScroore; ?>
