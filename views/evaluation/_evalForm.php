@@ -18,18 +18,20 @@ $this->params['breadcrumbs'][] = $this->title;
 <br>
 <table class="table table-bordered table-striped">
    <thead>
+       <tr>
+           <th ></th>
+       </tr>
    </thead>
    <tbody class="container-items">
    <tr class="section-item">
            <td class="vcenter">
    <?php foreach ($evalSections as $indexSection => $modelSection): ?>
-   <h3><?= $modelSection->section->name ?></h3>
-            <?php
-                // necessary for evaluate action.
-                if (! $modelSection->isNewRecord) {
-                    echo Html::activeHiddenInput($modelSection, "[{$indexSection}]id");
-                }
-            ?>
+   <?php
+                   // necessary for update action.
+                   if (! $modelSection->isNewRecord) {
+                       echo Html::activeHiddenInput($modelSection, "[{$indexSection}]id");
+                   }
+               ?>
            <?= $this->render('_evalFormItem', [
                    'form' => $form,
                    'modelSection' => $modelSection,
