@@ -11,6 +11,10 @@ nbproject
 
 # windows thumbnail cache
 Thumbs.db
+<<<<<<< HEAD
+=======
+evalsystem.zip
+>>>>>>> parent of bc29351c... Initialization of Counting numbers for Comp
 
 # composer vendor dir
 vendor/
