@@ -11,7 +11,7 @@ $this->title = 'Evaluate';
 <div class="card">
     <div class="card-content">
     <div class="card-header" data-background-color="blue">
-            <h3>Evaluate: <?= app\models\Teacher::find()->where(['user_id' => $model->evalFor->id ])->one()->fullName ?></h3>
+            <h2>Evaluate: <?= app\models\Teacher::find()->where(['user_id' => $model->evalFor->id ])->one()->fullName ?></h2>
             <p class="title">For Subject: <b><?= $model->class->name ?></b></p>
         </div>
         <br>

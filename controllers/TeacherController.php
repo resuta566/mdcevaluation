@@ -50,7 +50,7 @@ class TeacherController extends Controller
                 'ruleConfig' => [
                     'class' => AccessRule::className(),
                 ],
-                'only' => ['index','view','generate','unlink','bulk','generatebulk','list'],
+                'only' => ['index','view','generate','unlink','bulk','generatebulk','list','score'],
                 'rules'=>[
                     [
                         'actions'=>['login'],
@@ -58,7 +58,7 @@ class TeacherController extends Controller
                         'roles' => ['@']
                     ],
                     [
-                        'actions' => ['index','view','generate','unlink','bulk','generatebulk','list'],
+                        'actions' => ['index','view','generate','unlink','bulk','generatebulk','list','score'],
                         'allow' => true,
                         'roles' => [User::ROLE_ADMIN]
                     ]
@@ -105,13 +105,13 @@ class TeacherController extends Controller
     public function actionScore($id)
     {
         $model = Teacher::findOne($id);
-        $user = User::find()->where(['id' => $model->user_id])->one();
-        $evaluation = Evaluation::find()->where(['eval_for' => $user->id])->all();
+        $user = User::find()->where(['id' => $model->user->id])->one();
+        $evaluations = Evaluation::find()->where(['eval_for' => $user->id])->all();
         // $instruSection = Section::find()->where(['instrument_id' => $evaluation->instrument->id]);
         return $this->render('score',[
             'model' => $model,
-            'evaluation' => $evaluation,
-            
+            'evaluations' => $evaluations,
+            'user' => $user
             ]);
     }
     /**
