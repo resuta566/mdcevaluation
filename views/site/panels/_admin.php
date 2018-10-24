@@ -108,6 +108,7 @@ $this->title = "Admin Dashboard";
 					</div>
 								<div class="panel-body">
 								<center>
+								<h2>Evaluatee</h2>
 											<div class="col-lg-3 col-md-6 col-sm-6">
 												<div class="card card-stats">
 												<a href="<?= \yii\helpers\Url::to(['/user']) ?>">
@@ -143,23 +144,6 @@ $this->title = "Admin Dashboard";
 														</div>
 													</a>
 												</div>
-												</div><div class="col-lg-3 col-md-6 col-sm-6">
-												<div class="card card-stats">
-													<a href="<?= \yii\helpers\Url::to(['/head']) ?>">
-														<div class="card-header" data-background-color="purple">
-															<i class="glyphicon glyphicon-bookmark"></i>
-														</div>
-														<div class="card-content">
-															<p class="category">Head/Deans</p>
-															<h3 class="title"><?= Head::find()->count(); ?></h3>
-														</div>
-														<div class="card-footer">
-															<div class="stats">
-																<i class="glyphicon glyphicon-briefcase"></i> Active
-															</div>
-														</div>
-													</a>
-												</div>
 												</div>
 											<div class="col-lg-3 col-md-6 col-sm-6">
 												<div class="card card-stats">
@@ -179,6 +163,12 @@ $this->title = "Admin Dashboard";
 													</a>
 												</div>
 												</div>
+											
+											</center>
+						  	</div>
+							  <div class="panel-body">
+							  <center>
+							  <h2>Evaluation</h2>
 											<div class="col-lg-3 col-md-6 col-sm-6">
 													<div class="card card-stats">
 														<a href="<?= \yii\helpers\Url::to(['/instrument']) ?>">
@@ -197,10 +187,26 @@ $this->title = "Admin Dashboard";
 														</a>
 													</div>
 												</div>
+												<div class="col-lg-3 col-md-6 col-sm-6">
+													<div class="card card-stats">
+														<a href="<?= \yii\helpers\Url::to(['/rank']) ?>">
+															<div class="card-header" data-background-color="cyan">
+																<i class="glyphicon glyphicon-equalizer"></i>
+															</div>
+															<div class="card-content">
+																<p class="category">Ranking</p>
+																<h3 class="title"><?= Instrument::find()->count(); ?></h3>
+															</div>
+															<div class="card-footer">
+																<div class="stats">
+																	<i class="glyphicon glyphicon-heart-empty"></i> Ranking Teacher	
+																</div>
+															</div>
+														</a>
+													</div>
+												</div>
 											</center>
-		
-								</div>
-						  	</div>
+											</div>
 			</div>
 	</div>
 
