@@ -23,6 +23,7 @@ return array(
     'kartik\\checkbox\\' => array($vendorDir . '/kartik-v/yii2-checkbox-x'),
     'kartik\\base\\' => array($vendorDir . '/kartik-v/yii2-krajee-base/src'),
     'dmstr\\' => array($vendorDir . '/dmstr/yii2-adminlte-asset'),
+    'dixonstarter\\pdfprint\\' => array($vendorDir . '/dixonstarter/yii2-pdfprint'),
     'cebe\\markdown\\' => array($vendorDir . '/cebe/markdown'),
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),

@@ -18,6 +18,35 @@ use Yii;
  */
 class Head extends \yii\db\ActiveRecord
 {
+    const GENDER_MALE = 1;
+    const GENDER_FEMALE =2;
+
+
+    public static function getGender() {
+        return $gender = [
+            1 => 'MALE',
+            2 => 'FEMALE',
+        ];
+    }
+
+    public function getGenderName() {
+        return static::getGender()[$this->gender];
+    }
+
+    public function getFullName()
+    {
+        return $this->lname . ", " . $this->fname;
+    }
+
+    public function getHeadUser()
+    {
+        return Yii::$app->formatter->asText($this->id);
+        
+    }
+    public function getHeadPass()
+    {
+        return $this->id . "" . $this->lname;
+    }
     /**
      * {@inheritdoc}
      */
@@ -47,9 +76,9 @@ class Head extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'lname' => 'Lname',
-            'fname' => 'Fname',
-            'mname' => 'Mname',
+            'lname' => 'Last Name',
+            'fname' => 'First Name',
+            'mname' => 'Middle Name',
             'gender' => 'Gender',
             'user_id' => 'User ID',
         ];

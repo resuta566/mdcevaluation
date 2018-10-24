@@ -121,6 +121,12 @@ class TeacherController extends Controller
             'user' => $user
             ]);
     }
+
+    public function actionRank()
+    {
+
+        return $this->render('rank');
+    }
     /**
      * Displays a single Teacher model.
      * @param integer $id

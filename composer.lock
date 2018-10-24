@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bc67888f28765b6f72cfa508d6c57be4",
+    "content-hash": "c46214643d4de778ac4da350a03d0e6f",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -106,6 +106,25 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/77d2a51d0520d2ee44173afdf4e40a9201f5964e",
                 "reference": "77d2a51d0520d2ee44173afdf4e40a9201f5964e",
+                "shasum": null
+            },
+            "type": "bower-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
+            "name": "bower-asset/nprogress",
+            "version": "v0.2.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:rstacruz/nprogress.git",
+                "reference": "254266ea50c220f6507fa3f2978fc530147c7f06"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rstacruz/nprogress/zipball/254266ea50c220f6507fa3f2978fc530147c7f06",
+                "reference": "254266ea50c220f6507fa3f2978fc530147c7f06",
                 "shasum": null
             },
             "type": "bower-asset",
@@ -373,6 +392,50 @@
                 "zikula"
             ],
             "time": "2018-08-27T06:10:37+00:00"
+        },
+        {
+            "name": "dixonstarter/yii2-pdfprint",
+            "version": "1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dixonsatit/yii2-pdfprint.git",
+                "reference": "26cbbca898b8f7143a90a05e53e191bd60581f80"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dixonsatit/yii2-pdfprint/zipball/26cbbca898b8f7143a90a05e53e191bd60581f80",
+                "reference": "26cbbca898b8f7143a90a05e53e191bd60581f80",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/nprogress": "*",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "dixonstarter\\pdfprint\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sathit Seethaphon",
+                    "email": "dixonsatit@gmail.com"
+                }
+            ],
+            "description": "Load PDF into iframe and call print.",
+            "keywords": [
+                " pdf print",
+                " print",
+                " yii2",
+                "extension",
+                "iframe"
+            ],
+            "time": "2016-10-17T10:02:05+00:00"
         },
         {
             "name": "dmstr/yii2-adminlte-asset",

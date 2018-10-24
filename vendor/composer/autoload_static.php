@@ -51,6 +51,7 @@ class ComposerStaticInitd099cc876a08fd28c5ab85ac0f855acd
         'd' => 
         array (
             'dmstr\\' => 6,
+            'dixonstarter\\pdfprint\\' => 22,
         ),
         'c' => 
         array (
@@ -168,6 +169,10 @@ class ComposerStaticInitd099cc876a08fd28c5ab85ac0f855acd
         'dmstr\\' => 
         array (
             0 => __DIR__ . '/..' . '/dmstr/yii2-adminlte-asset',
+        ),
+        'dixonstarter\\pdfprint\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dixonstarter/yii2-pdfprint',
         ),
         'cebe\\markdown\\' => 
         array (

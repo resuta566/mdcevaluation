@@ -57,21 +57,35 @@ AppAsset::register($this);
 		</a>
 		<?php }?>
 						</div>
-
+			
 	    	<div class="sidebar-wrapper">
+			<?php if(Yii::$app->user->identity->role==User::ROLE_ADMIN){ ?>
+			<?= ramosisw\CImaterial\widgets\Menu::widget(
+				[
+					'options' => ['class' => 'nav'],
+					'items' => [
+						['label' => 'Dashboard', 'icon' => 'home', 'url' => ['/']],
+						['label' => 'Users', 'icon' => 'user', 'url' => ['/user']],
+						['label' => 'Teachers', 'icon' => 'blackboard', 'url' => ['/teacher']],
+						['label' => 'Ranking', 'icon' => 'equalizer', 'url' => ['/rank']],
+						['label' => 'Students', 'icon' => 'education', 'url' => ['/student']],
+						['label' => 'Instruments', 'icon' => 'book', 'url' => ['/instrument']],
+					],
+				]
+			) ?>
+		</a>
+        <?php }else if(Yii::$app->user->identity->role==User::ROLE_STUDENT && Yii::$app->user->identity->role==User::ROLE_TEACHER){?>
 			<?= ramosisw\CImaterial\widgets\Menu::widget(
             [
                 'options' => ['class' => 'nav'],
                 'items' => [
                     ['label' => 'Dashboard', 'icon' => 'home', 'url' => ['/']],
-                    ['label' => 'Users', 'icon' => 'user', 'url' => ['/user']],
-                    ['label' => 'Teachers', 'icon' => 'blackboard', 'url' => ['/teacher']],
-                    ['label' => 'Heads/Deans', 'icon' => 'bookmark', 'url' => ['/head']],
-                    ['label' => 'Students', 'icon' => 'education', 'url' => ['/student']],
-                    ['label' => 'Instruments', 'icon' => 'book', 'url' => ['/instrument']],
+                    ['label' => 'Profile', 'icon' => 'user', 'url' => ['/user']],
                 ],
             ]
         ) ?>
+		<?php }?>
+			
 	    	</div>
 		</div>
 

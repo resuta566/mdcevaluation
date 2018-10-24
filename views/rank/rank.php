@@ -5,6 +5,7 @@ use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use yii\widgets\DetailView;
 use app\models\Teacher;
+use app\models\User;
 use app\models\Evaluation;
 use app\models\EvaluationSection;
 use app\models\EvaluationItem;
@@ -19,22 +20,29 @@ use kartik\tabs\TabsX;
 /* @var $this yii\web\View */
 /* @var $model app\models\Teacher */
 
-$this->title = $model->getFullName()."'s Score";
+$this->title = "TEACHER RANKING";
 $this->params['breadcrumbs'][] = ['label' => 'Teachers', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="card" id="div1">
     <div class="card-header" data-background-color="blue">
                 <h1><?= Html::encode($this->title) ?></h1>
-                <p class="simple-text">Teacher Details</p>
+                <p class="simple-text">Teacher Ranking</p>
      </div>
      <div class="card-content">
-     <?= \dixonstarter\pdfprint\Pdfprint::widget([
-  'elementClass' => '.btn-pdfprint'
-]);?>
+     <?php 
+      $castTeachers = User::find()->where(['department' => 1])->andWhere(['role' => 20])->orWhere(['role' => 100])->all();
+      $coeTeachers = User::find()->where(['department' => 2])->andWhere(['role' => 20])->all();
+      $cabmhTeachers = User::find()->where(['department' => 3])->andWhere(['role' => 20])->all();
+      $cabmbTeachers = User::find()->where(['department' => 4])->andWhere(['role' => 20])->all();
+      $conTeachers = User::find()->where(['department' => 5])->andWhere(['role' => 20])->all();
+      $ccjTeachers = User::find()->where(['department' => 6])->andWhere(['role' => 20])->all();
+      $shsTeachers = User::find()->where(['department' => 7])->andWhere(['role' => 20])->all();
+      $jhsTeachers = User::find()->where(['department' => 8])->andWhere(['role' => 20])->all();
+      $elemTeachers = User::find()->where(['department' => 9])->andWhere(['role' => 20])->all();
+     ?>
 
-    <button onclick="printContent('div1')" class="btn btn-info btn-pdfprint">Print Content</button>
-    <?php $score = array();?>
+     <?php $score = array();?>
     <?php $itemAve;?>
     <?php $scores;?>
     <?php 
@@ -44,35 +52,15 @@ $this->params['breadcrumbs'][] = $this->title;
     ?>
     <?php $sectionScore = array();?>
     <?php $itemScore = array();?>
-    <?php  $evaluation = Evaluation::find()->where(['eval_for' => $model->user->id])->one(); ?>
-        <?php $inst = Instrument::find()->where(['id' => $evaluation->instrument->id])->one(); ?>
+    <?php foreach($castTeachers as $indexCastTeac => $casTeacher):?>
+    <?php  $evaluation = Evaluation::find()->where(['eval_for' => $casTeacher->id])->one(); ?>
+    <?= Teacher::find()->where(['user_id' => $casTeacher->id])->one()->fullName." " ?>
+        <?php $inst = Instrument::find()->where(['id' => 1])->one(); ?>
         <?php $sect = Section::find()->where(['instrument_id' => $inst->id]); ?>
-        <table class="table table-bordered table-striped">
-            <thead>
-            </thead>
-            <tbody class="container-items">
                         <?php foreach($sect->all() as $se => $s):?>
                             <?php $sectItems = Item::find()->where(['section_id' => $s->id]) ?>
                             <?php $sectScroore = 0; ?>
-                            <tr>
-                                <td>
-                                <h2>
-                                <?= $s->name;?> 
-                                </h2>
-                                    <table class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Statement</th>
-                                            <th>Score</th>
-                                        </tr>
-                                    </thead>
-                                        <tbody>
-                                            <?php foreach($sectItems->all() as $secI => $sI):?>
-                                            <tr>
-                                                <td for="statement">  
-                                                    <?= $sI->statement  ?>
-                                                </td>
-                                                <td for="score">  
+                                            <?php foreach($sectItems->all() as $secI => $sI):?> 
                                                     <?php 
                                                     $sql1 = 'SELECT evaluation.id as "Evaluation ID",
                                                     evaluation_section.id as "Evaluation Section ID", 
@@ -80,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     evaluation_item.score as "SCORE" 
                                                     FROM `evaluation` 
                                                     INNER JOIN (evaluation_section,evaluation_item) 
-                                                    ON evaluation.eval_for = '. $model->user->id .' 
+                                                    ON evaluation.eval_for = '. $casTeacher->id .' 
                                                     WHERE evaluation_section.evaluation_id = evaluation.id 
                                                     AND evaluation_item.evaluation_section_id = evaluation_section.id 
                                                     AND evaluation_item.item_id = '.$sI->id .' 
@@ -92,7 +80,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     evaluation_item.score as "SCORE" 
                                                     FROM `evaluation` 
                                                     INNER JOIN (evaluation_section,evaluation_item) 
-                                                    ON evaluation.eval_for = '. $model->user->id .' 
+                                                    ON evaluation.eval_for = '. $casTeacher->id .' 
                                                     WHERE evaluation_section.evaluation_id = evaluation.id 
                                                     AND evaluation_item.evaluation_section_id = evaluation_section.id 
                                                     AND evaluation_item.item_id = '.$sI->id .' 
@@ -104,7 +92,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     evaluation_item.score as "SCORE" 
                                                     FROM `evaluation` 
                                                     INNER JOIN (evaluation_section,evaluation_item) 
-                                                    ON evaluation.eval_for = '. $model->user->id .' 
+                                                    ON evaluation.eval_for = '. $casTeacher->id .' 
                                                     WHERE evaluation_section.evaluation_id = evaluation.id 
                                                     AND evaluation_item.evaluation_section_id = evaluation_section.id 
                                                     AND evaluation_item.item_id = '.$sI->id .' 
@@ -116,7 +104,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     evaluation_item.score as "SCORE" 
                                                     FROM `evaluation` 
                                                     INNER JOIN (evaluation_section,evaluation_item) 
-                                                    ON evaluation.eval_for = '. $model->user->id .' 
+                                                    ON evaluation.eval_for = '. $casTeacher->id .' 
                                                     WHERE evaluation_section.evaluation_id = evaluation.id 
                                                     AND evaluation_item.evaluation_section_id = evaluation_section.id 
                                                     AND evaluation_item.item_id = '.$sI->id .' 
@@ -128,7 +116,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     evaluation_item.score as "SCORE" 
                                                     FROM `evaluation` 
                                                     INNER JOIN (evaluation_section,evaluation_item) 
-                                                    ON evaluation.eval_for = '. $model->user->id .' 
+                                                    ON evaluation.eval_for = '. $casTeacher->id .' 
                                                     WHERE evaluation_section.evaluation_id = evaluation.id 
                                                     AND evaluation_item.evaluation_section_id = evaluation_section.id 
                                                     AND evaluation_item.item_id = '.$sI->id .' 
@@ -143,46 +131,65 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     ?>
                                                     
                                                 <?php 
-                                                $itemAve =
-                                                (($itemScore[0]*1)+($itemScore[1]*2)+($itemScore[2]*3)+($itemScore[3]*4)+($itemScore[4]*5))/($itemScore[0]+$itemScore[1]+$itemScore[2]+$itemScore[3]+$itemScore[4])
+                                                $itemCount = $itemScore[0]+$itemScore[1]+$itemScore[2]+$itemScore[3]+$itemScore[4];
                                                 ?>
-                                                <?= $itemAve ?>
+                                                <?php if(!$itemCount==0){?>
+                                                    <?php
+                                                $itemAve =
+                                                (($itemScore[0]*1)+($itemScore[1]*2)+($itemScore[2]*3)+($itemScore[3]*4)+($itemScore[4]*5))/$itemCount
+                                                ?>
+                                                        
                                                 <?php $sectScore += $itemAve?>
-                                                </td>
-                                            </tr>
+                                                <?php }?>
+                                                
                                             <?php endforeach; ?>
-                                            
                                             <?php $sectionScorenotAve[$se] = $sectScore?>
                                             <?php $sectionScore[$se] = number_format((float) $sectionScorenotAve[$se]/$sectItems->count(),2, '.', '');?>
-                                            <?php echo "SCORE: ". $sectionScore[$se] ?>
                                             <?php $sectScore = 0;?>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
 
                             <?php $mee += ($sectionScore[$se]*$sectItems->count()) ?>
                             <?php $me +=$sectItems->count()?>
                         <?php endforeach; ?>
-                        
-                </tbody>
-                </table>
-                
-                <div class="pull-right">
-                <h1>
                 <?= " AVERAGE SCORE: ".$mee/$me ?>
-                </h1>
-                </div>
-                
-      </div>
- </div>
- <script>
-      function printContent(el)
-      {
-         var restorepage = document.body.innerHTML;
-         var printcontent = document.getElementById(el).innerHTML;
-         document.body.innerHTML = printcontent;
-         window.print();
-         document.body.innerHTML = restorepage;
-     }
-   </script>
+                <?php $mee = 0;?>
+                <?php $me = 0;?>
+                <?php endforeach; ?>
+
+
+
+
+
+
+
+       <!-- <?php 
+       $items = [
+           [
+        'label'=>'<i class="glyphicon glyphicon-list-alt"></i> CAST',
+        'content'=> "ACTIVE",
+        'active'=>true
+       ],[
+        'label'=>'<i class="glyphicon glyphicon-list-alt"></i> COE',
+        'content'=> "INACTIVE",
+       ],
+       [
+        'label'=>'<i class="glyphicon glyphicon-list-alt"></i> CABM-H',
+        'content'=> "INACTIVE",
+       ],[
+        'label'=>'<i class="glyphicon glyphicon-list-alt"></i> CABM-B',
+        'content'=> "INACTIVE",
+       ],[
+        'label'=>'<i class="glyphicon glyphicon-list-alt"></i> CON',
+        'content'=> "INACTIVE",
+       ],[
+        'label'=>'<i class="glyphicon glyphicon-list-alt"></i> CCJ',
+        'content'=> "INACTIVE",
+       ],
+    ];
+       echo TabsX::widget([
+    'items'=>$items,
+    'position'=>TabsX::POS_ABOVE,
+    'encodeLabels'=>false
+]);
+?> -->
+     </div>
+</div>

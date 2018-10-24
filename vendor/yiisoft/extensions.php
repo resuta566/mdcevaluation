@@ -120,4 +120,13 @@ return array (
       '@kartik/tabs' => $vendorDir . '/kartik-v/yii2-tabs-x/src',
     ),
   ),
+  'dixonstarter/yii2-pdfprint' => 
+  array (
+    'name' => 'dixonstarter/yii2-pdfprint',
+    'version' => '1.3.0.0',
+    'alias' => 
+    array (
+      '@dixonstarter/pdfprint' => $vendorDir . '/dixonstarter/yii2-pdfprint',
+    ),
+  ),
 );

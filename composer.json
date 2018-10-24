@@ -22,7 +22,8 @@
         "kartik-v/yii2-checkbox-x": "@dev",
         "dmstr/yii2-adminlte-asset": "2.1",
         "wbraganca/yii2-dynamicform": "*",
-        "kartik-v/yii2-tabs-x": "dev-master"
+        "kartik-v/yii2-tabs-x": "dev-master",
+        "dixonstarter/yii2-pdfprint": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

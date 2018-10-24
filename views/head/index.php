@@ -18,20 +18,31 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 </div>
 
+<div class="card-content">
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
+    <!-- <p>
         <?= Html::a('Create Head', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    </p> -->
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        // 'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
+            [ 'attribute' => 
+            'id', 
+            'label' => 'ID Number',
+            'format' => 'raw', 
+            'value' => 
+            function ($model) {
+            return Html::a($model->id, 
+            [ 'head/view', 'id' => $model->id ], [
+                'target' => '_blank']
+                );
+            },
+        ],
             'lname',
             'fname',
             'mname',
@@ -41,4 +52,5 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+    </div>
 </div>

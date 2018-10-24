@@ -48,9 +48,9 @@ $this->title = "Admin Dashboard";
 												<p>Teachers</p>
 											</a>
 										</li><li>
-											<a href="<?= \yii\helpers\Url::to(['/head']) ?>">
-												<i class="glyphicon glyphicon-bookmark"> </i>
-												<p>Heads/Deans</p>
+											<a href="<?= \yii\helpers\Url::to(['/rank']) ?>">
+												<i class="glyphicon glyphicon-equalizer"> </i>
+												<p>Ranking</p>
 											</a>
 										</li>
 										<li>
@@ -63,12 +63,6 @@ $this->title = "Admin Dashboard";
 											<a href="<?= \yii\helpers\Url::to(['/instrument']) ?>">
 												<i class="glyphicon glyphicon-book"> </i>
 												<p>Instrument</p>
-											</a>
-										</li>
-										<li>
-											<a href="<?= \yii\helpers\Url::to(['/evaluation-item']) ?>">
-												<i class="glyphicon glyphicon-book"> </i>
-												<p>Evaluation Item</p>
 											</a>
 										</li>
 								</ul>
