@@ -32,7 +32,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php $score = array();?>
     <?php $itemAve;?>
     <?php $scores;?>
-    <?php $sectScore = 0; ?>
+    <?php 
+    $sectScore = 0; 
+    $me = 0;
+    $mee = 0;
+    ?>
     <?php $sectionScore = array();?>
     <?php $itemScore = array();?>
     <?php  $evaluation = Evaluation::find()->where(['eval_for' => $model->user->id])->one(); ?>
@@ -48,7 +52,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?php $sectScroore = 0; ?>
                             <tr>
                                 <td>
-                                <?= $s->name." Count-". $sectItems->count();?> 
+                                <h2>
+                                <?= $s->name;?> 
+                                </h2>
                                     <table class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
@@ -142,18 +148,28 @@ $this->params['breadcrumbs'][] = $this->title;
                                             </tr>
                                             <?php endforeach; ?>
                                             
-                                            <?php $sectionScore[$se] = $sectScore?>
-                                            <?php $sectScroore = number_format((float) $sectionScore[$se]/$sectItems->count(),2, '.', '');?>
-                                            <?php echo "SCORE: ". $sectScroore; ?>
+                                            <?php $sectionScorenotAve[$se] = $sectScore?>
+                                            <?php $sectionScore[$se] = number_format((float) $sectionScorenotAve[$se]/$sectItems->count(),2, '.', '');?>
+                                            <?php echo "SCORE: ". $sectionScore[$se] ?>
                                             <?php $sectScore = 0;?>
                                         </tbody>
                                     </table>
                                 </td>
                             </tr>
-                            <?= $sectionScore[$se] ?>
+
+                            <?php $mee += ($sectionScore[$se]*$sectItems->count()) ?>
+                            <?php $me +=$sectItems->count()?>
                         <?php endforeach; ?>
+                        
                 </tbody>
                 </table>
+                
+                <div class="pull-right">
+                <h1>
+                <?= " AVERAGE SCORE: ".$mee/$me ?>
+                </h1>
+                </div>
+                
       </div>
  </div>
      
