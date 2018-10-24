@@ -16,7 +16,7 @@ class m180909_031749_create_student_class_table extends Migration
             'id' => $this->primaryKey(),
             'student_id' => $this->integer(),
             'class_id' => $this->integer(),
-            'status' => $this->integer(1)->notNull(),
+            'status' => $this->integer(1)->notNull()->defaultValue(1),
         ]);
         $this->createIndex(
             'idx-student_class-student_id',
