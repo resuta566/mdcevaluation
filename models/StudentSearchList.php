@@ -42,7 +42,7 @@ class StudentSearchList extends Student
      */
     public function search($params)
     {
-        $query = Student::find()->where(['user_id' => null ]);
+        $query = Student::find();
 
         // add conditions that should always apply here
 
@@ -68,7 +68,8 @@ class StudentSearchList extends Student
         $query->orFilterWhere(['like', 'id', $this->studentSearch])
             ->orFilterWhere(['like', 'lname', $this->studentSearch])
             ->orFilterWhere(['like', 'fname', $this->studentSearch])
-            ->orFilterWhere(['like', 'mname', $this->studentSearch]);
+            ->orFilterWhere(['like', 'mname', $this->studentSearch])
+            ->andWhere(['user_id' => null]);
 
         return $dataProvider;
     }

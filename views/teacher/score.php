@@ -143,13 +143,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                             <?php endforeach; ?>
                                             
                                             <?php $sectionScore[$se] = $sectScore?>
-                                            <?php $sectScroore = number_format((float) $sectionScore[$se]/$sect->count(),2, '.', '');?>
+                                            <?php $sectScroore = number_format((float) $sectionScore[$se]/$sectItems->count(),2, '.', '');?>
                                             <?php echo "SCORE: ". $sectScroore; ?>
                                             <?php $sectScore = 0;?>
                                         </tbody>
                                     </table>
                                 </td>
                             </tr>
+                            <?= $sectionScore[$se] ?>
                         <?php endforeach; ?>
                 </tbody>
                 </table>

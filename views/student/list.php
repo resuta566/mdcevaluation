@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         echo "<div id='modalContent'></div>";
                 Modal::end();
         ?>
-        <?php //echo $this->render('_listsearch', ['model' => $searchModel]); ?>
+        <?php echo $this->render('_listsearch', ['model' => $searchModel]); ?>
         <br>
      <?= Html::beginForm(['generatebulk'],'post'); ?>
             <?= GridView::widget([

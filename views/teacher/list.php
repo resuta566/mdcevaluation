@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
     
 </div>
 <div style="margin: 20px">
-<?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+<?php echo $this->render('_search', ['model' => $searchModel]); ?>
 <?= Html::beginForm(['generatebulk'],'post'); ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

@@ -14,6 +14,7 @@ use app\models\Item;
 use app\models\EvaluationSection;
 use app\models\EvaluationItem;
 use app\models\TeacherSearch;
+use app\models\TeacherSearchList;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -92,7 +93,7 @@ class TeacherController extends Controller
     public function actionList()
     {
         $this->layout = "alayout";
-        $searchModel = new TeacherSearch();
+        $searchModel = new TeacherSearchList();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('list', [

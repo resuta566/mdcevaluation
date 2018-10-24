@@ -6,6 +6,7 @@ use yii\widgets\ActiveForm;
 use yii\widgets\DetailView;
 use app\models\Teacher;
 use app\models\Instrument;
+use app\models\Evaluation;
 use app\models\Classes;
 use yii\grid\GridView;
 use kartik\tabs\TabsX;
@@ -73,7 +74,9 @@ $this->params['breadcrumbs'][] = $this->title;
        
     </div>
     <div class="pull-right">
+    <?php if($model->user->id = Evaluation::find()->where(['eval_for' => $model->user->id])->all()){?>
     <?= Html::a('Score', ['score', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
+    <?php }?>
     </div>
     </div>
     <br>
