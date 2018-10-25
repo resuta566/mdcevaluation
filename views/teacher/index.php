@@ -20,9 +20,24 @@ $this->params['breadcrumbs'][] = $this->title;
     
 </div>
 <div style="margin: 20px">
+<p class="category">Teachers Lists by Departments</p>
+<?= Html::a('CAST', ['cast-teacher'], ['class' => 'btn btn-info','target' => '_blank']) ?>
+<?= Html::a('COE', ['coe-teacher'], ['class' => 'btn btn-info','target' => '_blank']) ?>
+<?= Html::a('CABM-B', ['cabmb-teacher'], ['class' => 'btn btn-info','target' => '_blank']) ?>
+<?= Html::a('CABM-H', ['cabmh-teacher'], ['class' => 'btn btn-info','target' => '_blank']) ?>
+<?= Html::a('CON', ['con-teacher'], ['class' => 'btn btn-info','target' => '_blank']) ?>
+<?= Html::a('CCJ', ['ccj-teacher'], ['class' => 'btn btn-info','target' => '_blank']) ?>
+<?= Html::a('SHS', ['shs-teacher'], ['class' => 'btn btn-info','target' => '_blank']) ?>
+<?= Html::a('JHS', ['jhs-teacher'], ['class' => 'btn btn-info','target' => '_blank']) ?>
+<?= Html::a('Elementary', ['elem-teacher'], ['class' => 'btn btn-info','target' => '_blank']) ?>
 <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 <br>
-<?= Html::a('Generate Many', ['list'], ['class' => 'btn btn-info']) ?>
+
+    <div class="pull-right">
+    <?= Html::a('Generate Many', ['list'], ['class' => 'btn btn-info']) ?>
+    </div>
+    <br>
+    <div>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'tableOptions' => [
@@ -56,6 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
         // ],
         ],
     ]); ?>
+    </div>
 </div>
 </div>
 </div>

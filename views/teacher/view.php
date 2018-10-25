@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php }else{?>
         
             <?=  
-        Html::a('Unlink', ['unlink', 'id' => $model->id], [
+        Html::a('Reset Pass', ['unlink', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'WARNING! Unlinking the account will delete the user and the evaluation data of this teacher',

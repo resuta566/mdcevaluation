@@ -263,12 +263,12 @@ class TeacherController extends Controller
         $dataProvider = $searchModel->search($id);
         $activeDataProvider = $activeClass->search($id);
         $teacher = Teacher::findOne($id);
-        $user = User::find()->where(['username'=> $teacher->id])->one();
-        $teacher->unlink('user',$user);
+        $user = User::find()->where(['id'=> $teacher->user_id])->one();
+        $user->setPassword($teacher->getTeacherPass());
         Yii::$app->session->setFlash('success', 
         ' '.Teacher::findOne($id)->getFullName(). "'s account has been unlinked.");
                      
-        $user->delete();
+        $user->update();
         Yii::$app->session->setFlash('danger', 
         ' '.Teacher::findOne($id)->getFullName()."'s account has been deleted");
                     
@@ -409,6 +409,97 @@ class TeacherController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
        return $this->render('coe-teacher',[
+           'castUsers' => $castUsers,
+           'searchModel' => $searchModel,
+           'dataProvider' => $dataProvider,
+       ]);
+    }
+    public function actionCabmhTeacher()
+    {
+        $castUsers = User::find()->where(['role' => 20])->andWhere(['department' => 3])->all();
+        $this->layout = "alayout";
+        $searchModel = new \app\models\TeacherSearchCABMH();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+       return $this->render('cabmh-teacher',[
+           'castUsers' => $castUsers,
+           'searchModel' => $searchModel,
+           'dataProvider' => $dataProvider,
+       ]);
+    }
+    public function actionCabmbTeacher()
+    {
+        $castUsers = User::find()->where(['role' => 20])->andWhere(['department' => 1])->all();
+        $this->layout = "alayout";
+        $searchModel = new \app\models\TeacherSearchCABMB();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+       return $this->render('cabmb-teacher',[
+           'castUsers' => $castUsers,
+           'searchModel' => $searchModel,
+           'dataProvider' => $dataProvider,
+       ]);
+    }
+    public function actionConTeacher()
+    {
+        $castUsers = User::find()->where(['role' => 20])->andWhere(['department' => 5])->all();
+        $this->layout = "alayout";
+        $searchModel = new \app\models\TeacherSearchCON();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+       return $this->render('con-teacher',[
+           'castUsers' => $castUsers,
+           'searchModel' => $searchModel,
+           'dataProvider' => $dataProvider,
+       ]);
+    }
+    public function actionCcjTeacher()
+    {
+        $castUsers = User::find()->where(['role' => 20])->andWhere(['department' => 6])->all();
+        $this->layout = "alayout";
+        $searchModel = new \app\models\TeacherSearchCCJ();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+       return $this->render('ccj-teacher',[
+           'castUsers' => $castUsers,
+           'searchModel' => $searchModel,
+           'dataProvider' => $dataProvider,
+       ]);
+    }
+    public function actionShsTeacher()
+    {
+        $castUsers = User::find()->where(['role' => 20])->andWhere(['department' => 7])->all();
+        $this->layout = "alayout";
+        $searchModel = new \app\models\TeacherSearchSHS();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+       return $this->render('shs-teacher',[
+           'castUsers' => $castUsers,
+           'searchModel' => $searchModel,
+           'dataProvider' => $dataProvider,
+       ]);
+    }
+    public function actionJhsTeacher()
+    {
+        $castUsers = User::find()->where(['role' => 20])->andWhere(['department' => 8])->all();
+        $this->layout = "alayout";
+        $searchModel = new \app\models\TeacherSearchJHS();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+       return $this->render('jhs-teacher',[
+           'castUsers' => $castUsers,
+           'searchModel' => $searchModel,
+           'dataProvider' => $dataProvider,
+       ]);
+    }
+    public function actionElemTeacher()
+    {
+        $castUsers = User::find()->where(['role' => 20])->andWhere(['department' => 9])->all();
+        $this->layout = "alayout";
+        $searchModel = new \app\models\TeacherSearchELEM();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+       return $this->render('elem-teacher',[
            'castUsers' => $castUsers,
            'searchModel' => $searchModel,
            'dataProvider' => $dataProvider,

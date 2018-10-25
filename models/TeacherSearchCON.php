@@ -52,6 +52,8 @@ class TeacherSearchCON extends Teacher
 
         $this->load($params);
 
+        $query->joinWith(['user'],true, 'LEFT JOIN');
+
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
@@ -65,11 +67,12 @@ class TeacherSearchCON extends Teacher
         //     'user_id' => $this->user_id,
         // ]);
 
-        $query->orFilterWhere(['like', 'id', $this->teacherSearch])
+        $query->orFilterWhere(['like', 'teacher.id', $this->teacherSearch])
             ->orFilterWhere(['like', 'fname', $this->teacherSearch])
             ->orFilterWhere(['like', 'lname', $this->teacherSearch])
             ->orFilterWhere(['like', 'mname', $this->teacherSearch])
-            ->andWhere(['user_id' => null]);
+            ->andWhere(['user.role' => 20])
+            ->andWhere(['user.department' => 5]);
 
         return $dataProvider;
     }

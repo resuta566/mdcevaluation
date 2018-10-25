@@ -10,7 +10,7 @@ use app\models\Teacher;
 /**
  * TeacherSearch represents the model behind the search form of `app\models\Teacher`.
  */
-class TeacherSearchCCJ extends Teacher
+class TeacherSearchJHS extends Teacher
 {
     public $teacherSearch;
     /**
@@ -72,7 +72,7 @@ class TeacherSearchCCJ extends Teacher
             ->orFilterWhere(['like', 'lname', $this->teacherSearch])
             ->orFilterWhere(['like', 'mname', $this->teacherSearch])
             ->andWhere(['user.role' => 20])
-            ->andWhere(['user.department' => 6]);
+            ->andWhere(['user.department' => 8]);
 
         return $dataProvider;
     }
