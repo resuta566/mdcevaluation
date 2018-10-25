@@ -51,7 +51,12 @@ class TeacherController extends Controller
                 'ruleConfig' => [
                     'class' => AccessRule::className(),
                 ],
-                'only' => ['index','view','generate','unlink','bulk','generatebulk','list','score'],
+                'only' => [
+                    'index','view','generate','unlink',
+                    'bulk','generatebulk','list','score',
+                    'castTeacher','coeTeacher','cabmhTeacher','cabmbTeacher','conTeacher','ccjTeacher',
+                    'shsTeacher','jhsTeacher','elemTeacher',
+            ],
                 'rules'=>[
                     [
                         'actions'=>['login'],
@@ -59,7 +64,12 @@ class TeacherController extends Controller
                         'roles' => ['@']
                     ],
                     [
-                        'actions' => ['index','view','generate','unlink','bulk','generatebulk','list','score'],
+                        'actions' => [
+                        'index','view','generate','unlink','bulk','generatebulk','list','score',
+                        'castTeacher','coeTeacher','cabmhTeacher',
+                        'cabmbTeacher','conTeacher','ccjTeacher',
+                        'shsTeacher','jhsTeacher','elemTeacher'
+                    ],
                         'allow' => true,
                         'roles' => [User::ROLE_ADMIN]
                     ]
