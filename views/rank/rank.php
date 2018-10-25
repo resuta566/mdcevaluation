@@ -24,9 +24,6 @@ $this->title = "TEACHER RANKING";
 $this->params['breadcrumbs'][] = ['label' => 'Teachers', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<?= \dixonstarter\pdfprint\Pdfprint::widget([
-  'elementClass' => '.btn-pdfprint'
-]);?>
 <div class="card" id="div1">
     <div class="card-header" data-background-color="blue">
                 <h1><?= Html::encode($this->title) ?></h1>

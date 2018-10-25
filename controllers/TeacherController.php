@@ -388,6 +388,32 @@ class TeacherController extends Controller
         // die();
     }
 
+    public function actionCastTeacher()
+    {
+        $castUsers = User::find()->where(['role' => 20])->andWhere(['department' => 1])->all();
+        $this->layout = "alayout";
+        $searchModel = new \app\models\TeacherSearchCAST();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+       return $this->render('cast-teacher',[
+           'castUsers' => $castUsers,
+           'searchModel' => $searchModel,
+           'dataProvider' => $dataProvider,
+       ]);
+    }
+    public function actionCoeTeacher()
+    {
+        $castUsers = User::find()->where(['role' => 20])->andWhere(['department' => 2])->all();
+        $this->layout = "alayout";
+        $searchModel = new \app\models\TeacherSearchCOE();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+       return $this->render('coe-teacher',[
+           'castUsers' => $castUsers,
+           'searchModel' => $searchModel,
+           'dataProvider' => $dataProvider,
+       ]);
+    }
 
     public function actionStop()
     {

@@ -66,6 +66,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             4 => 'CABM-B',
             5 => 'CON',
             6 => 'CCJ',
+            7 => 'Senior High School',
+            8 => 'Junior High School',
+            9 => 'Elementary'
         ];
     }
 

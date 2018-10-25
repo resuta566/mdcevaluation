@@ -10,7 +10,7 @@ use app\models\Teacher;
 /**
  * TeacherSearch represents the model behind the search form of `app\models\Teacher`.
  */
-class TeacherSearch extends Teacher
+class TeacherSearchCAST extends Teacher
 {
     public $teacherSearch;
     /**
@@ -52,6 +52,8 @@ class TeacherSearch extends Teacher
 
         $this->load($params);
 
+        $query->joinWith(['user'],true, 'LEFT JOIN');
+
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
@@ -65,11 +67,12 @@ class TeacherSearch extends Teacher
         //     'user_id' => $this->user_id,
         // ]);
 
-        $query->orFilterWhere(['like', 'id', $this->teacherSearch])
+        $query->orFilterWhere(['like', 'teacher.id', $this->teacherSearch])
             ->orFilterWhere(['like', 'fname', $this->teacherSearch])
             ->orFilterWhere(['like', 'lname', $this->teacherSearch])
             ->orFilterWhere(['like', 'mname', $this->teacherSearch])
-            ->andWhere(['not', ['user_id' => null]]);
+            ->andWhere(['user.role' => 20])
+            ->andWhere(['user.department' => 1]);
 
         return $dataProvider;
     }
