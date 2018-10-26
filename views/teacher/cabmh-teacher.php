@@ -11,16 +11,37 @@ use yii\bootstrap\Modal;
 
 $this->title = 'CABM-H Teachers';
 $this->params['breadcrumbs'][] = $this->title;
+$dean = \app\models\User::find()->where(['role' => 30])->andWhere(['department'=> 4])->one();
+$user = \app\models\User::find()->where(['role' => 20])->andWhere(['department'=> 3])->one();
 ?>
 
 <div class="card">
     <div class="card-header" data-background-color="blue">
-        <h1 class="title"><?= Html::encode($this->title) ?></h1>
+        <h1 class="title"><?= Html::encode($this->title) ?> : DEAN - <?= $dean->teacher->fullName?></h1>
         <p class="category">List of <?= Html::encode($this->title) ?> of the Evaluation</p>
         
     </div>
     <div class="card-content">
     <?php echo $this->render('_searchCabmh', ['model' => $searchModel]); ?>
+    <div>
+    <p>Start Peer Evaluation</p>
+    <?= Html::beginForm(['teacheval', 'id' =>  $user->department ],'post'); ?>
+
+    <?=  Html::dropDownList('instrumentdropdown', null,
+                    \yii\helpers\ArrayHelper::map(app\models\Instrument::find()->all(), 'id', 'name'),
+                        [
+                            'class' => 'form-control', 
+                            'prompt'=>'Choose an Instrument'
+                        ]) ?>
+   <br>
+   <?= Html::submitButton('GENERATE', [
+               'class' => 'btn btn-info',
+               'data' => [
+                   'confirm' => 'Are you sure you want to Start Evaluation for this Teachers?',
+                   'method' => 'post',
+               ],
+           ]); ?>
+           </div>
         <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'tableOptions' => [

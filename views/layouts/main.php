@@ -55,6 +55,10 @@ if (class_exists('ramosisw\CImaterial\web\MaterialAsset')) {
 			<a href="<?= \yii\helpers\Url::to(['/']) ?>" class="simple-text">
 		<?= Yii::$app->user->identity->teacher->fullName . '</a>'; ?>
 		</a>
+		<?php }else if(Yii::$app->user->identity->role==User::ROLE_HEAD){?>
+			<a href="<?= \yii\helpers\Url::to(['/']) ?>" class="simple-text">
+		<?= Yii::$app->user->identity->teacher->fullName . '</a>'; ?>
+		</a>
 		<?php }?>
 						</div>
 
@@ -74,13 +78,13 @@ if (class_exists('ramosisw\CImaterial\web\MaterialAsset')) {
 				]
 			) ?>
 		</a>
-        <?php }else if(Yii::$app->user->identity->role==User::ROLE_STUDENT || Yii::$app->user->identity->role==User::ROLE_TEACHER){?>
+        <?php }else if(Yii::$app->user->identity->role==User::ROLE_STUDENT || Yii::$app->user->identity->role==User::ROLE_TEACHER || Yii::$app->user->identity->role==User::ROLE_HEAD){?>
 			<?= ramosisw\CImaterial\widgets\Menu::widget(
             [
                 'options' => ['class' => 'nav'],
                 'items' => [
                     ['label' => 'Dashboard', 'icon' => 'home', 'url' => ['/']],
-                    ['label' => 'Profile', 'icon' => 'user', 'url' => ['/user']],
+                    ['label' => 'Profile', 'icon' => 'user', 'url' => ['/user/profile']],
                 ],
             ]
         ) ?>

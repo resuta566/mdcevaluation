@@ -185,6 +185,81 @@ class TeacherController extends Controller
         ]);
     }
 
+    
+
+    public function actionTeacheval($id){
+        $action = Yii::$app->request->post('instrumentdropdown');
+        $instrument = Instrument::find('id')->where(['id'=> $action ])->one();
+        $instrumentSection = Section::find('id')->where(['instrument_id' => $instrument])->all();
+        $deptUsers = User::find()->where(['department' => $id])->andWhere(['role' => [20,30]])->all();
+        // print_r($deptUsers);
+        // die();
+        $userId = 0;
+        foreach($deptUsers as $deptUser){
+            // print_r($deptUser);
+            // die();
+            $userId = $deptUser->id;
+               foreach ($deptUsers as $sc) {
+                   
+                   if($sc->id !== $userId):
+                    echo "YEAH";
+                    $evaluation = new Evaluation();
+                 $evaluation->eval_by =  $deptUser->id;
+                 $evaluation->eval_for = $sc->id;
+                 $evaluation->instrument_id = $instrument->id;
+              //    $evaluation->link('evalBy', $evalby);
+              //    $evaluation->link('evalFor', $evalfor);
+              //    $evaluation->link('instrument', $instrument);
+                 // $model->estatus = 1;
+              //    $model->save();
+                 $evaluation->save();
+             
+                 // print_r($evaluationId);
+                 // die();
+                             foreach($instrumentSection as $iS){
+                                 $evalSection = new EvaluationSection;
+                                 $evalSection->evaluation_id = $evaluation->id;
+                                 $evalSection->section_id = $iS->id;
+                                 $evalSection->link('evaluation', $evaluation);
+                                 $evalSection->link('section', $iS);
+                                 // echo $iS->id." " . $iS->name. " - ";
+                                 $instrumentSectionItem = Item::find()->where(['section_id' => $iS->id])->all(); 
+                                         // echo  $instrumentSectionItem ."<br>";
+                                         // echo "<br>";
+                                         foreach($instrumentSectionItem as $institem){
+                                                 $evalItem = new EvaluationItem;
+                                                 $evalItem->evaluation_section_id = $evalSection->id;
+                                                 $evalItem->item_id = $institem->id;
+                                                 $evalItem->link('evaluationSection', $evalSection);
+                                                 $evalItem->link('item', $institem);
+                                                 $evalItem->save();
+                                                 if(!$evalItem->save()){
+                                                     print_r($evalItem->getErrors());
+                                                     die();
+                                                 }
+                                         }
+                             }
+                //    die();
+                   endif;
+                //    var_dump($sc->id);
+
+                 
+                }
+           }
+        //    if(!$evalItem->save() || !$evaluation->save())
+        //    {
+        //    Yii::$app->session->setFlash('danger',
+        //     "Evaluation can't be submitted! Check if there is student for the class");
+        //    }
+        //    Yii::$app->session->setFlash('success',
+        //    "Evaluation has been submitted to all the students of the subjects you selected");
+
+           return $this->redirect(['index']);
+    }
+    /**
+     * Teacher Student Evaluation
+     * 
+     */
     public function actionBulk(){
         $action = Yii::$app->request->post('instrumentdropdown');
         $instrument = Instrument::find('id')->where(['id'=> $action ])->one();

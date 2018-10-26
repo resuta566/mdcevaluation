@@ -84,27 +84,34 @@ $this->title = "Dashboard";
 						<p class="category">Student Dashboard</p>
 					</div>
 								<div class="panel-body">
-									
-								<center>
+								<?php $evaluation =\app\models\Evaluation::find()->where(['eval_by' => Yii::$app->user->identity->id])->all();  ?>
+								<?php if(!$evaluation){?>
+										<h3>There is no Evaluation yet.</h3>
+										<small>Please wait for the admin to create an evaluation form for you.</small>
+								<?php } else{ ?>
+									<?php foreach ($evaluation as $usereval => $eval): ?>
+								<center> 
 								<div class="col-lg-3 col-md-6 col-sm-6">
 									<div class="card card-stats">
-                                            <a href="<?= \yii\helpers\Url::to(['/teacher']) ?>">
+                                            <a href="<?= \yii\helpers\Url::to(['evaluation/evaluate', 'id' => $eval->id ]) ?>">
                                                 <div class="card-header" data-background-color="orange">
                                                     <i class="glyphicon glyphicon-blackboard"></i>
                                                 </div>
                                                 <div class="card-content">
-                                                    <p class="category">Teachers</p>
-                                                    <h3 class="title"><?= Teacher::find()->count(); ?></h3>
+                                                    <h5 class="title"><?= $eval->evalFor->teacher->fullName ?></h5>
+													<!--  -->
                                                 </div>
                                                 <div class="card-footer">
                                                     <div class="stats">
-                                                        <i class="glyphicon glyphicon-briefcase"></i> Active
+                                                        <i class="glyphicon glyphicon-briefcase"></i> <?= $eval->evalFor->departmentName ?>
                                                     </div>
                                                 </a>
                                         </div>
 										
                         			</div>
 									</center>
+							<?php endforeach; ?>
+								<?php }?>
 								</div>
 						  	</div>
 			</div>

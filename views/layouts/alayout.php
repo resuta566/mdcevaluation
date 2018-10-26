@@ -32,7 +32,7 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 <div class="wrapper">
-	    <div class="sidebar" data-color="blue" data-image="">
+	    <div class="sidebar" data-color="blue" data-image="http://mdc.ph/wp-content/themes/mdc2.4/img/logo.png">
 
 			<!--
 		        Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
@@ -92,7 +92,7 @@ AppAsset::register($this);
 	    <div class="main-panel">
 		<?php
 		NavBar::begin([
-			'brandLabel' => '<img src="" style="display:inline; horizontal-align: top; height:45px;" alt="logo"/> Teacher Evaluation',
+			'brandLabel' => '<img src="http://mdc.ph/wp-content/themes/mdc2.4/img/logo.png" style="display:inline; horizontal-align: top; height:45px;" alt="logo"/> Teacher Evaluation',
 			'brandUrl' => Yii::$app->homeUrl,
 			'innerContainerOptions' => ['class' => 'container-fluid'],
 			'options' => [
