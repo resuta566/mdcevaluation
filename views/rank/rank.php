@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
      <div class="card-content">
      <button onclick="printContent('div1')" class="btn btn-info btn-pdfprint">Print Content</button>
      <?php 
-      $castTeachers = User::find()->where(['department' => 1])->andWhere(['role' => 20])->orWhere(['role' => 100])->all();
+      $castTeachers = User::find()->where(['department' => 1])->andWhere(['role' => 20])->all();
       $coeTeachers = User::find()->where(['department' => 2])->andWhere(['role' => 20])->all();
       $cabmhTeachers = User::find()->where(['department' => 3])->andWhere(['role' => 20])->all();
       $cabmbTeachers = User::find()->where(['department' => 4])->andWhere(['role' => 20])->all();
@@ -47,38 +47,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'castTeachers' => $castTeachers 
         ])?>
 
-       <!-- <?php 
-       $items = [
-           [
-        'label'=>'<i class="glyphicon glyphicon-list-alt"></i> CAST',
-        'content'=> "GAGO"
-        ,
-        'active'=>true
-       ],
-       [
-        'label'=>'<i class="glyphicon glyphicon-list-alt"></i> COE',
-        'content'=> "INACTIVE",
-       ],
-       [
-        'label'=>'<i class="glyphicon glyphicon-list-alt"></i> CABM-H',
-        'content'=> "INACTIVE",
-       ],[
-        'label'=>'<i class="glyphicon glyphicon-list-alt"></i> CABM-B',
-        'content'=> "INACTIVE",
-       ],[
-        'label'=>'<i class="glyphicon glyphicon-list-alt"></i> CON',
-        'content'=> "INACTIVE",
-       ],[
-        'label'=>'<i class="glyphicon glyphicon-list-alt"></i> CCJ',
-        'content'=> "INACTIVE",
-       ],
-    ];
-       echo TabsX::widget([
-    'items'=>$items,
-    'position'=>TabsX::POS_ABOVE,
-    'encodeLabels'=>false
-]);
-?> -->
+        <?= $this->render('_coe',[
+            'coeTeachers' => $coeTeachers 
+        ])?>
+
      </div>
 </div>
 <script>
