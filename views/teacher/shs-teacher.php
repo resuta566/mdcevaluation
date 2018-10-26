@@ -16,7 +16,7 @@ $user = \app\models\User::find()->where(['role' => 30])->andWhere(['department'=
 
 <div class="card">
     <div class="card-header" data-background-color="blue">
-        <h1 class="title"><?= Html::encode($this->title) ?> : PRINCIPAL - <?= $user->teacher->fullName?></h1>
+    <h2 class="title"><?= Html::encode($this->title) ?></h2><h3 class="title">PRINCIPAL - <?= $user->teacher->fullName?></h3>
         <p class="category">List of <?= Html::encode($this->title) ?> of the Evaluation</p>
         
     </div>
@@ -24,7 +24,7 @@ $user = \app\models\User::find()->where(['role' => 30])->andWhere(['department'=
     <?php echo $this->render('_searchShs', ['model' => $searchModel]); ?>
     <div>
     <p>Start Peer Evaluation</p>
-    <?= Html::beginForm(['teacheval', 'id' =>  $user->department ],'post'); ?>
+    <?= Html::beginForm(['teacheval', 'id' =>  $user->department, 'deanid' =>  $user->id ],'post'); ?>
 
     <?=  Html::dropDownList('instrumentdropdown', null,
                     \yii\helpers\ArrayHelper::map(app\models\Instrument::find()->all(), 'id', 'name'),

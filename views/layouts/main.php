@@ -16,7 +16,7 @@ if (class_exists('ramosisw\CImaterial\web\MaterialAsset')) {
     ramosisw\CImaterial\web\MaterialAsset::register($this);
 }
 // AppAsset::register($this);
-// MaterialAsset::register($this);
+MaterialAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

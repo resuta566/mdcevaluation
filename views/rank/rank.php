@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="card" id="div1">
     <div class="card-header" data-background-color="blue">
-                <h1><?= Html::encode($this->title) ?></h1>
+                <h2><?= Html::encode($this->title) ?></h2>
                 <p class="simple-text">Teacher Ranking</p>
      </div>
      <div class="card-content">
@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
       $elemTeachers = User::find()->where(['department' => 9])->andWhere(['role' => 20])->all();
      ?>
      
-    <?= $this->renderAjax('_cast',[
+    <?= $this->render('_cast',[
             'castTeachers' => $castTeachers 
         ])?>
 

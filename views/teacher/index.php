@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="teacher-index">
 <div class="card">
 <div class="card-header" data-background-color="blue">
-    <h1 class="title"><?= Html::encode($this->title) ?></h1>
+    <h2 class="title"><?= Html::encode($this->title) ?></h2>
     <p class="category">List of <?= Html::encode($this->title) ?> of the Evaluation</p>
     
 </div>

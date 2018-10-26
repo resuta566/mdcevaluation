@@ -54,8 +54,8 @@ class TeacherController extends Controller
                 'only' => [
                     'index','view','generate','unlink',
                     'bulk','generatebulk','list','score',
-                    'castTeacher','coeTeacher','cabmhTeacher','cabmbTeacher','conTeacher','ccjTeacher',
-                    'shsTeacher','jhsTeacher','elemTeacher',
+                    'cast-teacher','coe-teacher','cabmh-teacher','cabmb-teacher','con-teacher','ccj-teacher',
+                    'shs-teacher','jhs-teacher','elem-teacher',
             ],
                 'rules'=>[
                     [
@@ -66,9 +66,8 @@ class TeacherController extends Controller
                     [
                         'actions' => [
                         'index','view','generate','unlink','bulk','generatebulk','list','score',
-                        'castTeacher','coeTeacher','cabmhTeacher',
-                        'cabmbTeacher','conTeacher','ccjTeacher',
-                        'shsTeacher','jhsTeacher','elemTeacher'
+                        'cast-teacher','coe-teacher','cabmh-teacher','cabmb-teacher','con-teacher','ccj-teacher',
+                        'shs-teacher','jhs-teacher','elem-teacher',
                     ],
                         'allow' => true,
                         'roles' => [User::ROLE_ADMIN]
@@ -185,37 +184,54 @@ class TeacherController extends Controller
         ]);
     }
 
-    
 
-    public function actionTeacheval($id){
+
+    public function actionTeacheval($id,$deanid){
         $action = Yii::$app->request->post('instrumentdropdown');
         $instrument = Instrument::find('id')->where(['id'=> $action ])->one();
         $instrumentSection = Section::find('id')->where(['instrument_id' => $instrument])->all();
-        $deptUsers = User::find()->where(['department' => $id])->andWhere(['role' => [20,30]])->all();
-        // print_r($deptUsers);
+        $deptUsers = User::find()->where(['department' => $id])->andWhere(['role' => 20])->all();
+        // print_r($deanid);
         // die();
-        $userId = 0;
-        foreach($deptUsers as $deptUser){
             // print_r($deptUser);
-            // die();
-            $userId = $deptUser->id;
-               foreach ($deptUsers as $sc) {
-                   
-                   if($sc->id !== $userId):
-                    echo "YEAH";
+            //Teacher to Dean
+            foreach ($deptUsers as $sc) :
+                $evaluation = new Evaluation();
+                $evaluation->eval_by =  $sc->id;
+                $evaluation->eval_for = $deanid;
+                $evaluation->instrument_id = $instrument->id;
+                $evaluation->save();
+                         foreach($instrumentSection as $iS){
+                             $evalSection = new EvaluationSection;
+                             $evalSection->evaluation_id = $evaluation->id;
+                             $evalSection->section_id = $iS->id;
+                             $evalSection->link('evaluation', $evaluation);
+                             $evalSection->link('section', $iS);
+                             // echo $iS->id." " . $iS->name. " - ";
+                             $instrumentSectionItem = Item::find()->where(['section_id' => $iS->id])->all(); 
+                                     // echo  $instrumentSectionItem ."<br>";
+                                     // echo "<br>";
+                                     foreach($instrumentSectionItem as $institem){
+                                             $evalItem = new EvaluationItem;
+                                             $evalItem->evaluation_section_id = $evalSection->id;
+                                             $evalItem->item_id = $institem->id;
+                                             $evalItem->link('evaluationSection', $evalSection);
+                                             $evalItem->link('item', $institem);
+                                             $evalItem->save();
+                                             if(!$evalItem->save()){
+                                                 print_r($evalItem->getErrors());
+                                                 die();
+                                             }
+                                     }
+                         }
+            endforeach;
+            //Dean to Teacher
+               foreach ($deptUsers as $sc) :
                     $evaluation = new Evaluation();
-                 $evaluation->eval_by =  $deptUser->id;
-                 $evaluation->eval_for = $sc->id;
-                 $evaluation->instrument_id = $instrument->id;
-              //    $evaluation->link('evalBy', $evalby);
-              //    $evaluation->link('evalFor', $evalfor);
-              //    $evaluation->link('instrument', $instrument);
-                 // $model->estatus = 1;
-              //    $model->save();
-                 $evaluation->save();
-             
-                 // print_r($evaluationId);
-                 // die();
+                    $evaluation->eval_by =  $deanid;
+                    $evaluation->eval_for = $sc->id;
+                    $evaluation->instrument_id = $instrument->id;
+                    $evaluation->save();
                              foreach($instrumentSection as $iS){
                                  $evalSection = new EvaluationSection;
                                  $evalSection->evaluation_id = $evaluation->id;
@@ -239,21 +255,47 @@ class TeacherController extends Controller
                                                  }
                                          }
                              }
-                //    die();
+                endforeach;
+
+        foreach($deptUsers as $deptUser):
+            // print_r($deptUser);
+            // die();
+            //Teachers Only Loop 
+               foreach ($deptUsers as $sc) :
+                   
+                   if($sc->id !== $deptUser->id):
+                    echo "YEAH";
+                    $evaluation = new Evaluation();
+                    $evaluation->eval_by =  $deptUser->id;
+                    $evaluation->eval_for = $sc->id;
+                    $evaluation->instrument_id = $instrument->id;
+                    $evaluation->save();
+                             foreach($instrumentSection as $iS){
+                                 $evalSection = new EvaluationSection;
+                                 $evalSection->evaluation_id = $evaluation->id;
+                                 $evalSection->section_id = $iS->id;
+                                 $evalSection->link('evaluation', $evaluation);
+                                 $evalSection->link('section', $iS);
+                                 // echo $iS->id." " . $iS->name. " - ";
+                                 $instrumentSectionItem = Item::find()->where(['section_id' => $iS->id])->all(); 
+                                         // echo  $instrumentSectionItem ."<br>";
+                                         // echo "<br>";
+                                         foreach($instrumentSectionItem as $institem){
+                                                 $evalItem = new EvaluationItem;
+                                                 $evalItem->evaluation_section_id = $evalSection->id;
+                                                 $evalItem->item_id = $institem->id;
+                                                 $evalItem->link('evaluationSection', $evalSection);
+                                                 $evalItem->link('item', $institem);
+                                                 $evalItem->save();
+                                                 if(!$evalItem->save()){
+                                                     print_r($evalItem->getErrors());
+                                                     die();
+                                                 }
+                                         }
+                             }
                    endif;
-                //    var_dump($sc->id);
-
-                 
-                }
-           }
-        //    if(!$evalItem->save() || !$evaluation->save())
-        //    {
-        //    Yii::$app->session->setFlash('danger',
-        //     "Evaluation can't be submitted! Check if there is student for the class");
-        //    }
-        //    Yii::$app->session->setFlash('success',
-        //    "Evaluation has been submitted to all the students of the subjects you selected");
-
+                endforeach;
+            endforeach;
            return $this->redirect(['index']);
     }
     /**
