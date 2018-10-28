@@ -167,7 +167,9 @@ class EvaluationController extends Controller
         }
             
         if (Yii::$app->request->post()) {
-            
+            $evalllll = Yii::$app->request->post('EvaluationSection');
+            print_r($evalllll[1]['comment']);
+            die();
             // reset
             $evalItems = [];
 

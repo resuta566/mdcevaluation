@@ -391,13 +391,10 @@ class TeacherController extends Controller
         $activeDataProvider = $activeClass->search($id);
         $teacher = Teacher::findOne($id);
         $user = User::find()->where(['id'=> $teacher->user_id])->one();
-        $user->setPassword($teacher->getTeacherPass());
-        Yii::$app->session->setFlash('success', 
-        ' '.Teacher::findOne($id)->getFullName(). "'s account has been unlinked.");
-                     
+        $user->setPassword($teacher->getTeacherPass()); 
         $user->update();
-        Yii::$app->session->setFlash('danger', 
-        ' '.Teacher::findOne($id)->getFullName()."'s account has been deleted");
+        Yii::$app->session->setFlash('success', 
+        ' '.Teacher::findOne($id)->getFullName()."'s account has been reseted.");
                     
             return $this->render('view', [
                 'model' => $this->findModel($id),
@@ -471,6 +468,7 @@ class TeacherController extends Controller
     public function actionGeneratebulk()
     {
         $userDept = Yii::$app->request->post('userDepartment');
+        $userRole = Yii::$app->request->post('userRole');
         $selection=(array)Yii::$app->request->post('selection');
         foreach($selection as $studid){
             $teacher = Teacher::find()->where(['id' => $studid])->one();
@@ -484,7 +482,7 @@ class TeacherController extends Controller
             
                             $user->username = $teacher->getTeacherUser();
                             $user->setPassword($teacher->getTeacherPass());
-                            $user->role = 20;
+                            $user->role = $userRole;
                             $user->status = 10;
                             $user->department = $userDept;
                             $user->save();
@@ -556,7 +554,7 @@ class TeacherController extends Controller
     }
     public function actionCabmbTeacher()
     {
-        $castUsers = User::find()->where(['role' => 20])->andWhere(['department' => 1])->all();
+        $castUsers = User::find()->where(['role' => 20])->andWhere(['department' => 4])->all();
         $this->layout = "alayout";
         $searchModel = new \app\models\TeacherSearchCABMB();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);

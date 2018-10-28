@@ -13,6 +13,7 @@ use app\models\Student;
 class StudentSearch extends Student
 {
     public $studentSearch;
+    public $studentRole;
     /**
      * {@inheritdoc}
      */
@@ -20,7 +21,7 @@ class StudentSearch extends Student
     {
         return [
             [['id', 'gender', 'user_id'], 'integer'],
-            [['lname', 'fname', 'mname','studentSearch'], 'safe'],
+            [['lname', 'fname', 'mname','studentSearch','studentRole'], 'safe'],
         ];
     }
 
@@ -42,7 +43,7 @@ class StudentSearch extends Student
      */
     public function search($params)
     {
-        $query = Student::find()->where(['not',['user_id' => NULL]]);
+        $query = Student::find();
 
         // add conditions that should always apply here
 
@@ -51,6 +52,8 @@ class StudentSearch extends Student
         ]);
 
         $this->load($params);
+
+        $query->joinWith('user');
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -65,10 +68,12 @@ class StudentSearch extends Student
         //     'user_id' => $this->user_id,
         // ]);
 
-        $query->orFilterWhere(['like', 'id', $this->studentSearch])
+        $query->orFilterWhere(['like', 'student.id', $this->studentSearch])
             ->orFilterWhere(['like', 'lname', $this->studentSearch])
             ->orFilterWhere(['like', 'fname', $this->studentSearch])
-            ->orFilterWhere(['like', 'mname', $this->studentSearch]);
+            ->orFilterWhere(['like', 'mname', $this->studentSearch])
+            ->andFilterWhere(['user.department' => $this->studentRole])
+            ->andWhere(['not', ['user_id' => null]]);
 
         return $dataProvider;
     }

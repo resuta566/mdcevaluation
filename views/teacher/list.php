@@ -78,6 +78,17 @@ $this->params['breadcrumbs'][] = $this->title;
                    'class' => 'form-control', 
                    'prompt'=>'Choose a Department'
                ]) ?>
+   <?php
+       $dept_list = array(
+           20 => 'Teacher',
+           30 => 'Dean'
+       );
+       ?>
+   <?=  Html::dropDownList('userRole', null, $dept_list,
+               [
+                   'class' => 'form-control', 
+                   'prompt'=>'Users Role'
+               ]) ?>
    <br>
    <?= Html::submitButton('GENERATE', [
                'class' => 'btn btn-info',

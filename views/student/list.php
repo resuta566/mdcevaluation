@@ -78,7 +78,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     3 => 'CABM-H',
                     4 => 'CABM-B',
                     5 => 'CON',
-                    6 => 'CCJ'
+                    6 => 'CCJ',
+                    7 => 'Senior High School',
+                    8 => 'Junior High School',
+                    9 => 'Elementary'
                 );
                 ?>
              <?=  Html::dropDownList('userDepartment', null, $dept_list,

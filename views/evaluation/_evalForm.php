@@ -13,7 +13,12 @@ use wbraganca\dynamicform\DynamicFormWidget;
 $this->title = 'Evaluate '. app\models\Teacher::find()->where(['user_id' => $model->evalFor->id ])->one()->fullName;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>
+<?php $form = ActiveForm::begin(['id' => 'dynamic-form',
+        'enableClientValidation' => true,
+        'validateOnSubmit' => true,
+        'options' => [
+            'class' => 'form'
+    ],]); ?>
 
 <br>
 <table class="table table-bordered table-striped">
@@ -47,7 +52,13 @@ $this->params['breadcrumbs'][] = $this->title;
    </tbody>
 </table>
 <div class="form-group">
-   <?= Html::submitButton($model->isNewRecord ? 'SUBMIT' : 'SUBMIT', ['class' => 'btn btn-success']) ?>
+   <?= Html::submitButton($model->isNewRecord ? 'SUBMIT' : 'SUBMIT',
+                    [
+                'class' => 'btn btn-success',
+                'data' => [
+                    'confirm' => 'You must put some comments in each sections.',
+                ],
+                ]) ?>
 </div>
 
 <?php ActiveForm::end(); ?>

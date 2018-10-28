@@ -2,8 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use yii\bootstrap\Modal;
-use yii\helpers\Url;
+use app\models\Student;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StudentSearch */
@@ -12,57 +12,68 @@ use yii\helpers\Url;
 $this->title = 'Students';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-
-<div class="card">
+<div class="student-index">
+    <div class="card">
     <div class="card-header" data-background-color="blue">
-            <h2 class="title"><?= Html::encode($this->title) ?></h2>
-            <p class="simple-text">List of Students of the Evaluation</p>
+        <h2 class="title"><?= Html::encode($this->title) ?></h2>
+        <p class="category">List of <?= Html::encode($this->title) ?> of the Evaluation</p>
+        
     </div>
         <div style="margin: 20px">
-        <?php
-        Modal::begin([
-                        'header' => '<h4>Student</h4>',
-                        'id' => 'modal',
-                        'size' => 'modal-lg',
-                        ]);
-                        echo "<div id='modalContent'></div>";
-                Modal::end();
-        ?>
-        <?php echo $this->render('_search', ['model' => $searchModel]); ?>
-        <br>
-        <?= Html::a('Generate Many', ['list'], ['class' => 'btn btn-info']) ?>
+        <p class="category"><?= Html::encode($this->title) ?> Lists by Departments</p>
+        <?= Html::a('CAST', ['student-department', 'department' => 1], ['class' => 'btn btn-info','target' => '_blank']) ?>
+        <?= Html::a('COE', ['student-department', 'department' => 2], ['class' => 'btn btn-info','target' => '_blank']) ?>
+        <?= Html::a('CABM-B', ['student-department', 'department' => 3], ['class' => 'btn btn-info','target' => '_blank']) ?>
+        <?= Html::a('CABM-H', ['student-department', 'department' => 4], ['class' => 'btn btn-info','target' => '_blank']) ?>
+        <?= Html::a('CON', ['student-department', 'department' => 5], ['class' => 'btn btn-info','target' => '_blank']) ?>
+        <?= Html::a('CCJ', ['student-department', 'department' => 6], ['class' => 'btn btn-info','target' => '_blank']) ?>
+        <?= Html::a('SHS', ['student-department', 'department' => 7], ['class' => 'btn btn-info','target' => '_blank']) ?>
+        <?= Html::a('JHS', ['student-department', 'department' => 8], ['class' => 'btn btn-info','target' => '_blank']) ?>
+        <?= Html::a('Elementary', ['student-department', 'department' => 9], ['class' => 'btn btn-info','target' => '_blank']) ?>
+        
+        <?php Pjax::begin(['enablePushState'=>false,'timeout' => 5000]); ?>
+
+            <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+            <div class="pull-right">
+            <?= Html::a('Generate Many', ['list'], ['class' => 'btn btn-info']) ?>
+            </div>
+            <br>
+            <div>
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'tableOptions' => [
                     'class' => 'table table-condensed',
                 ],
-                // 'filterModel' => $searchModel,
                 'columns' => [
-                        [ 'attribute' => 
-                                'id', 
-                                'label' => 'Username/ID Number',
-                                'format' => 'raw', 
-                                'value' => 
-                                // Url::to('student/view'),
-                                function ($model) {
-                                    return Html::a($model->id, 
-                                    [ 'student/view', 'id' => $model->id ], [
-                                        'target' => '_blank']
-                                        );
-                                    },
-                                    'contentOptions' => [ 'style' => 'width: 40px' ],
-                                ],
+                    
+                    // ['class' => 'yii\grid\SerialColumn'],
+                    [ 'attribute' => 
+                        'id', 
+                        'label' => 'ID Number',
+                        'format' => 'raw', 
+                        'value' => 
+                        function ($model) {
+                        return Html::a($model->id, 
+                        [ 'student/view', 'id' => $model->id ], [
+                            'target' => '_blank']
+                            );
+                        },
+                    ],
+                    
+
                     'lname',
                     'fname',
                     'mname',
                     'genderName',
-                    // 'user_id',
+                    'user.departmentName',
 
-                    // [
-                    // 'class' => 'yii\grid\ActionColumn',
-                    //  'template' => '{view}'    
-                    // ],
+                //     ['class' => 'yii\grid\ActionColumn',
+                //      'template' => '{view}',
+                // ],
                 ],
             ]); ?>
-        </div>
+            </div>
+    <?php Pjax::end(); ?>
+</div>
+</div>
 </div>

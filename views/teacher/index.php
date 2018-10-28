@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use app\models\Teacher;
 use yii\bootstrap\Modal;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TeacherSearch */
@@ -30,9 +31,9 @@ $this->params['breadcrumbs'][] = $this->title;
 <?= Html::a('SHS', ['shs-teacher'], ['class' => 'btn btn-info','target' => '_blank']) ?>
 <?= Html::a('JHS', ['jhs-teacher'], ['class' => 'btn btn-info','target' => '_blank']) ?>
 <?= Html::a('Elementary', ['elem-teacher'], ['class' => 'btn btn-info','target' => '_blank']) ?>
-<?php echo $this->render('_search', ['model' => $searchModel]); ?>
-<br>
+<?php Pjax::begin(['enablePushState'=>false,'timeout' => 5000]); ?>
 
+    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
     <div class="pull-right">
     <?= Html::a('Generate Many', ['list'], ['class' => 'btn btn-info']) ?>
     </div>
@@ -64,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'fname',
             'mname',
             'genderName',
-            // 'user_id',
+            'user.departmentName',
 
         //     ['class' => 'yii\grid\ActionColumn',
         //      'template' => '{view}',
@@ -72,6 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
     </div>
+    <?php Pjax::end(); ?>
 </div>
 </div>
 </div>

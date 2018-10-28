@@ -13,6 +13,7 @@ use app\models\Teacher;
 class TeacherSearch extends Teacher
 {
     public $teacherSearch;
+    public $teacherRole;
     /**
      * {@inheritdoc}
      */
@@ -20,7 +21,7 @@ class TeacherSearch extends Teacher
     {
         return [
             [['id','gender', 'user_id'], 'integer'],
-            [['lname', 'fname', 'mname','teacherSearch'], 'safe'],
+            [['lname', 'fname', 'mname','teacherSearch','teacherRole'], 'safe'],
         ];
     }
 
@@ -51,6 +52,8 @@ class TeacherSearch extends Teacher
         ]);
 
         $this->load($params);
+        
+        $query->joinWith('user');
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -69,6 +72,7 @@ class TeacherSearch extends Teacher
             ->orFilterWhere(['like', 'fname', $this->teacherSearch])
             ->orFilterWhere(['like', 'lname', $this->teacherSearch])
             ->orFilterWhere(['like', 'mname', $this->teacherSearch])
+            ->andFilterWhere(['user.department' => $this->teacherRole])
             ->andWhere(['not', ['user_id' => null]]);
 
         return $dataProvider;

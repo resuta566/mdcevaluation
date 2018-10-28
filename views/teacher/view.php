@@ -90,6 +90,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <th>First Name</th>
         <th>Middle Name</th>
         <th>Gender</th>
+        <th>Department</th>
     </tr>
     <tr>
     
@@ -97,6 +98,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <td><?= $model->fname ?></td>
         <td><?= $model->mname ?></td>
         <td><?= $model->genderName ?></td>
+        <td><?= $model->user->departmentName ?></td>
        
     </tr>
     </table>

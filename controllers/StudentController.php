@@ -59,14 +59,12 @@ class StudentController extends Controller
     public function actionIndex()
     {
         $this->layout = "alayout";
-        $model = Student::find()->orderBy('id')->all();
         $searchModel = new StudentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->pagination->pageSize= 100;
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'model' => $model,
         ]);
     }
 
@@ -101,19 +99,15 @@ class StudentController extends Controller
     {
         $student = Student::findOne($id);
         $user = User::find()->where(['username'=> $student->id])->one();
-        $student->unlink('user',$user);
-        Yii::$app->session->setFlash('success', 
+        $user->setPassword($student->getStudentPass()); 
+        $user->update();
+        Yii::$app->session->setFlash('sucess', 
                             Student::findOne($id)->getFullName().
-                            "'s account has been unlinked.");
-                     
-        $user->delete();
-        Yii::$app->session->setFlash('danger', 
-                            Student::findOne($id)->getFullName().
-                            "'s account has been deleted");
+                            "'s account has been password reseted.");
                     
         return $this->render('view', [
             'model' => $this->findModel($id),
-    ]);
+        ]);
     }
 
     /**
@@ -217,6 +211,114 @@ class StudentController extends Controller
         // die();
     }
 
+
+    public function actionStudentDepartment($department)
+    {
+        if($department == 1){
+            //CAST
+            $castUsers = User::find()->where(['role' => 15])->andWhere(['department' => 1])->all();
+            $this->layout = "alayout";
+            $searchModel = new \app\models\StudentSearchCAST();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+            return $this->render('cast-student',[
+                'castUsers' => $castUsers,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else if($department == 2) {
+            //COE
+            $castUsers = User::find()->where(['role' => 15])->andWhere(['department' => 2])->all();
+            $this->layout = "alayout";
+            $searchModel = new \app\models\StudentSearchCOE();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+            return $this->render('coe-student',[
+                'castUsers' => $castUsers,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else if($department == 3) {
+        //CABM-H
+            $castUsers = User::find()->where(['role' => 15])->andWhere(['department' => 3])->all();
+            $searchModel = new \app\models\StudentSearchCABMH();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+            return $this->render('cabmh-student',[
+                'castUsers' => $castUsers,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else if($department == 4) {
+        //CABM-B
+            $castUsers = User::find()->where(['role' => 15])->andWhere(['department' => 4])->all();
+            $searchModel = new \app\models\StudentSearchCABMB();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+            return $this->render('cabmb-student',[
+                'castUsers' => $castUsers,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else if($department == 5) {
+        //CON
+            $castUsers = User::find()->where(['role' => 15])->andWhere(['department' => 5])->all();
+            $searchModel = new \app\models\StudentSearchCON();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+            return $this->render('con-student',[
+                'castUsers' => $castUsers,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else if($department == 6) {
+        //CCJ
+            $castUsers = User::find()->where(['role' => 15])->andWhere(['department' => 6])->all();
+            $searchModel = new \app\models\StudentSearchCCJ();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+            return $this->render('ccj-student',[
+                'castUsers' => $castUsers,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else if($department == 7) {
+        //Senior HS
+            $castUsers = User::find()->where(['role' => 15])->andWhere(['department' => 7])->all();
+            $searchModel = new \app\models\StudentSearchSHS();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+            return $this->render('shs-student',[
+                'castUsers' => $castUsers,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else if($department == 8) {
+        //Junior HS
+            $castUsers = User::find()->where(['role' => 15])->andWhere(['department' => 8])->all();
+            $searchModel = new \app\models\StudentSearchJHS();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+            return $this->render('jhs-student',[
+                'castUsers' => $castUsers,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else if($department == 9) {
+        //Elementary
+            $castUsers = User::find()->where(['role' => 15])->andWhere(['department' => 9])->all();
+            $searchModel = new \app\models\StudentSearchELEM();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+            return $this->render('elem-student',[
+                'castUsers' => $castUsers,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+            throw new \yii\web\HttpException(404, 'Department Not Found');
+    }
+    
     /**
      * Updates an existing Student model.
      * If update is successful, the browser will be redirected to the 'view' page.

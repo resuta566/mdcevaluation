@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 <td for="statement">  
                                                     <?= $sI->statement  ?>
                                                 </td>
-                                                <td for="score">  
+                                                <td for="score" style="width: 20%">  
                                                     <?php 
                                                     $sql1 = 'SELECT evaluation.id as "Evaluation ID",
                                                     evaluation_section.id as "Evaluation Section ID", 

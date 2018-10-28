@@ -238,14 +238,14 @@ class InstrumentController extends Controller
 
                             $modelSection->instrument_id = $modelInstrument->id;
 
-                            if (!($flag = $modelSection->save(false))) {
+                            if (!($flag = $modelSection->save())) {
                                 break;
                             }
 
                             if (isset($modelsItem[$indexSection]) && is_array($modelsItem[$indexSection])) {
                                 foreach ($modelsItem[$indexSection] as $indexItem => $modelItem) {
                                     $modelItem->section_id = $modelSection->id;
-                                    if (!($flag = $modelItem->save(false))) {
+                                    if (!($flag = $modelItem->save())) {
                                         break;
                                     }
                                 }

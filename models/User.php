@@ -115,7 +115,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'status' => 'Status',
             'department' => 'Department',
             'roleName' => 'User Role',
-            'statusName' => 'Status'
+            'statusName' => 'Status',
+            'departmentName' => 'Department'
         ];
     }
 

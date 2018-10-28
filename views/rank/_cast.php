@@ -161,7 +161,7 @@ use kartik\tabs\TabsX;
                 for($i=0;$i<count($data);$i++) {
                     echo('<tr>');
                     echo('<td>' . $data[$i]['name'] . '</td>');
-                    echo('<td>' . $data[$i]['score'] . '</td>');
+                    echo('<td style="width: 20%">' . $data[$i]['score'] . '</td>');
                     echo('</tr>');
                   }
                   

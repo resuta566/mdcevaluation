@@ -24,7 +24,7 @@ $user =\app\models\User::find()->where(['role' => 30])->andWhere(['department'=>
     <?php echo $this->render('_searchJhs', ['model' => $searchModel]); ?>
     <div>
     <p>Start Peer Evaluation</p>
-    <?= Html::beginForm(['teacheval', 'id' =>  $user->department , 'deanid' =>  $user->id ],'post'); ?>
+    <?= Html::beginForm(['teacheval', 'id' =>  8 , 'deanid' =>  $user->id ],'post'); ?>
 
     <?=  Html::dropDownList('instrumentdropdown', null,
                     \yii\helpers\ArrayHelper::map(app\models\Instrument::find()->all(), 'id', 'name'),

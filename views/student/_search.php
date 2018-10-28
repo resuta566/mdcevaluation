@@ -13,19 +13,38 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
+        'options' => [
+            'data-pjax' => 1,
+        ],
     ]); ?>
+    <table class="table table-striped">
 
-    <?= $form->field($model, 'studentSearch') ?>
+    <tr>
+        
+        <?php
+                $dept_list = array(
+                    1 => 'CAST',
+                    2 => 'COE',
+                    3 => 'CABM-H',
+                    4 => 'CABM-B',
+                    5 => 'CON',
+                    6 => 'CCJ',
+                    7 => 'Senior High School',
+                    8 => 'Junior High School',
+                    9 => 'Elementary'
+                );
+                ?>
+        <th style="width: 20%"><?= $form->field($model, 'studentRole')->dropDownList(
+            $dept_list,
+            [
+                'prompt'=>'Select Department'
+                ]   
+        );
 
-    <!-- <?= $form->field($model, 'lname') ?>
-
-    <?= $form->field($model, 'fname') ?>
-
-    <?= $form->field($model, 'mname') ?>
-
-    <?= $form->field($model, 'gender') ?> -->
-
-    <?php // echo $form->field($model, 'user_id') ?>
+?></th>
+<th> <?= $form->field($model, 'studentSearch') ?></th>
+    <tr>
+    </table>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
