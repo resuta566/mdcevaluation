@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\UserSearch */
@@ -21,6 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <!-- <p>
     <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>
     </p> -->
+    <?php Pjax::begin(['enablePushState'=>false,'timeout' => 5000]); ?>
     <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -38,7 +40,8 @@ $this->params['breadcrumbs'][] = $this->title;
                    'value' => 
                    function ($model) {
                    return Html::a($model->username, 
-                   [ 'user/view', 'id' => $model->id ], [
+                   \yii\helpers\Url::toRoute([ 'user/view', 'id' => $model->id ]), [
+                        'data-pjax' => 0,
                        'target' => '_blank']
                        );
                    },
@@ -54,5 +57,6 @@ $this->params['breadcrumbs'][] = $this->title;
             // ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+    <?php Pjax::end(); ?>
 </div>
 </div>

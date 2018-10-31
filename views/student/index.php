@@ -54,7 +54,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => 
                         function ($model) {
                         return Html::a($model->id, 
-                        [ 'student/view', 'id' => $model->id ], [
+                        \yii\helpers\Url::toRoute([ 'student/view', 'id' => $model->id ]), [
+                            'data-pjax' => 0,
                             'target' => '_blank']
                             );
                         },

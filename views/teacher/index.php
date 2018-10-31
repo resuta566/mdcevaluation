@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?= Html::a('SHS', ['shs-teacher'], ['class' => 'btn btn-info','target' => '_blank']) ?>
 <?= Html::a('JHS', ['jhs-teacher'], ['class' => 'btn btn-info','target' => '_blank']) ?>
 <?= Html::a('Elementary', ['elem-teacher'], ['class' => 'btn btn-info','target' => '_blank']) ?>
-<?php Pjax::begin(['enablePushState'=>false,'timeout' => 5000]); ?>
+<?php Pjax::begin(['timeout' => 5000]); ?>
 
     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
     <div class="pull-right">
@@ -55,7 +55,9 @@ $this->params['breadcrumbs'][] = $this->title;
                    function ($model) {
                    return Html::a($model->id, 
                    [ 'teacher/view', 'id' => $model->id ], [
-                       'target' => '_blank']
+                        'data-pjax' => 0,
+                       'target' => '_blank'
+                       ]
                        );
                    },
                ],

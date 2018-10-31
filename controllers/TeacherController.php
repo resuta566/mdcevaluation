@@ -183,10 +183,11 @@ class TeacherController extends Controller
             'model' => $model,
         ]);
     }
-
-
-
-    public function actionTeacheval($id,$deanid){
+    /**
+     * Peer Evaluation
+     */
+    public function actionTeacheval($id,$deanid)
+    {
         $action = Yii::$app->request->post('instrumentdropdown');
         $instrument = Instrument::find('id')->where(['id'=> $action ])->one();
         $instrumentSection = Section::find('id')->where(['instrument_id' => $instrument])->all();
@@ -302,7 +303,8 @@ class TeacherController extends Controller
      * Teacher Student Evaluation
      * 
      */
-    public function actionBulk(){
+    public function actionBulk()
+    {
         $action = Yii::$app->request->post('instrumentdropdown');
         $instrument = Instrument::find('id')->where(['id'=> $action ])->one();
         $instrumentSection = Section::find('id')->where(['instrument_id' => $instrument])->all();
@@ -364,18 +366,18 @@ class TeacherController extends Controller
                             }
                     
                 
+                     }
                 }
-        }
-        if(!$evalItem->save() || !$evaluation->save())
-        {
-        Yii::$app->session->setFlash('danger',
-         "Evaluation can't be submitted! Check if there is student for the class");
-        }
-        Yii::$app->session->setFlash('success',
-        "Evaluation has been submitted to all the students of the subjects you selected");
-       
+                if(!$evalItem->save() || !$evaluation->save())
+                {
+                Yii::$app->session->setFlash('danger',
+                "Evaluation can't be submitted! Check if there is student for the class");
+                }
+                Yii::$app->session->setFlash('success',
+                "Evaluation has been submitted to all the students of the subjects you selected");
+            
        return $this->redirect(['view', 'id' => $model->teacher->id]);
-     }
+    }
 
      /**
      * Unlink a single Teacher User.
