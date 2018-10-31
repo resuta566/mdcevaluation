@@ -34,7 +34,7 @@ class EvaluationController extends Controller
                 'ruleConfig' => [
                     'class' => AccessRule::className(),
                 ],
-                'only' => ['index','view','evaluate'],
+                'only' => ['index','create','update','view','evaluate'],
                 'rules'=>[
                     [
                         'actions'=>['login'],

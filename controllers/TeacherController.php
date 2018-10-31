@@ -197,7 +197,8 @@ class TeacherController extends Controller
             // print_r($deptUser);
             //Teacher to Dean
             foreach ($deptUsers as $sc) :
-                $evaluation = new Evaluation();
+                if(!Evaluation::find()->where(['eval_by' => $sc->id])->andWhere(['eval_for' => $deanid ])->one()){
+                    $evaluation = new Evaluation();
                 $evaluation->eval_by =  $sc->id;
                 $evaluation->eval_for = $deanid;
                 $evaluation->instrument_id = $instrument->id;
@@ -225,9 +226,13 @@ class TeacherController extends Controller
                                              }
                                      }
                          }
+                    Yii::$app->session->setFlash('success', 'Successfull Teacher to Dean Evaluation');
+                }
+                
             endforeach;
             //Dean to Teacher
                foreach ($deptUsers as $sc) :
+                if(!Evaluation::find()->where(['eval_by' => $deanid])->andWhere(['eval_for' => $sc->id ])->one()){
                     $evaluation = new Evaluation();
                     $evaluation->eval_by =  $deanid;
                     $evaluation->eval_for = $sc->id;
@@ -256,6 +261,10 @@ class TeacherController extends Controller
                                                  }
                                          }
                              }
+                             
+                    Yii::$app->session->setFlash('success', 'Successfull Dean to Teacher Evaluation');
+                }
+                   
                 endforeach;
 
         foreach($deptUsers as $deptUser):
@@ -264,8 +273,7 @@ class TeacherController extends Controller
             //Teachers Only Loop 
                foreach ($deptUsers as $sc) :
                    
-                   if($sc->id !== $deptUser->id):
-                    echo "YEAH";
+                   if($sc->id !== $deptUser->id && !Evaluation::find()->where(['eval_by' => $deptUser->id])->andWhere(['eval_for' => $sc->id ])->one()){
                     $evaluation = new Evaluation();
                     $evaluation->eval_by =  $deptUser->id;
                     $evaluation->eval_for = $sc->id;
@@ -294,7 +302,13 @@ class TeacherController extends Controller
                                                  }
                                          }
                              }
-                   endif;
+                             
+                    Yii::$app->session->setFlash('success', ' Successfull Peer Evaluation');
+                    
+            if(!$evaluation->save()){ 
+                Yii::$app->session->setFlash('danger', ' There is already an Evaluation for this teachers.');        
+            }
+                            }
                 endforeach;
             endforeach;
            return $this->redirect(['index']);
