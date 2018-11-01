@@ -68,7 +68,7 @@ class TeacherSearch extends Teacher
         //     'user_id' => $this->user_id,
         // ]);
 
-        $query->orFilterWhere(['like', 'id', $this->teacherSearch])
+        $query->orFilterWhere(['like', 'teacher.id', $this->teacherSearch])
             ->orFilterWhere(['like', 'fname', $this->teacherSearch])
             ->orFilterWhere(['like', 'lname', $this->teacherSearch])
             ->orFilterWhere(['like', 'mname', $this->teacherSearch])

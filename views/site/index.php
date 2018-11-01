@@ -5,50 +5,69 @@ use yii\bootstrap\Modal;
 
 $this->title = 'Mater Dei College Teachers Evaluation';
 ?>
+<header id="home">
+		<!-- Background Image -->
+		<div class="bg-img" style="background-image: url('http://mdc.ph/wp-content/uploads/2013/08/mdc-memorial-wall-955x350.png');">
+			<div class="overlay"></div>
+		</div>
+		<!-- /Background Image -->
 
-    <nav class="navbar navbar-fixed-top">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+		<!-- Nav -->
+		<nav id="nav" class="navbar nav-transparent">
+			<div class="container">
 
-                <a href="<?= \yii\helpers\Url::to(['/']) ?>" style="color: black"><img src="http://mdc.ph/wp-content/uploads/2013/08/MDC-Logo-clipped.png" style="display:inline; horizontal-align: top; height:45px;" alt="logo"/> <strong>Teacher Evaluation</strong></a>
-                
-            </div>
-            <div class="pull-right" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                    <a class="modalButton" href="<?= \yii\helpers\Url::to(['site/login']) ?>" style="color: black">LOGIN</button>
-                    
-                </ul>
-            </div>
-    </nav>
+				<div class="navbar-header">
+					<!-- Logo -->
+					<div class="navbar-brand">
+						<a href="<?= \yii\helpers\Url::to(['/']) ?>"> 
+							<img class="logo" src="http://mdc.ph/wp-content/uploads/2013/08/MDC-Logo-clipped.png" alt="logo">
+							<p style="color: white"><img class="logo-alt" src="http://mdc.ph/wp-content/uploads/2013/08/MDC-Logo-clipped.png" style="display:inline; horizontal-align: top; height:45px;" alt="logo"> 
+                            Teacher Evaluation</p>
+                        </a>
+					</div>
+					<!-- /Logo -->
 
-   <?php echo Carousel::widget([
-    'items' => [
-        // equivalent to the above
-        [
-            'content' => '<img style="width:1400px;height:700px;" src="http://mdc.ph/wp-content/uploads/2013/08/mdc-memorial-wall-955x350.png"/>',
-            'caption' => '<strong><h1>Mater Dei College</h1><p>This is the MDC Campus</p></strong>',
-            
-    ],
-        // the item contains both the image and the caption
-        [
-            'content' => '<img src="https://dbkpop.com/wp-content/uploads/2018/06/momoland_baam_yeonwoo_profile.jpg"/>',
-            'caption' => '<strong><h2>Yeonwoo</h2><p>Lee Da-Bin</p></strong>',
-            
-        ],
-    ],
-    'options' => [
-        'class'=>'carousel slide',
-        'interval' => '600'
-        ]
-]);
+					<!-- Collapse nav button -->
+					<div class="nav-collapse">
+						<span></span>
+					</div>
+					<!-- /Collapse nav button -->
+				</div>
 
-?>
+				<!--  Main navigation  -->
+				<ul class="main-nav nav navbar-nav navbar-right">
+					<li><a class="modalButton" href="<?= \yii\helpers\Url::to(['site/logins']) ?>" style="color: white">LOGIN</a></li>
+				</ul>
+				<!-- /Main navigation -->
+
+			</div>
+		</nav>
+		<!-- /Nav -->
+
+		<!-- home wrapper -->
+		<div class="home-wrapper">
+			<div class="container">
+				<div class="row">
+
+					<!-- home content -->
+					<div class="col-md-10 col-md-offset-1">
+						<div class="home-content">
+                            <h1 class="white-text">MATER DEI COLLEGE</h1>
+                            <h3 class="white-text">Teacher Evaluation</h3>
+							<p class="white-text">This is the Automated Teacher Evaluation System of Mater Dei College Tubigon Bohol
+							</p>
+							<button id="modalButton" class="btn btn-info" href="<?= \yii\helpers\Url::to(['site/logins']) ?>"  style="color: white">LOGIN</button>
+						
+						</div>
+					</div>
+					<!-- /home content -->
+
+				</div>
+			</div>
+		</div>
+		<!-- /home wrapper -->
+
+	</header>
 <?php $this->registerJsFile("@web/js/main.js");?>
 <div class="content">
                 <?php Modal::begin([

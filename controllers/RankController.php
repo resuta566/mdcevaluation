@@ -59,6 +59,7 @@ class RankController extends Controller
      */
     public function actionIndex()
     {
+        $this->layout = 'alayout';
         return $this->render('rank');
     }
 }

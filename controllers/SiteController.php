@@ -23,37 +23,42 @@ class SiteController extends Controller
     public function behaviors()
     {
         return [
-            // 'access' => [
-            //     'class' => AccessControl::className(),
-            //     'ruleConfig' => [
-            //         'class' => AccessRule::className(),
-            //     ],
-            //     'only' => ['index','view','about'],
-            //     'rules'=>[
-            //         [
-            //             'actions'=>['index'],
-            //             'allow' => true,
-            //             'roles' => ['@']
-            //         ],[
-            //             'actions' => ['index'],
-            //             'allow' => true,
-            //             'roles' => [User::ROLE_STUDENT]
-            //         ],[
-            //             'actions' => ['index'],
-            //             'allow' => true,
-            //             'roles' => [User::ROLE_TEACHER]
-            //         ],[
-            //             'actions' => ['index'],
-            //             'allow' => true,
-            //             'roles' => [User::ROLE_HEAD]
-            //         ],
-            //         [
-            //             'actions' => ['index','delete','about'],
-            //             'allow' => true,
-            //             'roles' => [User::ROLE_ADMIN]
-            //         ]
-            //     ],
-            // ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'ruleConfig' => [
+                    'class' => AccessRule::className(),
+                ],
+                'only' => ['index','view','about'],
+                'rules'=>[
+                    [
+                        'actions'=>['index'],
+                        'allow' => true,
+                        'roles' => ['?']
+                    ],
+                    [
+                        'actions'=>['index'],
+                        'allow' => true,
+                        'roles' => ['@']
+                    ],[
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => [User::ROLE_STUDENT]
+                    ],[
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => [User::ROLE_TEACHER]
+                    ],[
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => [User::ROLE_HEAD]
+                    ],
+                    [
+                        'actions' => ['index','delete','about'],
+                        'allow' => true,
+                        'roles' => [User::ROLE_ADMIN]
+                    ]
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -95,8 +100,7 @@ class SiteController extends Controller
         //                 $user->save();
         // Yii::$app->db->schema->getTableSchema('teacher');
         if(Yii::$app->user->isGuest) {
-            
-        $this->layout = 'loginLayout';
+
             return $this->render('index');
 
         }else if (Yii::$app->user->identity->role==User::ROLE_ADMIN) {
@@ -116,7 +120,6 @@ class SiteController extends Controller
             return $this->render('panels/_teacher');
 
          }else{
-            $this->layout = 'loginLayout';
             return $this->render('index');
          }
     }
@@ -130,7 +133,28 @@ class SiteController extends Controller
     {
         $this->layout = 'loginLayout';
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            return $this->redirect('index');
+        }
+
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->goBack();
+        }
+
+        $model->password = '';
+        return $this->render('login', [
+            'model' => $model,
+        ]);
+    }
+    /**
+     * 
+     * LogIn For Index
+     */
+    public function actionLogins()
+    {
+        $this->layout = 'loginLayout';
+        if (!Yii::$app->user->isGuest) {
+            return $this->redirect('index');
         }
 
         $model = new LoginForm();
