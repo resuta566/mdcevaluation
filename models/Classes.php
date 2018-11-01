@@ -13,12 +13,11 @@ use Yii;
  * @property string $day
  * @property string $time
  * @property int $teacher_id
- * @property int $eval_status
+ * @property int $estatus
  *
  * @property Teacher $teacher
  * @property Evaluation[] $evaluations
  * @property StudentClass[] $studentClasses
- * @property Student[] $students
  */
 class Classes extends \yii\db\ActiveRecord
 {
@@ -33,6 +32,7 @@ class Classes extends \yii\db\ActiveRecord
     public function getEstatusName() {
         return static::getEstatus()[$this->estatus];
     }
+
     /**
      * {@inheritdoc}
      */
@@ -47,7 +47,7 @@ class Classes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'description', 'day', 'time', 'teacher_id'], 'required'],
+            [['name', 'description', 'day', 'time'], 'required'],
             [['description'], 'string'],
             [['teacher_id', 'estatus'], 'integer'],
             [['name', 'day', 'time'], 'string', 'max' => 100],
@@ -67,8 +67,7 @@ class Classes extends \yii\db\ActiveRecord
             'day' => 'Day',
             'time' => 'Time',
             'teacher_id' => 'Teacher ID',
-            'estatusName' => 'Evaluation Status',
-            'estatus' => 'Evaluation Status',
+            'estatus' => 'Estatus',
         ];
     }
 
@@ -95,10 +94,7 @@ class Classes extends \yii\db\ActiveRecord
     {
         return $this->hasMany(StudentClass::className(), ['class_id' => 'id']);
     }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
+    
     public function getStudents()
     {
         return $this->hasMany(Student::className(), ['id' => 'student_id'])->viaTable('student_class', ['class_id' => 'id']);

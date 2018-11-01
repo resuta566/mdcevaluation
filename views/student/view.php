@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Student */
@@ -75,17 +76,47 @@ $this->params['breadcrumbs'][] = $this->title;
     </tr>
     </table>
 
-    <p><strong>Subject Enrolled</strong></p>
-    <!-- <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'lname',
-            'fname',
-            'mname',
-            'gender',
-            //'user_id',
+    <h2><strong>Subject Enrolled</strong></h2>
+    <?= GridView::widget([
+        'dataProvider' => $activeDataProvider,
+        'columns' => [
+            // [
+            //         'class' => 'yii\grid\CheckboxColumn',
+            // ],
+
+           [ 
+               'attribute' => 
+                   'name', 
+                   'label' => 'Subject Name',
+                   'format' => 'raw', 
+                   'value' => 
+                   function ($sclasses) {
+                   return Html::a($sclasses->class->name, 
+                   [ 'classes/view', 'id' => $sclasses->class->id ], [
+                       'target' => '_blank']
+                       );
+                   },
+               ],
+               [ 
+                'attribute' => 
+                    'name', 
+                    'label' => 'Student Enrolled',
+                    'format' => 'raw', 
+                    'value' =>  function ($sclasses) {  
+                        return $sclasses->find()->where(['class_id' => $sclasses->class->id])->count();
+                    },
+                ],
+           [ 
+               'attribute' => 
+               'name', 
+               'label' => 'Status (Active / Drop)',
+               'format' => 'raw', 
+               'value' => 
+               function ($sclasses) {
+               return ($sclasses->statusName );
+               },
+           ],
         ],
-    ]) ?> -->
+    ]); ?>
 </div>
 </div>

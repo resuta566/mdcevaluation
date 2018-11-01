@@ -336,7 +336,7 @@ class TeacherController extends Controller
         $selection=(array)Yii::$app->request->post('selection');//typecasting
         foreach($selection as $id){
          $model = Classes::findOne((int)$id);//make a typecasting
-         $sclass = StudentClass::find()->where(['class_id'=>$model->id])->all();
+         $sclass = StudentClass::find()->where(['class_id'=>$model->id])->andWhere(['status'=>1])->all();
             foreach ($sclass as $sc) {
                 $evaluation = new Evaluation();
                 $evalby = User::find()->where(['id' => $sc->student->user->id])->one();
@@ -349,7 +349,7 @@ class TeacherController extends Controller
                 $evaluation->link('evalFor', $evalfor);
                 $evaluation->link('instrument', $instrument);
                 $evaluation->link('class', $model);
-                // $model->estatus = 1;
+                $model->estatus = 1;
                 $model->save();
                 $evaluation->save();
             

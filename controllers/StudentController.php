@@ -12,6 +12,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use app\components\AccessRule;
+use app\models\StudentClassStudView;
 
 /**
  * StudentController implements the CRUD actions for Student model.
@@ -90,8 +91,14 @@ class StudentController extends Controller
      */
     public function actionView($id)
     {
+        
+        $activeClass = new StudentClassStudView();
+        $activeDataProvider = $activeClass->search($id);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'activeDataProvider' => $activeDataProvider,
+
         ]);
     }
 
@@ -99,11 +106,16 @@ class StudentController extends Controller
     {
         $student = Student::findOne($id);
         $user = User::find()->where(['username'=> $student->id])->one();
-        $user->setPassword($student->getStudentPass()); 
-        $user->update();
-        Yii::$app->session->setFlash('sucess', 
+        $user->setPassword(Student::findOne($id)->getStudentPass()); 
+        $user->save();
+        if(!$user->save()){
+            Yii::$app->session->setFlash('danger', 
                             Student::findOne($id)->getFullName().
-                            "'s account has been password reseted.");
+                            "'s account password can't be reset.");
+        }
+        Yii::$app->session->setFlash('success', 
+                            Student::findOne($id)->getFullName().
+                            "'s account has been password reset.");
                     
         return $this->render('view', [
             'model' => $this->findModel($id),

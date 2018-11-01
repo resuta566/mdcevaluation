@@ -11,10 +11,12 @@ $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Classes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="classes-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
+<div class="card">
+    <div class="card-header" data-background-color="blue">
+         <h1><?= Html::encode($this->title) ?></h1>
+         <p class="simple-text"><?= $model->description ?></p>
+    </div>
+    <div class="card-content">
     <p>
         <!-- <?= Html::a('Generate', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?> -->
         <!-- <?= Html::a('Delete', ['delete', 'id' => $model->id], [
@@ -51,20 +53,9 @@ $this->params['breadcrumbs'][] = $this->title;
     </tr>
     </table>
 
-    <!-- <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'name',
-            'description:ntext',
-            'day',
-            'time',
-            'teacher_id',
-        ],
-    ]) ?> -->
-        <h2><b>Students Enrolled</b>
+        <h2><b>Students Enrolled:</b> <p><?= \app\models\StudentClass::find()->where(['class_id' => $model->id])->count();?></p>
      </h2>
-      <?=GridView::widget([
+      <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'columns' => [
                 // [
@@ -95,5 +86,5 @@ $this->params['breadcrumbs'][] = $this->title;
                ],
             ],
         ]); ?>
-
+            </div>
 </div>

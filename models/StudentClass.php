@@ -77,4 +77,7 @@ class StudentClass extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Classes::className(), ['id' => 'class_id']);
     }
+
+    
+
 }

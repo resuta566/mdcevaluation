@@ -1,0 +1,238 @@
+/*
+Theme Name:
+Author: yaminncco
+
+Colors:
+	Body 		  : #868F9B
+	Headers 	: #10161A
+	Primary 	: #6195FF
+	Dark      : #FCFCFF
+	Grey 		  : #F4F4F4 #FAFAFA #EEE
+
+Fonts: Montserrat Varela Round
+
+Table OF Contents
+------------------------------------
+1 > General
+2 > Logo
+3 > Navigation
+4 > Header
+5 > About
+6 > Portfolio
+7 > Services
+8 >  Why choose us
+9 >  Numbers
+10 > Pricing
+11 > Testimonial
+12 > Team
+13 > Blog
+14 > Blog post
+15 > Blog sidebar
+16 > Contact
+17 > Footer
+18 > Responsive
+19 > Owl theme
+20 > Back to top
+21 > Preloader
+
+------------------------------------*/
+
+/*------------------------------------*\
+	General
+\*------------------------------------*/
+
+
+/* -- typography -- */
+
+body {
+    
+    overflow-x: hidden;
+}
+
+
+.main-color {
+    color: #6195FF;
+}
+
+.white-text {
+    color: #FFF;
+}
+
+
+
+/* --  background image section  -- */
+
+.bg-img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.bg-img .overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    opacity: .8;
+    background: #1C1D21;
+}
+
+
+/* --  section header  -- */
+
+
+/* --  Buttons  -- */
+
+
+/*------------------------------------*\
+	Logo
+\*------------------------------------*/
+
+.navbar-brand {
+    padding: 0;
+    color: white
+}
+
+.navbar-brand .logo, .navbar-brand .logo-alt {
+    max-height: 50px;
+    display: block;
+}
+
+#nav:not(.nav-transparent):not(.fixed-nav) .navbar-brand .logo-alt {
+	display: none;
+}
+
+#nav.nav-transparent:not(.fixed-nav) .navbar-brand .logo {
+	display: none;
+}
+
+#nav.fixed-nav .navbar-brand .logo-alt {
+    display: none;
+}
+
+@media only screen and (max-width: 767px) {
+    #nav.nav-transparent .navbar-brand .logo-alt {
+        display: none !important;
+    }
+    #nav.nav-transparent .navbar-brand .logo {
+        display: block !important;
+    }
+}
+
+
+/*------------------------------------*\
+	Navigation
+\*------------------------------------*/
+
+#nav {
+    padding: 10px 0px;
+    background: #FFF;
+    -webkit-transition: 0.2s padding;
+    transition: 0.2s padding;
+    z-index: 999;
+}
+
+#nav.navbar {
+    border: none;
+    border-radius: 0;
+    margin-bottom: 0px;
+}
+
+#nav.fixed-nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    padding: 0px 0px;
+    background-color: #FFF !important;
+    border-bottom: 1px solid #EEE;
+}
+
+#nav.nav-transparent {
+    background: transparent;
+}
+
+
+/* -- default nav -- */
+
+@media only screen and (min-width: 768px) {
+    .main-nav li {
+        padding: 0px 15px;
+    }
+    .main-nav li a {
+        font-size: 14px;
+        -webkit-transition: 0.2s color;
+        transition: 0.2s color;
+    }
+    .main-nav>li>a {
+        color: #10161A;
+        padding: 15px 0px;
+    }
+    #nav.nav-transparent:not(.fixed-nav) .main-nav>li>a {
+        color: #fff;
+    }
+    .main-nav>li>a:hover, .main-nav>li>a:focus, .main-nav>li.active>a {
+        background: transparent;
+        color: #6195FF;
+    }
+    .main-nav>li>a:after {
+        content: "";
+        display: block;
+        background-color: #6195FF;
+        height: 2px;
+        width: 0%;
+        -webkit-transition: 0.2s width;
+        transition: 0.2s width;
+    }
+    .main-nav>li>a:hover:after, .main-nav>li.active>a:after {
+        width: 100%;
+    }
+    
+    .nav-collapse {
+        display: none;
+    }
+}
+
+
+
+
+/* -- nav btn collapse -- */
+
+
+/*------------------------------------*\
+	Header
+\*------------------------------------*/
+
+header {
+    position: relative;
+}
+
+#home {
+    height: 100vh;
+}
+
+#home .home-wrapper {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    text-align: center;
+}
+
+.home-content h1 {
+  text-transform: uppercase;
+}
+.home-content button {
+  margin-top: 20px;
+}
+
+

@@ -170,12 +170,13 @@ $items = [
                     'dataProvider' => $activeDataProvider,
                     // 'filterModel' => $searchModel,
                     'columns' => [
-                        [
-                                'class' => 'yii\grid\CheckboxColumn',
+                        // [
+                        //         'class' => 'yii\grid\CheckboxColumn',
 
-                        ],
+                        // ],
                         [
                             'attribute' => 'estatus',
+                            'label' => 'Evaluation Status',
                             'value' =>  'estatusName',
                         ],
                         [ 'attribute' => 
@@ -196,14 +197,6 @@ $items = [
                         'time',
                     ],
                 ]) 
-                . 
-                Html::submitButton('Stop', [
-                    'class' => 'btn btn-info',
-                    'data' => [
-                        'confirm' => 'Are you sure you want to stop the evaluation of this subjects?',
-                        'method' => 'post',
-                    ],
-                ])
                 .
         Html::endForm()
     ],
@@ -215,47 +208,5 @@ echo TabsX::widget([
     'encodeLabels'=>false
 ]);
 ?>
-
-    <!-- <?=Html::beginForm(['bulk'],'post');?>
-        <?=GridView::widget([
-            'dataProvider' => $dataProvider,
-            // 'filterModel' => $searchModel,
-            'columns' => [
-                [
-                        'class' => 'yii\grid\CheckboxColumn',
-
-                ],
-                [
-                    'attribute' => 'estatus',
-                    'value' =>  'estatusName',
-                ],
-                [ 'attribute' => 
-                   'name', 
-                   'label' => 'Name',
-                   'format' => 'raw', 
-                   'value' => 
-                   function ($model) {
-                   return Html::a($model->name, 
-                   [ 'classes/view', 'id' => $model->id ], [
-                       'target' => '_blank']
-                       );
-                   },
-               ],
-            
-                'description',
-                'day',
-                'time',
-            ],
-        ]); ?>
-        <?=  
-        Html::submitButton('Evaluate', [
-            'class' => 'btn btn-info',
-            'data' => [
-                'confirm' => 'Are you sure you want to make an evaluation to this subjects?',
-                'method' => 'post',
-            ],
-        ]) ?>
-
-<?= Html::endForm();?>  -->
 </div>
 </div>
