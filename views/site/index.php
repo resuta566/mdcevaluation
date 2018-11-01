@@ -1,54 +1,64 @@
 <?php
-
+use  yii\bootstrap\Carousel;
+use yii\bootstrap\Modal;
 /* @var $this yii\web\View */
 
 $this->title = 'Mater Dei College Teachers Evaluation';
 ?>
 
+    <nav class="navbar navbar-fixed-top">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
 
-
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
-
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
+                <a href="<?= \yii\helpers\Url::to(['/']) ?>" style="color: black"><img src="http://mdc.ph/wp-content/uploads/2013/08/MDC-Logo-clipped.png" style="display:inline; horizontal-align: top; height:45px;" alt="logo"/> <strong>Teacher Evaluation</strong></a>
+                
             </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
+            <div class="pull-right" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                    <a class="modalButton" href="<?= \yii\helpers\Url::to(['site/login']) ?>" style="color: black">LOGIN</button>
+                    
+                </ul>
             </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+    </nav>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+   <?php echo Carousel::widget([
+    'items' => [
+        // equivalent to the above
+        [
+            'content' => '<img style="width:1400px;height:700px;" src="http://mdc.ph/wp-content/uploads/2013/08/mdc-memorial-wall-955x350.png"/>',
+            'caption' => '<strong><h1>Mater Dei College</h1><p>This is the MDC Campus</p></strong>',
+            
+    ],
+        // the item contains both the image and the caption
+        [
+            'content' => '<img src="https://dbkpop.com/wp-content/uploads/2018/06/momoland_baam_yeonwoo_profile.jpg"/>',
+            'caption' => '<strong><h2>Yeonwoo</h2><p>Lee Da-Bin</p></strong>',
+            
+        ],
+    ],
+    'options' => [
+        'class'=>'carousel slide',
+        'interval' => '600'
+        ]
+]);
 
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
-        </div>
+?>
+<?php $this->registerJsFile("@web/js/main.js");?>
+<div class="content">
+                <?php Modal::begin([
+                            'header' => '<center><h2>LOGIN</h2></center>',
+                            'id' => 'modal',
+                            'size' => 'modal-lg',
+                        ]);
+                        echo "<div id='modalContent'></div>";
+                        Modal::end();
+                        ?>
 
-    </div>
 </div>
+

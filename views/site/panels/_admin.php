@@ -13,7 +13,6 @@ use app\models\Head;
 MaterialAsset::register($this);
 $this->title = "Admin Dashboard";
 ?>
-<body>
 <div class="wrapper">
 			<div class="sidebar" data-color="blue" data-image="http://mdc.ph/wp-content/uploads/2013/08/MDC-Logo-clipped.png">
 							<!--
@@ -211,5 +210,4 @@ $this->title = "Admin Dashboard";
 	</div>
 
 </div>
-<body>
 

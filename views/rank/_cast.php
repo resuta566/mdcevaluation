@@ -164,6 +164,6 @@ use kartik\tabs\TabsX;
                     echo('<td style="width: 20%">' . $data[$i]['score'] . '</td>');
                     echo('</tr>');
                   }
-                  
                 echo "</tbody>";
+                echo "</table>";
                 ?>

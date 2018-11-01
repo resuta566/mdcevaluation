@@ -23,37 +23,37 @@ class SiteController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'ruleConfig' => [
-                    'class' => AccessRule::className(),
-                ],
-                'only' => ['index','view','about'],
-                'rules'=>[
-                    [
-                        'actions'=>['login'],
-                        'allow' => true,
-                        'roles' => ['@']
-                    ],[
-                        'actions' => ['index'],
-                        'allow' => true,
-                        'roles' => [User::ROLE_STUDENT]
-                    ],[
-                        'actions' => ['index'],
-                        'allow' => true,
-                        'roles' => [User::ROLE_TEACHER]
-                    ],[
-                        'actions' => ['index'],
-                        'allow' => true,
-                        'roles' => [User::ROLE_HEAD]
-                    ],
-                    [
-                        'actions' => ['index','delete','about'],
-                        'allow' => true,
-                        'roles' => [User::ROLE_ADMIN]
-                    ]
-                ],
-            ],
+            // 'access' => [
+            //     'class' => AccessControl::className(),
+            //     'ruleConfig' => [
+            //         'class' => AccessRule::className(),
+            //     ],
+            //     'only' => ['index','view','about'],
+            //     'rules'=>[
+            //         [
+            //             'actions'=>['index'],
+            //             'allow' => true,
+            //             'roles' => ['@']
+            //         ],[
+            //             'actions' => ['index'],
+            //             'allow' => true,
+            //             'roles' => [User::ROLE_STUDENT]
+            //         ],[
+            //             'actions' => ['index'],
+            //             'allow' => true,
+            //             'roles' => [User::ROLE_TEACHER]
+            //         ],[
+            //             'actions' => ['index'],
+            //             'allow' => true,
+            //             'roles' => [User::ROLE_HEAD]
+            //         ],
+            //         [
+            //             'actions' => ['index','delete','about'],
+            //             'allow' => true,
+            //             'roles' => [User::ROLE_ADMIN]
+            //         ]
+            //     ],
+            // ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -86,7 +86,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $this->layout = 'loginLayout';
+            $this->layout = 'loginLayout';
         // $user = new User;
         // $user->username = "admin";
         //                 $user->setPassword('admin');
@@ -95,11 +95,12 @@ class SiteController extends Controller
         //                 $user->save();
         // Yii::$app->db->schema->getTableSchema('teacher');
         if(Yii::$app->user->isGuest) {
-
+            
+        $this->layout = 'loginLayout';
             return $this->render('index');
 
         }else if (Yii::$app->user->identity->role==User::ROLE_ADMIN) {
-
+            
             return $this->render('panels/_admin');
 
          }else if (Yii::$app->user->identity->role==User::ROLE_STUDENT) {
@@ -107,14 +108,15 @@ class SiteController extends Controller
             return $this->render('panels/_student');
 
          }else if (Yii::$app->user->identity->role==User::ROLE_TEACHER) {
-
+            
             return $this->render('panels/_teacher');
 
          }else if (Yii::$app->user->identity->role==User::ROLE_HEAD) {
-
+            
             return $this->render('panels/_teacher');
 
          }else{
+            $this->layout = 'loginLayout';
             return $this->render('index');
          }
     }
@@ -137,7 +139,7 @@ class SiteController extends Controller
         }
 
         $model->password = '';
-        return $this->render('login', [
+        return $this->renderAjax('login', [
             'model' => $model,
         ]);
     }
@@ -152,7 +154,7 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         if ( Yii::$app->user->isGuest )
-    return Yii::$app->getResponse()->redirect(['site/login'],302);
+    return Yii::$app->getResponse()->redirect(['/'],302);
     }
 
     // public function actionContact()

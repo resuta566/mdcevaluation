@@ -24,13 +24,13 @@ $this->title = "TEACHER RANKING";
 $this->params['breadcrumbs'][] = ['label' => 'Teachers', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="card" id="div1">
+<div class="card">
     <div class="card-header" data-background-color="blue">
                 <h2><?= Html::encode($this->title) ?></h2>
                 <p class="simple-text">Teacher Ranking</p>
      </div>
      <div class="card-content">
-     <button onclick="printContent('div1')" class="btn btn-info btn-pdfprint">Print Content</button>
+     <button onclick="printContent('div1')" class="btn btn-info btn-pdfprint"><i class="glyphicon glyphicon-print" style="font-size: 20px"></i></button>
      <?php 
       $castTeachers = User::find()->where(['department' => 1])->andWhere(['role' => 20])->all();
       $coeTeachers = User::find()->where(['department' => 2])->andWhere(['role' => 20])->all();
@@ -43,13 +43,37 @@ $this->params['breadcrumbs'][] = $this->title;
       $elemTeachers = User::find()->where(['department' => 9])->andWhere(['role' => 20])->all();
      ?>
      
-    <?= $this->render('_cast',[
+    <!-- <?= $this->render('_cast',[
             'castTeachers' => $castTeachers 
         ])?>
 
         <?= $this->render('_coe',[
             'coeTeachers' => $coeTeachers 
-        ])?>
+        ])?> -->
+            <div id="div1">
+            <?php echo yii\bootstrap\Tabs::widget([
+            'navType' => 'nav-pills',
+            'encodeLabels' => false,
+            'items' => [
+                [
+                    'label' => '<i class="glyphicon glyphicon-transfer" style="font-size: 20px"></i> CAST', 
+                    'icon' => 'user',
+                    'content' => $this->render('_cast',[
+                        'castTeachers' => $castTeachers 
+                    ]),
+                    'active' => true
+                ],[
+                    'label' => '<i class="glyphicon glyphicon-transfer" style="font-size: 20px"></i> COE', 
+                    'icon' => 'user',
+                    'content' => $this->render('_coe',[
+                        'coeTeachers' => $coeTeachers 
+                    ]),
+                ],
+                ]
+                ]);
+                
+        ?>     
+        </div>
 
      </div>
 </div>

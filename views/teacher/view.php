@@ -209,6 +209,7 @@ $items = [
     ],
     ];
 echo TabsX::widget([
+    'navType' => 'nav-pills',
     'items'=>$items,
     'position'=>TabsX::POS_ABOVE,
     'encodeLabels'=>false

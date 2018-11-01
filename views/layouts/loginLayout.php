@@ -9,11 +9,11 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use app\assets\AppAsset;
 use ramosisw\CImaterial\web\MaterialAsset;
-if (class_exists('ramosisw\CImaterial\web\MaterialAsset')) {
-    ramosisw\CImaterial\web\MaterialAsset::register($this);
-}
+// if (class_exists('ramosisw\CImaterial\web\MaterialAsset')) {
+//     ramosisw\CImaterial\web\MaterialAsset::register($this);
+// }
 // AppAsset::register($this);
-MaterialAsset::register($this)
+MaterialAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
