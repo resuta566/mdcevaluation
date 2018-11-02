@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <p class="simple-text">Teacher Ranking</p>
      </div>
      <div class="card-content">
+    <?= Html::a('Print', ['print'], ['class' => 'btn btn-success']) ?>
      <button onclick="printContent('div1')" class="btn btn-info btn-pdfprint"><i class="glyphicon glyphicon-print" style="font-size: 20px"></i></button>
      <?php 
       $castTeachers = User::find()->where(['department' => 1])->andWhere(['role' => 20])->all();

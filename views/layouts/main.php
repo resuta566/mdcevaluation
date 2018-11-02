@@ -94,9 +94,10 @@ MaterialAsset::register($this);
 
 	    <div class="main-panel">
 		<?php
+		$url = Yii::$app->request->baseUrl;
 		NavBar::begin([
-			'brandLabel' => '<img src="http://mdc.ph/wp-content/uploads/2013/08/MDC-Logo-clipped.png" style="display:inline; horizontal-align: top; height:45px;" alt="logo"/> Teacher Evaluation',
-			'brandUrl' => Yii::$app->homeUrl,
+				'brandLabel' => "<img src='$url/img/mdclogo.png' style='display:inline; horizontal-align: top; height:45px;' alt='logo'/> Teacher Evaluation",
+				'brandUrl' => Yii::$app->homeUrl,
 			'innerContainerOptions' => ['class' => 'container-fluid'],
 			'options' => [
 				'class' => 'navbar navbar-transparent navbar-absolute',

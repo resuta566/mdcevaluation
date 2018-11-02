@@ -100,4 +100,9 @@ class Evaluation extends \yii\db\ActiveRecord
     {
         return $this->hasMany(EvaluationSection::className(), ['evaluation_id' => 'id']);
     }
+    public function getEvaluationItems()
+    {
+        return $this->hasMany(EvaluationItem::className(), ['id' => 'evaluation_id'])->viaTable('evaluation_section es', ['evaluation_id' => 'id'])
+        ->from(['ei' => EvaluationItem::tableName()]);;
+    }
 }

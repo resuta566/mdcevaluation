@@ -17,7 +17,15 @@ use yii\grid\GridView;
 use kartik\tabs\TabsX;
     
 ?>
-<?php 
+
+<div >
+    <div class="jem">
+      TEACHER EVALUATION 
+    </div>
+
+
+    <div>
+    <?php 
      $data = array(array(),array());
      $score = array();?>
     <?php $itemAve;?>
@@ -167,3 +175,5 @@ use kartik\tabs\TabsX;
                 echo "</tbody>";
                 echo "</table>";
                 ?>
+            </div>
+</div>

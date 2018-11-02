@@ -7,7 +7,7 @@ $this->title = 'Mater Dei College Teachers Evaluation';
 ?>
 <header id="home">
 		<!-- Background Image -->
-		<div class="bg-img" style="background-image: url('http://mdc.ph/wp-content/uploads/2013/08/mdc-memorial-wall-955x350.png');">
+		<div class="bg-img" style="background-image: url('<?= Yii::$app->request->baseUrl ?>/img/mdcbg.jpg');">
 			<div class="overlay"></div>
 		</div>
 		<!-- /Background Image -->
@@ -20,8 +20,8 @@ $this->title = 'Mater Dei College Teachers Evaluation';
 					<!-- Logo -->
 					<div class="navbar-brand">
 						<a href="<?= \yii\helpers\Url::to(['/']) ?>"> 
-							<img class="logo" src="http://mdc.ph/wp-content/uploads/2013/08/MDC-Logo-clipped.png" alt="logo">
-							<p style="color: white"><img class="logo-alt" src="http://mdc.ph/wp-content/uploads/2013/08/MDC-Logo-clipped.png" style="display:inline; horizontal-align: top; height:45px;" alt="logo"> 
+							<img class="logo" src="<?= Yii::$app->request->baseUrl ?>/img/mdclogo.png" alt="logo">
+							<p style="color: white"><img class="logo-alt" src="<?= Yii::$app->request->baseUrl ?>/img/mdclogo.png" style="display:inline; horizontal-align: top; height:45px;" alt="logo"> 
                             Teacher Evaluation</p>
                         </a>
 					</div>
@@ -68,16 +68,16 @@ $this->title = 'Mater Dei College Teachers Evaluation';
 		<!-- /home wrapper -->
 
 	</header>
-<?php $this->registerJsFile("@web/js/main.js");?>
 <div class="content">
-                <?php Modal::begin([
-                            'header' => '<center><h2>LOGIN</h2></center>',
-                            'id' => 'modal',
-                            'size' => 'modal-lg',
-                        ]);
-                        echo "<div id='modalContent'></div>";
-                        Modal::end();
-                        ?>
+	<?php 
+		Modal::begin([
+		'header' => '',
+		'id' => 'modal',
+		'size' => '',
+		]);
+		echo "<div id='modalContent'></div>";
+		Modal::end();
+	?>
 
 </div>
 
