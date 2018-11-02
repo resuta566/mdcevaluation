@@ -66,10 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'placeholder' => 'Password'
                                     ]) ?>
 
-        <?= $form->field($model, 'rememberMe',['options' =>[
-            'class' => 'check-box',
-        ] 
-        ])->checkbox([
+        <?= $form->field($model, 'rememberMe')->checkbox([
             'name' => 'optionsCheckboxes']) ?>
 
         <div class="form-group">

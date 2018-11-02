@@ -37,7 +37,7 @@ class Evaluation extends \yii\db\ActiveRecord
     {
         return [
             [['eval_by', 'eval_for', 'instrument_id', 'class_id'], 'integer'],
-            [['date','stat'], 'safe'],
+            [['date'], 'safe'],
             [['class_id'], 'exist', 'skipOnError' => true, 'targetClass' => Classes::className(), 'targetAttribute' => ['class_id' => 'id']],
             [['eval_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['eval_by' => 'id']],
             [['eval_for'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['eval_for' => 'id']],
@@ -57,7 +57,6 @@ class Evaluation extends \yii\db\ActiveRecord
             'instrument_id' => 'Instrument ID',
             'class_id' => 'Class ID',
             'date' => 'Date',
-            'stat' => 'Stat'
         ];
     }
 
@@ -99,10 +98,5 @@ class Evaluation extends \yii\db\ActiveRecord
     public function getEvaluationSections()
     {
         return $this->hasMany(EvaluationSection::className(), ['evaluation_id' => 'id']);
-    }
-    public function getEvaluationItems()
-    {
-        return $this->hasMany(EvaluationItem::className(), ['id' => 'evaluation_id'])->viaTable('evaluation_section es', ['evaluation_id' => 'id'])
-        ->from(['ei' => EvaluationItem::tableName()]);;
     }
 }

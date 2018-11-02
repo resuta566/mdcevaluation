@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use app\models\StudentClass;
 use app\models\StudentClassSearchS;
 use app\models\User;
+use app\models\Evaluation;
 use yii\filters\AccessControl;
 use app\components\AccessRule;
 use kartik\mpdf\Pdf;
@@ -55,13 +56,22 @@ class RankController extends Controller
     }
 
     /**
-     * Lists all Classes models.
+     * RANK
      * @return mixed
      */
     public function actionIndex()
     {
         $this->layout = 'alayout';
         return $this->render('rank');
+    }
+
+    public function actionPrints()
+    {
+        $this->layout = 'alayout';
+        $evaluation = Evaluation::find()->where(['eval_for' => 1])->one();
+        return $this->render('print',[
+            'evaluation' => $evaluation
+        ]);
     }
 
     /**

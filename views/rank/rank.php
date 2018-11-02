@@ -30,44 +30,81 @@ $this->params['breadcrumbs'][] = $this->title;
                 <p class="simple-text">Teacher Ranking</p>
      </div>
      <div class="card-content">
-    <?= Html::a('Print', ['print'], ['class' => 'btn btn-success']) ?>
+    <?= Html::a('Print', ['prints'], [
+        'class' => 'btn btn-success',
+        'target' => '_blank'
+        ]) ?>
      <button onclick="printContent('div1')" class="btn btn-info btn-pdfprint"><i class="glyphicon glyphicon-print" style="font-size: 20px"></i></button>
      <?php 
-      $castTeachers = User::find()->where(['department' => 1])->andWhere(['role' => 20])->all();
-      $coeTeachers = User::find()->where(['department' => 2])->andWhere(['role' => 20])->all();
-      $cabmhTeachers = User::find()->where(['department' => 3])->andWhere(['role' => 20])->all();
-      $cabmbTeachers = User::find()->where(['department' => 4])->andWhere(['role' => 20])->all();
-      $conTeachers = User::find()->where(['department' => 5])->andWhere(['role' => 20])->all();
-      $ccjTeachers = User::find()->where(['department' => 6])->andWhere(['role' => 20])->all();
-      $shsTeachers = User::find()->where(['department' => 7])->andWhere(['role' => 20])->all();
-      $jhsTeachers = User::find()->where(['department' => 8])->andWhere(['role' => 20])->all();
-      $elemTeachers = User::find()->where(['department' => 9])->andWhere(['role' => 20])->all();
+      $castTeachers = User::find()->where(['department' => 1])->andWhere(['role' => [20,30,100]])->all();
+      $coeTeachers = User::find()->where(['department' => 2])->andWhere(['role' => [20,30]])->all();
+      $cabmhTeachers = User::find()->where(['department' => 3])->andWhere(['role' => [20,30]])->all();
+      $cabmbTeachers = User::find()->where(['department' => 4])->andWhere(['role' => [20,30]])->all();
+      $conTeachers = User::find()->where(['department' => 5])->andWhere(['role' => [20,30]])->all();
+      $ccjTeachers = User::find()->where(['department' => 6])->andWhere(['role' => [20,30]])->all();
+      $shsTeachers = User::find()->where(['department' => 7])->andWhere(['role' => [20,30]])->all();
+      $jhsTeachers = User::find()->where(['department' => 8])->andWhere(['role' => [20,30]])->all();
+      $elemTeachers = User::find()->where(['department' => 9])->andWhere(['role' => [20,30]])->all();
      ?>
-     
-    <!-- <?= $this->render('_cast',[
-            'castTeachers' => $castTeachers 
-        ])?>
-
-        <?= $this->render('_coe',[
-            'coeTeachers' => $coeTeachers 
-        ])?> -->
-            <div id="div1">
+            <div >
             <?php echo yii\bootstrap\Tabs::widget([
             'navType' => 'nav-pills',
             'encodeLabels' => false,
             'items' => [
                 [
-                    'label' => '<i class="glyphicon glyphicon-transfer" style="font-size: 20px"></i> CAST', 
+                    'label' => 'CAST', 
                     'icon' => 'user',
                     'content' => $this->render('_cast',[
                         'castTeachers' => $castTeachers 
                     ]),
                     'active' => true
                 ],[
-                    'label' => '<i class="glyphicon glyphicon-transfer" style="font-size: 20px"></i> COE', 
+                    'label' => 'COE', 
                     'icon' => 'user',
                     'content' => $this->render('_coe',[
-                        'coeTeachers' => $coeTeachers 
+                        'teachers' => $coeTeachers 
+                    ]),
+                ],[
+                    'label' => 'CABM-B', 
+                    'icon' => 'user',
+                    'content' => $this->render('_cabmb',[
+                        'teachers' => $cabmbTeachers 
+                    ]),
+                ],[
+                    'label' => 'CABM-H', 
+                    'icon' => 'user',
+                    'content' => $this->render('_cabmh',[
+                        'teachers' => $cabmhTeachers 
+                    ]),
+                ],[
+                    'label' => 'CON', 
+                    'icon' => 'user',
+                    'content' => $this->render('_con',[
+                        'teachers' => $conTeachers 
+                    ]),
+                ],[
+                    'label' => 'CCJ', 
+                    'icon' => 'user',
+                    'content' => $this->render('_ccj',[
+                        'teachers' => $ccjTeachers 
+                    ]),
+                ],[
+                    'label' => 'SHS', 
+                    'icon' => 'user',
+                    'content' => $this->render('_shs',[
+                        'teachers' => $shsTeachers 
+                    ]),
+                ],[
+                    'label' => 'JHS', 
+                    'icon' => 'user',
+                    'content' => $this->render('_jhs',[
+                        'teachers' => $jhsTeachers 
+                    ]),
+                ],[
+                    'label' => 'ELEMENTARY', 
+                    'icon' => 'user',
+                    'content' => $this->render('_elem',[
+                        'teachers' => $elemTeachers 
                     ]),
                 ],
                 ]
