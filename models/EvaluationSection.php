@@ -18,6 +18,7 @@ use Yii;
  */
 class EvaluationSection extends \yii\db\ActiveRecord
 {
+   
     /**
      * {@inheritdoc}
      */
@@ -33,11 +34,13 @@ class EvaluationSection extends \yii\db\ActiveRecord
     {
         return [
             [['evaluation_id', 'section_id'], 'integer'],
+            [['comment'], 'required','skipOnEmpty' => false],
             [['comment'], 'string', 'max' => 100],
             [['evaluation_id'], 'exist', 'skipOnError' => true, 'targetClass' => Evaluation::className(), 'targetAttribute' => ['evaluation_id' => 'id']],
             [['section_id'], 'exist', 'skipOnError' => true, 'targetClass' => Section::className(), 'targetAttribute' => ['section_id' => 'id']],
         ];
     }
+
 
     /**
      * {@inheritdoc}
@@ -50,6 +53,11 @@ class EvaluationSection extends \yii\db\ActiveRecord
             'section_id' => 'Section ID',
             'comment' => 'Comment',
         ];
+    }
+
+    public function attributes()
+    {
+        return array_merge(parent::attributes(), ['id', 'evaluation_id', 'section_id', 'comment']);
     }
 
     /**

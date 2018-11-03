@@ -12,6 +12,7 @@ use Yii;
  * @property int $eval_for
  * @property int $instrument_id
  * @property int $class_id
+ * @property int $status 0 = Not Yet Submit score, 1 = submitted
  * @property string $date
  *
  * @property Classes $class
@@ -36,7 +37,7 @@ class Evaluation extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['eval_by', 'eval_for', 'instrument_id', 'class_id'], 'integer'],
+            [['eval_by', 'eval_for', 'instrument_id', 'class_id', 'status'], 'integer'],
             [['date'], 'safe'],
             [['class_id'], 'exist', 'skipOnError' => true, 'targetClass' => Classes::className(), 'targetAttribute' => ['class_id' => 'id']],
             [['eval_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['eval_by' => 'id']],
@@ -56,6 +57,7 @@ class Evaluation extends \yii\db\ActiveRecord
             'eval_for' => 'Eval For',
             'instrument_id' => 'Instrument ID',
             'class_id' => 'Class ID',
+            'status' => 'Status',
             'date' => 'Date',
         ];
     }

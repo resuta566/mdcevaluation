@@ -3,6 +3,9 @@
 namespace app\controllers;
 
 use Yii;
+use yii\helpers\Json;
+use yii\bootstrap\ActiveForm;
+use yii\web\Response;
 use app\models\ModelForm as Model;
 use yii\helpers\ArrayHelper;
 use app\models\Evaluation;
@@ -175,6 +178,11 @@ class EvaluationController extends Controller
             Model::loadMultiple($evalSections, Yii::$app->request->post());
             $deletedSectionIDs = array_diff($oldSectionIDs, array_filter(ArrayHelper::map($evalSections, 'id', 'id')));
 
+            if (Yii::$app->request->isAjax) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ActiveForm::validateMultiple($evalSections);
+            }
+
             // validate Evaluation and EvaluationSection models
             $valid = $model->validate();
             $valid = Model::validateMultiple($evalSections) && $valid;
@@ -187,6 +195,7 @@ class EvaluationController extends Controller
                     foreach ($items as $indexItem => $item) {
                         $data['EvaluationItem'] = $item;
                         $modelItem = (isset($item['id']) && isset($oldItems[$item['id']])) ? $oldItems[$item['id']] : new EvaluationItem;
+                        // $modelItem->scenario = 'update';
                         $modelItem->load($data);
                         $evalItems[$indexSection][$indexItem] = $modelItem;
                         $valid = $modelItem->validate();
@@ -215,17 +224,18 @@ class EvaluationController extends Controller
                         // }
                         
                         foreach ($evalSections as $indexSection => $modelSection) {
-                            
+                                
                             if ($flag === false) {
                                 break;
                             }
 
-                            if (!($flag = $modelSection->save(false))) {
+                            if (!($flag = $modelSection->save())) {
                                 break;
                             }
 
                             if (isset($evalItems[$indexSection]) && is_array($evalItems[$indexSection])) {
                                 foreach ($evalItems[$indexSection] as $indexItem => $modelItem) {
+                                    
                                     if (!($flag = $modelItem->save(false))) {
                                         break;
                                     }
@@ -233,7 +243,8 @@ class EvaluationController extends Controller
                             }
                         }
                     }
-
+                         $model->status = 1;
+                         $model->save();
                         $transaction->commit();
                         return $this->redirect(['/']);
                     

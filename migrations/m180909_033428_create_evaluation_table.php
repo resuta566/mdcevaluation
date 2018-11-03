@@ -18,6 +18,7 @@ class m180909_033428_create_evaluation_table extends Migration
             'eval_for' => $this->integer(),
             'instrument_id' => $this->integer(),
             'class_id' => $this->integer(),
+            'status' => $this->integer()->defaultValue(0),
             'date' => 'timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'
         ]);
         $this->createIndex(

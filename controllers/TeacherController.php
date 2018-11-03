@@ -131,10 +131,19 @@ class TeacherController extends Controller
             ]);
     }
 
-    public function actionRank()
+    public function actionComments($id)
     {
-
-        return $this->render('rank');
+        $model = Teacher::findOne($id);
+        $user = User::find()->where(['id' => $model->user->id])->one();
+        $evaluation = Evaluation::find()->where(['eval_for' => $user->id])->one();
+        $sections = EvaluationSection::find()->where(['evaluation_id' => $evaluation->id])->one();
+        if($sections->comment == null){
+            throw new \yii\web\HttpException(404, "The Evaluatee didn't submit comments yet.");
+        }
+        return $this->render('comments',[
+            'model' => $model,
+            'user' => $user
+            ]);
     }
     /**
      * Displays a single Teacher model.
@@ -205,6 +214,7 @@ class TeacherController extends Controller
                 $evaluation->save();
                          foreach($instrumentSection as $iS){
                              $evalSection = new EvaluationSection;
+                             $evalSection->scenario = 'create';
                              $evalSection->evaluation_id = $evaluation->id;
                              $evalSection->section_id = $iS->id;
                              $evalSection->link('evaluation', $evaluation);
@@ -240,6 +250,7 @@ class TeacherController extends Controller
                     $evaluation->save();
                              foreach($instrumentSection as $iS){
                                  $evalSection = new EvaluationSection;
+                                 $evalSection->scenario = 'create';
                                  $evalSection->evaluation_id = $evaluation->id;
                                  $evalSection->section_id = $iS->id;
                                  $evalSection->link('evaluation', $evaluation);
@@ -281,6 +292,7 @@ class TeacherController extends Controller
                     $evaluation->save();
                              foreach($instrumentSection as $iS){
                                  $evalSection = new EvaluationSection;
+                                 $evalSection->scenario = 'create';
                                  $evalSection->evaluation_id = $evaluation->id;
                                  $evalSection->section_id = $iS->id;
                                  $evalSection->link('evaluation', $evaluation);
@@ -357,6 +369,7 @@ class TeacherController extends Controller
                 // die();
                             foreach($instrumentSection as $iS){
                                 $evalSection = new EvaluationSection;
+                                $evalSection->scenario = 'create';
                                 $evalSection->evaluation_id = $evaluation->id;
                                 $evalSection->section_id = $iS->id;
                                 $evalSection->link('evaluation', $evaluation);

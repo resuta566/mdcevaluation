@@ -71,7 +71,7 @@ class TeacherSearchELEM extends Teacher
             ->orFilterWhere(['like', 'fname', $this->teacherSearch])
             ->orFilterWhere(['like', 'lname', $this->teacherSearch])
             ->orFilterWhere(['like', 'mname', $this->teacherSearch])
-            ->andWhere(['user.role' => 20])
+            ->andWhere(['user.role' => [20,30]])
             ->andWhere(['user.department' => 9]);
 
         return $dataProvider;

@@ -70,6 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="pull-right">
     <?php if($model->user->id = Evaluation::find()->where(['eval_for' => $model->user->id])->all()){?>
+    <?= Html::a('Comments', ['comments', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
     <?= Html::a('Score', ['score', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
     <?php }?>
     </div>

@@ -14,8 +14,8 @@ $this->title = 'Evaluate '. app\models\Teacher::find()->where(['user_id' => $mod
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php $form = ActiveForm::begin(['id' => 'dynamic-form',
-        'enableClientValidation' => true,
-        'validateOnSubmit' => true,
+         'enableClientValidation'=>true,
+         'enableAjaxValidation'=>true,
         'options' => [
             'class' => 'form'
     ],]); ?>

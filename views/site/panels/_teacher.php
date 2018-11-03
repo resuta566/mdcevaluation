@@ -10,9 +10,6 @@ use app\models\User;
 MaterialAsset::register($this);
 $this->title = "Dashboard";
 ?>
-
-
-
 <body>
 <div class="wrapper">
 			<div class="sidebar" data-color="purple" data-image="<?= Yii::$app->request->baseUrl ?>/img/mdclogo.png">
