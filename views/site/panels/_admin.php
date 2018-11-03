@@ -108,6 +108,26 @@ $this->title = "Admin Dashboard";
 								<div class="panel-body">
 								<center>
 								<h2>Evaluatee</h2>
+								<div class="col-md-4">
+									<div class="card">
+										<div class="card-header card-chart" data-background-color="green">
+											Today is
+											<p style="font-size: 50px">
+												<?= date('d');?><br>
+												<?= date('F');?>
+											</p>
+										</div>
+										<div class="card-content">
+											<h4 class="title"><span class="text-success"> <p id="curTime"></p></span></h4>
+											<p class="category"><span class="text-success"> <?= date('l');?></span> </p>
+										</div>
+										<div class="card-footer">
+											<div class="stats">
+											<i class="glyphicon glyphicon-calendar"></i> <?= date('Y');?>
+											</div>
+										</div>
+									</div>
+								</div>
 											<div class="col-lg-3 col-md-6 col-sm-6">
 												<div class="card card-stats">
 												<a href="<?= \yii\helpers\Url::to(['/user']) ?>">
@@ -165,10 +185,9 @@ $this->title = "Admin Dashboard";
 											
 											</center>
 						  	</div>
-							  <div class="panel-body">
-							  <center>
+							  <div class="panel-body" align="center">
 							  <h2>Evaluation</h2>
-											<div class="col-lg-3 col-md-6 col-sm-6">
+											<div class="col-lg-6 col-md-6 col-sm-6">
 													<div class="card card-stats">
 														<a href="<?= \yii\helpers\Url::to(['/instrument']) ?>">
 															<div class="card-header" data-background-color="red">
@@ -186,7 +205,7 @@ $this->title = "Admin Dashboard";
 														</a>
 													</div>
 												</div>
-												<div class="col-lg-3 col-md-6 col-sm-6">
+												<div class="col-lg-6 col-md-6 col-sm-6">
 													<div class="card card-stats">
 														<a href="<?= \yii\helpers\Url::to(['/rank']) ?>">
 															<div class="card-header" data-background-color="cyan">
@@ -194,7 +213,7 @@ $this->title = "Admin Dashboard";
 															</div>
 															<div class="card-content">
 																<p class="category">Ranking</p>
-																<h3 class="title"><?= Instrument::find()->count(); ?></h3>
+																<h3 class="title">1</h3>
 															</div>
 															<div class="card-footer">
 																<div class="stats">
@@ -204,10 +223,19 @@ $this->title = "Admin Dashboard";
 														</a>
 													</div>
 												</div>
-											</center>
 											</div>
 			</div>
 	</div>
 
 </div>
+<script>
+var display=setInterval(function(){Time()},0);
+
+function Time()
+{
+var date=new Date();
+var time=date.toLocaleTimeString();
+document.getElementById("curTime").innerHTML=time;
+}
+</script>
 

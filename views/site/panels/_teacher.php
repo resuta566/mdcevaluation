@@ -5,6 +5,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use app\assets\MaterialAsset;
 use app\models\Teacher;
+use app\models\User;
 
 MaterialAsset::register($this);
 $this->title = "Dashboard";
@@ -35,12 +36,28 @@ $this->title = "Dashboard";
 										<p>Dashboard</p>
 									</a>
 								</li>
-					<li>
+								<?php if(Yii::$app->user->identity->role==User::ROLE_TEACHER){ ?>
+									<li>
+									<a href="<?= \yii\helpers\Url::to(['/teacher']) ?>">
+										<i class="glyphicon glyphicon-user"> </i>
+										<p>Profile</p>
+									</a>
+								</li>
+								<?php }else if(Yii::$app->user->identity->role==User::ROLE_HEAD){?>
+									<li>
 									<a href="<?= \yii\helpers\Url::to(['/teacher']) ?>">
 										<i class="glyphicon glyphicon-blackboard"> </i>
 										<p>Teachers</p>
 									</a>
 								</li>
+								<li>
+									<a href="<?= \yii\helpers\Url::to(['/user/profile']) ?>">
+										<i class="glyphicon glyphicon-user"> </i>
+										<p>Profile</p>
+									</a>
+								</li>
+								<?php }?>
+								
 	               
 	            </ul>
 	    	</div>
@@ -81,7 +98,7 @@ $this->title = "Dashboard";
 						<div class="card">
 					<div class="card-header" data-background-color="blue">
 						<h1 class="title">DASHBOARD</h1>
-						<p class="category">Student Dashboard</p>
+						<p class="category">Teacher Dashboard</p>
 					</div>
 								<div class="panel-body">
 								<?php $evaluation =\app\models\Evaluation::find()->where(['eval_by' => Yii::$app->user->identity->id])->all();  ?>

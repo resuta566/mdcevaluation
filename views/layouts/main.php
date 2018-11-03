@@ -78,12 +78,23 @@ MaterialAsset::register($this);
 				]
 			) ?>
 		</a>
-        <?php }else if(Yii::$app->user->identity->role==User::ROLE_STUDENT || Yii::$app->user->identity->role==User::ROLE_TEACHER || Yii::$app->user->identity->role==User::ROLE_HEAD){?>
+        <?php }else if(Yii::$app->user->identity->role==User::ROLE_STUDENT || Yii::$app->user->identity->role==User::ROLE_TEACHER){?>
 			<?= ramosisw\CImaterial\widgets\Menu::widget(
             [
                 'options' => ['class' => 'nav'],
                 'items' => [
                     ['label' => 'Dashboard', 'icon' => 'home', 'url' => ['/']],
+                    ['label' => 'Profile', 'icon' => 'user', 'url' => ['/user/profile']],
+                ],
+            ]
+        ) ?>
+		<?php }else if(Yii::$app->user->identity->role==User::ROLE_HEAD){?>
+			<?= ramosisw\CImaterial\widgets\Menu::widget(
+            [
+                'options' => ['class' => 'nav'],
+                'items' => [
+                    ['label' => 'Dashboard', 'icon' => 'home', 'url' => ['/']],
+                    ['label' => 'Teacher', 'icon' => 'user', 'url' => ['/rank']],
                     ['label' => 'Profile', 'icon' => 'user', 'url' => ['/user/profile']],
                 ],
             ]

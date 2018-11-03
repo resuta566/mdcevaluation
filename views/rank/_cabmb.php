@@ -188,7 +188,7 @@ use kartik\tabs\TabsX;
                     for($i=0;$i<count($data);$i++) {
                         if(array_key_exists('score', $data[$i])){
                         echo('<tr>');
-                        echo('<td>' . $data[$i]['name'] . '</td>');
+                        echo('<td>' . Html::a($data[$i]['name'], ['teacher/view','id'=> $data[$i]['id']], ['target' => '_blank']) . '</td>');
                         echo('<td style="width: 20%">' . $data[$i]['score'] . '</td>');
                         echo('</tr>');
                     }
