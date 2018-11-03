@@ -6,7 +6,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <?php
- $castTeachers = app\models\User::find()->where(['department' => 1])->andWhere(['role' => [20,30,100]])->all();
+ $teachers = app\models\User::find()->where(['department' => $userDept])->andWhere(['role' => [20,30,100]])->all();
  ?>
 
  <button onclick="printContent('div1')" class="btn btn-info btn-pdfprint"><i class="glyphicon glyphicon-print" style="font-size: 20px"></i></button>
@@ -15,7 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?=
     $this->render('_castPrint',[
-        'castTeachers' => $castTeachers 
+        'teachers' => $teachers,
+        'userDept' => $userDept
     ]);
     ?>
 <br><br><br><br><br><br><br><br><br><br>
@@ -32,7 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
       {
          var restorepage = document.body.innerHTML;
          var printcontent = document.getElementById(el).innerHTML;
-         document.title = " ";
          document.body.innerHTML = printcontent;
          window.print();
          document.body.innerHTML = restorepage;

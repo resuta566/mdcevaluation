@@ -21,14 +21,18 @@ use kartik\tabs\TabsX;
 <div id="div1">
 
    <div class="jem">
-    <p style="font-family:Old English Text MT;"> Mater Dei College
+    <p style="font-family:Old English Text MT;font-size:20px;"> Mater Dei College
 <br>
      Tubigon,Bohol,Philippines
      <br>Teacher Evaluation <br>
-      CAST Department</p>
+     </p>
+    </div>
+    <div class="jem">
+    <h2 style="font-family:Old English Text MT;"> <?= User::find()->where(['department' => $userDept])->one()->departmentname; ?> Department</h2>
     </div>
 
 
+<br><br><br>
     <div>
     <?php
         $data = array(array(),array());
@@ -43,13 +47,13 @@ use kartik\tabs\TabsX;
         
         $sectionScore = array();
         $itemScore = array();
-        foreach($castTeachers as $indexCastTeac => $casTeacher):
+        foreach($teachers as $indexTeacher => $teacher):
 
-        $evaluation = Evaluation::find()->where(['eval_for' => $casTeacher->id])->one();
+        $evaluation = Evaluation::find()->where(['eval_for' => $teacher->id])->one();
         if(!$evaluation){
         
         }else{
-        Teacher::find()->where(['user_id' => $casTeacher->id])->one(); 
+        Teacher::find()->where(['user_id' => $teacher->id])->one(); 
             $inst = Instrument::find()->where(['id' => $evaluation->instrument->id])->one(); 
 
 
@@ -65,7 +69,7 @@ use kartik\tabs\TabsX;
                                                         evaluation_item.score as "SCORE" 
                                                         FROM `evaluation` 
                                                         INNER JOIN (evaluation_section,evaluation_item) 
-                                                        ON evaluation.eval_for = '. $casTeacher->id .' 
+                                                        ON evaluation.eval_for = '. $teacher->id .' 
                                                         WHERE evaluation_section.evaluation_id = evaluation.id 
                                                         AND evaluation_item.evaluation_section_id = evaluation_section.id 
                                                         AND evaluation_item.item_id = '.$sI->id .' 
@@ -77,7 +81,7 @@ use kartik\tabs\TabsX;
                                                         evaluation_item.score as "SCORE" 
                                                         FROM `evaluation` 
                                                         INNER JOIN (evaluation_section,evaluation_item) 
-                                                        ON evaluation.eval_for = '. $casTeacher->id .' 
+                                                        ON evaluation.eval_for = '. $teacher->id .' 
                                                         WHERE evaluation_section.evaluation_id = evaluation.id 
                                                         AND evaluation_item.evaluation_section_id = evaluation_section.id 
                                                         AND evaluation_item.item_id = '.$sI->id .' 
@@ -89,7 +93,7 @@ use kartik\tabs\TabsX;
                                                         evaluation_item.score as "SCORE" 
                                                         FROM `evaluation` 
                                                         INNER JOIN (evaluation_section,evaluation_item) 
-                                                        ON evaluation.eval_for = '. $casTeacher->id .' 
+                                                        ON evaluation.eval_for = '. $teacher->id .' 
                                                         WHERE evaluation_section.evaluation_id = evaluation.id 
                                                         AND evaluation_item.evaluation_section_id = evaluation_section.id 
                                                         AND evaluation_item.item_id = '.$sI->id .' 
@@ -101,7 +105,7 @@ use kartik\tabs\TabsX;
                                                         evaluation_item.score as "SCORE" 
                                                         FROM `evaluation` 
                                                         INNER JOIN (evaluation_section,evaluation_item) 
-                                                        ON evaluation.eval_for = '. $casTeacher->id .' 
+                                                        ON evaluation.eval_for = '. $teacher->id .' 
                                                         WHERE evaluation_section.evaluation_id = evaluation.id 
                                                         AND evaluation_item.evaluation_section_id = evaluation_section.id 
                                                         AND evaluation_item.item_id = '.$sI->id .' 
@@ -113,7 +117,7 @@ use kartik\tabs\TabsX;
                                                         evaluation_item.score as "SCORE" 
                                                         FROM `evaluation` 
                                                         INNER JOIN (evaluation_section,evaluation_item) 
-                                                        ON evaluation.eval_for = '. $casTeacher->id .' 
+                                                        ON evaluation.eval_for = '. $teacher->id .' 
                                                         WHERE evaluation_section.evaluation_id = evaluation.id 
                                                         AND evaluation_item.evaluation_section_id = evaluation_section.id 
                                                         AND evaluation_item.item_id = '.$sI->id .' 
@@ -149,11 +153,11 @@ use kartik\tabs\TabsX;
                                 
                                 $me +=$sectItems->count();
                             endforeach; 
-                    " AVERAGE SCORE: ". $casTeacher->teacher->fullname."-".$averageScore = $mee/$me; 
-                    $name = $casTeacher->teacher->fullname; 
-                    $data[$indexCastTeac]['id'] = $casTeacher->teacher->id;
-                    $data[$indexCastTeac]['name'] = $name;
-                    $data[$indexCastTeac]['score'] = $averageScore;
+                    " AVERAGE SCORE: ". $teacher->teacher->fullname."-".$averageScore = $mee/$me; 
+                    $name = $teacher->teacher->fullname; 
+                    $data[$indexTeacher]['id'] = $teacher->teacher->id;
+                    $data[$indexTeacher]['name'] = $name;
+                    $data[$indexTeacher]['score'] = $averageScore;
                     
                     $averageScore = 0;
                     $mee = 0;

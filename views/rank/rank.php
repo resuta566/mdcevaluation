@@ -30,11 +30,33 @@ $this->params['breadcrumbs'][] = $this->title;
                 <p class="simple-text">Teacher Ranking</p>
      </div>
      <div class="card-content">
-    <?= Html::a('Print', ['prints'], [
-        'class' => 'btn btn-success',
-        'target' => '_blank'
-        ]) ?>
-     <button onclick="printContent('div1')" class="btn btn-info btn-pdfprint"><i class="glyphicon glyphicon-print" style="font-size: 20px"></i></button>
+     <?= Html::beginForm(['prints'],'post');?>
+             <?php
+                $dept_list = array(
+                    1 => 'CAST',
+                    2 => 'COE',
+                    3 => 'CABM-H',
+                    4 => 'CABM-B',
+                    5 => 'CON',
+                    6 => 'CCJ',
+                    7 => 'Senior High School',
+                    8 => 'Junior High School',
+                    9 => 'Elementary'
+                );
+                ?>
+             <?=  Html::dropDownList('userDepartment', null, $dept_list,
+                        [
+                            'class' => 'form-control', 
+                            'prompt'=>'Choose a Department'
+                        ]) ?>
+              <?=   Html::submitButton('Print', [
+                        'class' => 'btn btn-info',
+                        'data' => [
+                            'method' => 'post',
+                        ],
+                    ]) ?>
+        <?= Html::endForm();?>
+
      <?php 
       $castTeachers = User::find()->where(['department' => 1])->andWhere(['role' => [20,30,100]])->all();
       $coeTeachers = User::find()->where(['department' => 2])->andWhere(['role' => [20,30]])->all();

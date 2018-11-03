@@ -68,9 +68,9 @@ class RankController extends Controller
     public function actionPrints()
     {
         $this->layout = 'alayout';
-        $evaluation = Evaluation::find()->where(['eval_for' => 1])->one();
+        $userDept = Yii::$app->request->post('userDepartment');
         return $this->render('print',[
-            'evaluation' => $evaluation
+            'userDept' => $userDept
         ]);
     }
 

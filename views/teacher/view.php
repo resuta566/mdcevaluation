@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="pull-left">
         
         <?php if($model->user_id==0){ ?>
-            <?=Html::beginForm(['generate', 'id' => $model->id],'post');?>
+            <?= Html::beginForm(['generate', 'id' => $model->id],'post');?>
              <?php
                 $dept_list = array(
                     1 => 'CAST',
@@ -54,14 +54,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             'method' => 'post',
                         ],
                     ]) ?>
-        <!-- <?=  
-        Html::a('Generate', ['generate', 'id' => $model->id], [
-            'class' => 'btn btn-success',
-            'data' => [
-                'confirm' => 'Are you sure you want to generate user for this teacher?',
-                'method' => 'post',
-            ],
-        ]) ?> -->
         <?= Html::endForm();?>
         <?php }else{?>
         
