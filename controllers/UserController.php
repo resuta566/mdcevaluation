@@ -79,10 +79,17 @@ class UserController extends Controller
         ]);
     }
 
+    public function actionChangepass($id)
+    {
+        return $this->render('change', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
     public function actionProfile($id)
     {
         if(Yii::$app->user->identity->id == $id){
-            return $this->render('view', [
+            return $this->render('profile', [
                 'model' => $this->findModel($id),
             ]);
         }

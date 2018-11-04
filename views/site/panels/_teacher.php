@@ -35,7 +35,7 @@ $this->title = "Dashboard";
 								</li>
 								<?php if(Yii::$app->user->identity->role==User::ROLE_TEACHER){ ?>
 									<li>
-									<a href="<?= \yii\helpers\Url::to(['/teacher']) ?>">
+									<a href="<?= \yii\helpers\Url::to(['/user/profile','id' => Yii::$app->user->identity->id]) ?>">
 										<i class="glyphicon glyphicon-user"> </i>
 										<p>Profile</p>
 									</a>
@@ -48,7 +48,7 @@ $this->title = "Dashboard";
 									</a>
 								</li>
 								<li>
-									<a href="<?= \yii\helpers\Url::to(['/user/profile']) ?>">
+									<a href="<?= \yii\helpers\Url::to(['/user/profile','id' => Yii::$app->user->identity->id]) ?>">
 										<i class="glyphicon glyphicon-user"> </i>
 										<p>Profile</p>
 									</a>
@@ -98,7 +98,7 @@ $this->title = "Dashboard";
 						<p class="category">Teacher Dashboard</p>
 					</div>
 								<div class="panel-body">
-								<?php $evaluation =\app\models\Evaluation::find()->where(['eval_by' => Yii::$app->user->identity->id])->all();  ?>
+								<?php $evaluation =\app\models\Evaluation::find()->where(['eval_by' => Yii::$app->user->identity->id])->andWhere(['status' => 0])->all();  ?>
 								<?php if(!$evaluation){?>
 										<h3>There is no Evaluation yet.</h3>
 										<small>Please wait for the admin to create an evaluation form for you.</small>

@@ -167,6 +167,8 @@ class EvaluationController extends Controller
         }
         if($model->evalBy->id !== Yii::$app->user->id){
             throw new \yii\web\HttpException(401, 'You are Forbidden to Evaluate this Teacher for it is not yours to evaluate!');
+        }elseif($model->status == 1){
+            throw new \yii\web\HttpException(401, "You're done evaluating this teacher you cant change anything after you submit!");
         }
             
         if (Yii::$app->request->post()) {

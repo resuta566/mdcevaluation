@@ -37,7 +37,7 @@ $this->title = "Dashboard";
 									</a>
 								</li>
 					<li>
-									<a href="<?= \yii\helpers\Url::to(['/']) ?>">
+									<a href="<?= \yii\helpers\Url::to(['/user/profile','id' => Yii::$app->user->identity->id]) ?>">
 										<i class="glyphicon glyphicon-user"> </i>
 										<p>Profile</p>
 									</a>
@@ -85,7 +85,7 @@ $this->title = "Dashboard";
 						<p class="category">Student Dashboard</p>
 					</div>
 								<div class="panel-body">
-								<?php $evaluation = Evaluation::find()->where(['eval_by' => Yii::$app->user->identity->id])->all();  ?>
+								<?php $evaluation = Evaluation::find()->where(['eval_by' => Yii::$app->user->identity->id])->andWhere(['status' => 0])->all();  ?>
 								<?php if(!$evaluation){?>
 										<h3>There is no Evaluation yet.</h3>
 										<small>Please wait for the admin to create an evaluation form for you.</small>
