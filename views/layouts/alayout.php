@@ -80,7 +80,7 @@ MaterialAsset::register($this);
                 'options' => ['class' => 'nav'],
                 'items' => [
                     ['label' => 'Dashboard', 'icon' => 'home', 'url' => ['/']],
-                    ['label' => 'Profile', 'icon' => 'user', 'url' => ['/user/profile']],
+                    ['label' => 'Profile', 'icon' => 'user', 'url' => ['/user/profile','id' => Yii::$app->user->identity->id]],
                 ],
             ]
         ) ?>
@@ -91,7 +91,7 @@ MaterialAsset::register($this);
                 'items' => [
                     ['label' => 'Dashboard', 'icon' => 'home', 'url' => ['/']],
                     ['label' => 'Teacher', 'icon' => 'user', 'url' => ['/rank/department']],
-                    ['label' => 'Profile', 'icon' => 'user', 'url' => ['/user/profile']],
+                    ['label' => 'Profile', 'icon' => 'user', 'url' => ['/user/profile','id' => Yii::$app->user->identity->id]],
                 ],
             ]
         ) ?>
