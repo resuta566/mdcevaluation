@@ -94,7 +94,7 @@ MaterialAsset::register($this);
                 'options' => ['class' => 'nav'],
                 'items' => [
                     ['label' => 'Dashboard', 'icon' => 'home', 'url' => ['/']],
-                    ['label' => 'Teacher', 'icon' => 'user', 'url' => ['/rank']],
+                    ['label' => 'Teacher', 'icon' => 'user', 'url' => ['/rank/department']],
                     ['label' => 'Profile', 'icon' => 'user', 'url' => ['/user/profile']],
                 ],
             ]

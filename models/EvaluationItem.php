@@ -17,7 +17,7 @@ use Yii;
  */
 class EvaluationItem extends \yii\db\ActiveRecord
 {
-    const SCENARIO_UPDATE = 'update';
+    const SCENARIO_CREATE = 'create';
     /**
      * {@inheritdoc}
      */
@@ -32,7 +32,7 @@ class EvaluationItem extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['score'], 'required','skipOnEmpty' => false],
+            [['score'], 'required','skipOnEmpty' => false, 'except' => 'create'],
             [['evaluation_section_id', 'item_id', 'score'], 'integer'],
             [['evaluation_section_id'], 'exist', 'skipOnError' => true, 'targetClass' => EvaluationSection::className(), 'targetAttribute' => ['evaluation_section_id' => 'id']],
             [['item_id'], 'exist', 'skipOnError' => true, 'targetClass' => Item::className(), 'targetAttribute' => ['item_id' => 'id']],

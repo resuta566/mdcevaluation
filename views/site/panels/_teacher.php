@@ -42,7 +42,7 @@ $this->title = "Dashboard";
 								</li>
 								<?php }else if(Yii::$app->user->identity->role==User::ROLE_HEAD){?>
 									<li>
-									<a href="<?= \yii\helpers\Url::to(['/teacher']) ?>">
+									<a href="<?= \yii\helpers\Url::to(['/rank/department']) ?>">
 										<i class="glyphicon glyphicon-blackboard"> </i>
 										<p>Teachers</p>
 									</a>

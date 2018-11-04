@@ -162,21 +162,8 @@ use kartik\tabs\TabsX;
         }
                     endforeach; 
                     $data;
-                //    print_r($data); 
-                //     die();
-                if (array_key_exists('score', $data) && array_key_exists('name', $data)) {
-
-                    usort($data, function ($a, $b) {
-                        if ($a['score'] === $b['score']) {
-                            return 0;
-                        }
-                        return ($a['score'] < $b['score']) ? 1 : -1;
-                    });
-                    
-                }else{
-                        
-                }
-                
+                //    var_dump($data);
+                //    die();
                     echo"<table class='table'>";
                     echo "<thead>";
                     echo "<tr>";
@@ -185,8 +172,14 @@ use kartik\tabs\TabsX;
                     echo "</tr>";
                     echo "</thead>";
                     echo "<tbody>";
+                    if(!empty($data) && !in_array(null,$data)){
+                        usort($data, function ($a, $b) {
+                            if ($a['score'] === $b['score']) {
+                                return 0;
+                            }
+                            return ($a['score'] < $b['score']) ? 1 : -1;
+                             });
                     for($i=0;$i<count($data);$i++) {
-                        if(array_key_exists('score', $data[$i])){
                         echo('<tr>');
                         echo('<td>' . Html::a($data[$i]['name'], ['teacher/view','id'=> $data[$i]['id']], ['target' => '_blank']) . '</td>');
                         echo('<td style="width: 20%">' . $data[$i]['score'] . '</td>');
@@ -195,6 +188,7 @@ use kartik\tabs\TabsX;
                 }
                     echo "</tbody>";
                     echo "</table>";
+                
                     
                     ?>
             </div>

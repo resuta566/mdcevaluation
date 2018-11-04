@@ -38,7 +38,12 @@ class ClassesController extends Controller
                         'roles' => ['@']
                     ],
                     [
-                        'actions' => ['index','view','evaluate'],
+                        'actions' => ['view'],
+                        'allow' => true,
+                        'roles' => [User::ROLE_HEAD]
+                    ],
+                    [
+                        'actions' => ['index','view'],
                         'allow' => true,
                         'roles' => [User::ROLE_ADMIN]
                     ]

@@ -18,7 +18,7 @@ use Yii;
  */
 class EvaluationSection extends \yii\db\ActiveRecord
 {
-   
+    const SCENARIO_CREATE = 'create';
     /**
      * {@inheritdoc}
      */
@@ -34,7 +34,7 @@ class EvaluationSection extends \yii\db\ActiveRecord
     {
         return [
             [['evaluation_id', 'section_id'], 'integer'],
-            [['comment'], 'required','skipOnEmpty' => false],
+            [['comment'], 'required','skipOnEmpty' => false, 'except' => 'create'],
             [['comment'], 'string', 'max' => 100],
             [['evaluation_id'], 'exist', 'skipOnError' => true, 'targetClass' => Evaluation::className(), 'targetAttribute' => ['evaluation_id' => 'id']],
             [['section_id'], 'exist', 'skipOnError' => true, 'targetClass' => Section::className(), 'targetAttribute' => ['section_id' => 'id']],

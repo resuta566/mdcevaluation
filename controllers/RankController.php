@@ -32,7 +32,7 @@ class RankController extends Controller
                 'ruleConfig' => [
                     'class' => AccessRule::className(),
                 ],
-                'only' => ['index','view','evaluate'],
+                'only' => ['index','view','department'],
                 'rules'=>[
                     [
                         'actions'=>['login'],
@@ -43,6 +43,11 @@ class RankController extends Controller
                         'actions' => ['index'],
                         'allow' => true,
                         'roles' => [User::ROLE_ADMIN]
+                    ],
+                    [
+                        'actions' => ['department'],
+                        'allow' => true,
+                        'roles' => [User::ROLE_HEAD]
                     ]
                 ],
             ],
@@ -63,6 +68,12 @@ class RankController extends Controller
     {
         $this->layout = 'alayout';
         return $this->render('rank');
+    }
+
+    public function actionDepartment()
+    {
+         return $this->render('department',[
+            ]);
     }
 
     public function actionPrints()

@@ -52,10 +52,10 @@ class TeacherController extends Controller
                     'class' => AccessRule::className(),
                 ],
                 'only' => [
-                    'index','view','generate','unlink',
+                    'index','generate','unlink','view',
                     'bulk','generatebulk','list','score',
                     'cast-teacher','coe-teacher','cabmh-teacher','cabmb-teacher','con-teacher','ccj-teacher',
-                    'shs-teacher','jhs-teacher','elem-teacher',
+                    'shs-teacher','jhs-teacher','elem-teacher','teacheval',
             ],
                 'rules'=>[
                     [
@@ -65,13 +65,18 @@ class TeacherController extends Controller
                     ],
                     [
                         'actions' => [
-                        'index','view','generate','unlink','bulk','generatebulk','list','score',
-                        'cast-teacher','coe-teacher','cabmh-teacher','cabmb-teacher','con-teacher','ccj-teacher',
-                        'shs-teacher','jhs-teacher','elem-teacher',
-                    ],
+                            'index','view','generate','unlink','bulk','generatebulk','list','score',
+                            'cast-teacher','coe-teacher','cabmh-teacher','cabmb-teacher','con-teacher','ccj-teacher',
+                            'shs-teacher','jhs-teacher','elem-teacher','teacheval'
+                          ],
                         'allow' => true,
                         'roles' => [User::ROLE_ADMIN]
-                    ]
+                        ],
+                        [
+                            'actions'=>['view'],
+                            'allow' => true,
+                            'roles' => [User::ROLE_HEAD]
+                        ],
                 ],
             ],
             'verbs' => [
@@ -153,23 +158,51 @@ class TeacherController extends Controller
      */
     public function actionView($id)
     {   
+        $model = Teacher::findOne($id);
         $searchModel = new ClassesSearchT();
         $instrument = Instrument::find()->all();
         $eval = new Evaluation();
         $activeClass = new ClassesSearchActive();
         $dataProvider = $searchModel->search($id);
         $activeDataProvider = $activeClass->search($id);
-        $model = Teacher::findOne($id);
         $classes = Classes::find()->where(['teacher_id'=>$id])->one();
-        return $this->render('view', [
-            'model'=> $model,
-            'eval' =>  $eval,
-            'classes'=> $classes,
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'instrument' => $instrument,
-            'activeDataProvider' => $activeDataProvider
-        ]);
+        if(Yii::$app->user->identity->department == 4){
+            if($model->user->department == 3 || $model->user->department == 4){
+                return $this->render('view', [
+                    'model'=> $model,
+                    'eval' =>  $eval,
+                    'classes'=> $classes,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'instrument' => $instrument,
+                    'activeDataProvider' => $activeDataProvider
+                ]);
+            }
+        }elseif(Yii::$app->user->identity->department == 7){
+            if($model->user->department == 7 || $model->user->department == 8){
+                return $this->render('view', [
+                    'model'=> $model,
+                    'eval' =>  $eval,
+                    'classes'=> $classes,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'instrument' => $instrument,
+                    'activeDataProvider' => $activeDataProvider
+                ]);
+            }
+        }elseif(Yii::$app->user->identity->department == $model->user->department){
+            return $this->render('view', [
+                'model'=> $model,
+                'eval' =>  $eval,
+                'classes'=> $classes,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'instrument' => $instrument,
+                'activeDataProvider' => $activeDataProvider
+            ]);
+        }
+        throw new \yii\web\HttpException(401, 'You are Forbidden to view this teacher.');
+        
     }
     protected function findModel($id)
     {
@@ -225,6 +258,7 @@ class TeacherController extends Controller
                                      // echo "<br>";
                                      foreach($instrumentSectionItem as $institem){
                                              $evalItem = new EvaluationItem;
+                                             $evalItem->scenario = 'create';
                                              $evalItem->evaluation_section_id = $evalSection->id;
                                              $evalItem->item_id = $institem->id;
                                              $evalItem->link('evaluationSection', $evalSection);
@@ -261,6 +295,7 @@ class TeacherController extends Controller
                                          // echo "<br>";
                                          foreach($instrumentSectionItem as $institem){
                                                  $evalItem = new EvaluationItem;
+                                                 $evalItem->scenario = 'create';
                                                  $evalItem->evaluation_section_id = $evalSection->id;
                                                  $evalItem->item_id = $institem->id;
                                                  $evalItem->link('evaluationSection', $evalSection);
@@ -303,6 +338,7 @@ class TeacherController extends Controller
                                          // echo "<br>";
                                          foreach($instrumentSectionItem as $institem){
                                                  $evalItem = new EvaluationItem;
+                                                 $evalItem->scenario = 'create';
                                                  $evalItem->evaluation_section_id = $evalSection->id;
                                                  $evalItem->item_id = $institem->id;
                                                  $evalItem->link('evaluationSection', $evalSection);
@@ -380,6 +416,7 @@ class TeacherController extends Controller
                                         // echo "<br>";
                                         foreach($instrumentSectionItem as $institem){
                                                 $evalItem = new EvaluationItem;
+                                                $evalItem->scenario = 'create';
                                                 $evalItem->evaluation_section_id = $evalSection->id;
                                                 $evalItem->item_id = $institem->id;
                                                 $evalItem->link('evaluationSection', $evalSection);

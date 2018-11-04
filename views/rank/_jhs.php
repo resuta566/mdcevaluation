@@ -164,37 +164,31 @@ use kartik\tabs\TabsX;
                     $data;
                 //    print_r($data); 
                 //     die();
-                if (array_key_exists('score', $data) && array_key_exists('name', $data)) {
-
+                echo"<table class='table'>";
+                echo "<thead>";
+                echo "<tr>";
+                echo "<th> Teacher Name </th>";
+                echo "<th> Score </th>";
+                echo "</tr>";
+                echo "</thead>";
+                echo "<tbody>";
+                if(!empty($data) && !in_array(null,$data)){
                     usort($data, function ($a, $b) {
                         if ($a['score'] === $b['score']) {
                             return 0;
                         }
                         return ($a['score'] < $b['score']) ? 1 : -1;
-                    });
-                    
-                }else{
-                        
+                         });
+                for($i=0;$i<count($data);$i++) {
+                    echo('<tr>');
+                    echo('<td>' . Html::a($data[$i]['name'], ['teacher/view','id'=> $data[$i]['id']], ['target' => '_blank']) . '</td>');
+                    echo('<td style="width: 20%">' . $data[$i]['score'] . '</td>');
+                    echo('</tr>');
                 }
-                
-                    echo"<table class='table'>";
-                    echo "<thead>";
-                    echo "<tr>";
-                    echo "<th> Teacher Name </th>";
-                    echo "<th> Score </th>";
-                    echo "</tr>";
-                    echo "</thead>";
-                    echo "<tbody>";
-                    for($i=0;$i<count($data);$i++) {
-                        if(array_key_exists('score', $data[$i])){
-                        echo('<tr>');
-                        echo('<td>' .Html::a($data[$i]['name'], ['teacher/view','id'=> $data[$i]['id']], ['target' => '_blank']). '</td>');
-                        echo('<td style="width: 20%">' . $data[$i]['score'] . '</td>');
-                        echo('</tr>');
-                    }
-                }
-                    echo "</tbody>";
-                    echo "</table>";
+            }
+                echo "</tbody>";
+                echo "</table>";
+                echo "</table>";
                     
                     ?>
             </div>

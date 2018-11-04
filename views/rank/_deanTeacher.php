@@ -17,22 +17,6 @@ use yii\grid\GridView;
 use kartik\tabs\TabsX;
     
 ?>
-
-<div id="div1">
-
-   <div class="jem">
-    <p style="font-family:Old English Text MT;font-size:20px;"> Mater Dei College
-<br>
-     Tubigon,Bohol,Philippines
-     <br>Teacher Evaluation <br>
-     </p>
-    </div>
-    <div class="jem">
-    <h2 style="font-family:Old English Text MT;"> <?= User::find()->where(['department' => $userDept])->one()->departmentname; ?> Department</h2>
-    </div>
-
-
-<br><br><br>
     <div>
     <?php
         $data = array(array(),array());
@@ -47,6 +31,14 @@ use kartik\tabs\TabsX;
         
         $sectionScore = array();
         $itemScore = array();
+        if(Yii::$app->user->identity->department == 4){
+            $teachers = User::find()->where(['department' => [Yii::$app->user->identity->department,3]])->all();
+        }else if(Yii::$app->user->identity->department == 7){
+            $teachers = User::find()->where(['department' => [Yii::$app->user->identity->department,8]])->all();
+        }else{
+            $teachers = User::find()->where(['department' => Yii::$app->user->identity->department])->all();
+        }
+        
         foreach($teachers as $indexTeacher => $teacher):
 
         $evaluation = Evaluation::find()->where(['eval_for' => $teacher->id])->one();
@@ -186,7 +178,7 @@ use kartik\tabs\TabsX;
                          });
                 for($i=0;$i<count($data);$i++) {
                     echo('<tr>');
-                    echo('<td>'.$data[$i]['name']. '</td>');
+                    echo('<td>'.Html::a($data[$i]['name'], ['teacher/view','id'=> $data[$i]['id']], ['target' => '_blank']). '</td>');
                     echo('<td style="width: 20%">' . $data[$i]['score'] . '</td>');
                     echo('</tr>');
                 }
@@ -195,5 +187,4 @@ use kartik\tabs\TabsX;
                 echo "</table>";
                     
                     ?>
-            </div>
 </div>
