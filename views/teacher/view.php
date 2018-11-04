@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="card-content">
     <div class="row">
     <div class="pull-left">
-        
+    <?php if(Yii::$app->user->identity->role == 100){ ?>
         <?php if($model->user_id==0){ ?>
             <?= Html::beginForm(['generate', 'id' => $model->id],'post');?>
              <?php
@@ -65,13 +65,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+                 <?php }?>
                 <?php }?>
        
     </div>
     <div class="pull-right">
+    <?php if(Yii::$app->user->identity->role == 100){ ?>
     <?php if($model->user->id = Evaluation::find()->where(['eval_for' => $model->user->id])->all()){?>
     <?= Html::a('Comments', ['comments', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
     <?= Html::a('Score', ['score', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
+    <?php }?>
     <?php }?>
     </div>
     </div>
@@ -97,7 +100,8 @@ $this->params['breadcrumbs'][] = $this->title;
     </table>
      <h2><b>Subjects</b>
      </h2>
-    <?php 
+     <?php if(Yii::$app->user->identity->role == 100){ ?>
+        <?php 
 $items = [
     [
         'label'=>'<i class="glyphicon glyphicon-off"></i> INACTIVE',
@@ -201,5 +205,86 @@ echo TabsX::widget([
     'encodeLabels'=>false
 ]);
 ?>
+        <?php }else{?>
+        <?php 
+$items = [
+    [
+        'label'=>'<i class="glyphicon glyphicon-off"></i> INACTIVE',
+        'content'=> 
+                    GridView::widget([
+                        'dataProvider' => $dataProvider,
+                        // 'filterModel' => $searchModel,
+                        'columns' => [
+                            [
+                                'attribute' => 'estatus',
+                                'value' =>  'estatusName',
+                            ],
+                            [ 'attribute' => 
+                            'name', 
+                            'label' => 'Name',
+                            'format' => 'raw', 
+                            'value' => 
+                            function ($model) {
+                            return Html::a($model->name, 
+                            [ 'classes/view', 'id' => $model->id ], [
+                                'target' => '_blank']
+                                );
+                            },
+                        ],
+                            'description',
+                            'day',
+                            'time',
+                        ],
+                    ]),
+        'active'=>true
+    ],
+    [
+        'label'=>'<i class="glyphicon glyphicon-transfer"></i> ACTIVE',
+        'content'=>
+        //Active Evaluation Subjects 
+        Html::beginForm(['stop'],'post').
+                GridView::widget([
+                    'dataProvider' => $activeDataProvider,
+                    // 'filterModel' => $searchModel,
+                    'columns' => [
+                        // [
+                        //         'class' => 'yii\grid\CheckboxColumn',
+
+                        // ],
+                        [
+                            'attribute' => 'estatus',
+                            'label' => 'Evaluation Status',
+                            'value' =>  'estatusName',
+                        ],
+                        [ 'attribute' => 
+                        'name', 
+                        'label' => 'Name',
+                        'format' => 'raw', 
+                        'value' => 
+                        function ($model) {
+                        return Html::a($model->name, 
+                        [ 'classes/view', 'id' => $model->id ], [
+                            'target' => '_blank']
+                            );
+                        },
+                    ],
+                    
+                        'description',
+                        'day',
+                        'time',
+                    ],
+                ]) 
+                .
+        Html::endForm()
+    ],
+    ];
+echo TabsX::widget([
+    'navType' => 'nav-pills',
+    'items'=>$items,
+    'position'=>TabsX::POS_ABOVE,
+    'encodeLabels'=>false
+]);
+?>
+     <?php }?>
 </div>
 </div>

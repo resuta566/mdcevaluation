@@ -200,6 +200,16 @@ class TeacherController extends Controller
                 'instrument' => $instrument,
                 'activeDataProvider' => $activeDataProvider
             ]);
+        }elseif(Yii::$app->user->identity->role == 100){
+            return $this->render('view', [
+                'model'=> $model,
+                'eval' =>  $eval,
+                'classes'=> $classes,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'instrument' => $instrument,
+                'activeDataProvider' => $activeDataProvider
+            ]);
         }
         throw new \yii\web\HttpException(401, 'You are Forbidden to view this teacher.');
         
