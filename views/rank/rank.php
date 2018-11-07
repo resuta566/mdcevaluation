@@ -64,7 +64,9 @@ $this->params['breadcrumbs'][] = $this->title;
       $elemTeachers = User::find()->where(['department' => 9])->andWhere(['role' => [20,30]])->all();
      ?>
             <div >
-            <?php echo yii\bootstrap\Tabs::widget([
+            <?php 
+            ini_set('memory_limit','-1');
+            echo yii\bootstrap\Tabs::widget([
             'navType' => 'nav-pills',
             'encodeLabels' => false,
             'items' => [

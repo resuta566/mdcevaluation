@@ -27,7 +27,7 @@ class UserController extends Controller
                 'ruleConfig' => [
                     'class' => AccessRule::className(),
                 ],
-                'only' => ['index','view','update'],
+                'only' => ['index','view','update','changepassword'],
                 'rules'=>[
                     [
                         'actions'=>['login'],
@@ -35,9 +35,24 @@ class UserController extends Controller
                         'roles' => ['@']
                     ],
                     [
-                        'actions' => ['index','delete','view','update'],
+                        'actions' => ['index','delete','view','update','changepassword'],
                         'allow' => true,
                         'roles' => [User::ROLE_ADMIN]
+                    ],
+                    [
+                        'actions' => ['changepassword'],
+                        'allow' => true,
+                        'roles' => [User::ROLE_TEACHER]
+                    ],
+                    [
+                        'actions' => ['changepassword'],
+                        'allow' => true,
+                        'roles' => [User::ROLE_HEAD]
+                    ],
+                    [
+                        'actions' => ['changepassword'],
+                        'allow' => true,
+                        'roles' => [User::ROLE_STUDENT]
                     ]
                 ],
             ],
@@ -165,6 +180,7 @@ class UserController extends Controller
     }
 
     public function actionChangepassword(){
+
         $model = new \app\models\PasswordForm;
         $modeluser = User::find()->where([
             'id'=>Yii::$app->user->identity->id

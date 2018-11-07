@@ -104,7 +104,7 @@ MaterialAsset::register($this);
 		<?php
 		$url = Yii::$app->request->baseUrl;
 	NavBar::begin([
-			'brandLabel' => "<img src='$url/img/mdclogo.png' style='display:inline; horizontal-align: top; height:45px;' alt='logo'/> Teacher Evaluation",
+			'brandLabel' => "<p style=\"font-family:Old English Text MT;\"> <img src='$url/img/mdclogo.png' style='display:inline; horizontal-align: top; height:45px;' alt='logo'/> Teacher Evaluation</p>",
 			'brandUrl' => Yii::$app->homeUrl,
 			'innerContainerOptions' => ['class' => 'container-fluid'],
 			'options' => [

@@ -3,23 +3,22 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use app\models\User;
+use yii\bootstrap\Modal;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
-if(Yii::$app->user->identity->role==User::ROLE_TEACHER || Yii::$app->user->identity->role==User::ROLE_HEAD){
-    $this->title = $model->teacher->fullName;
-}elseif(Yii::$app->user->identity->role==User::ROLE_STUDENT){
-    $this->title = $model->student->fullName;
+if(Yii::$app->user->identity->role== User::ROLE_ADMIN || Yii::$app->user->identity->role== User::ROLE_HEAD || Yii::$app->user->identity->role== User::ROLE_TEACHER){
+    $titles = Yii::$app->user->identity->teacher->fullName;
+}else{
+    $titles = Yii::$app->user->identity->student->fullName;
 }
+$this->title = $titles;
 $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['/']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="user-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('change password', ['changepassword'], ['class' => 'btn btn-primary']) ?>
+    <a class="btn btn-info" href="<?= \yii\helpers\Url::to(['user/changepassword']) ?>"  style="color: white">Change Password</a>
     </p>
 
     <?= DetailView::widget([
@@ -34,7 +33,5 @@ $this->params['breadcrumbs'][] = $this->title;
             'departmentname',
         ],
     ]) ?>
-
-
-        <a href="<?= \yii\helpers\Url::to(['/teacher/score','id' => Yii::$app->user->identity->id]) ?>">A</a>
-</div>
+	
+        

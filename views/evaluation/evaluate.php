@@ -20,9 +20,9 @@ $this->title = 'Evaluate';
         <strong>
         <?php
         if(Yii::$app->user->identity->role== User::ROLE_HEAD){
-            echo '<h2>Head\'s Evaluation of Faculty';
+            echo '<h2>Head\'s Evaluation of Faculty</h2>';
         }else{
-            echo '<h2>Student\'s Evaluation of Faculty';
+            echo '<h2>Student\'s Evaluation of Faculty</h2>';
         }
         ?>
         </strong>

@@ -167,27 +167,27 @@ use kartik\tabs\TabsX;
                     $data;
                 //    var_dump($data);
                 //    die();
-                    echo"<table class='table'>";
-                    echo "<thead>";
-                    echo "<tr>";
-                    echo "<th> Teacher Name </th>";
-                    echo "<th> Score </th>";
-                    echo "<th> Remarks </th>";
-                    echo "</tr>";
-                    echo "</thead>";
-                    echo "<tbody>";
-                    if(!empty($data) && !in_array(null,$data)){
-                        usort($data, function ($a, $b) {
-                            if ($a['score'] === $b['score']) {
-                                return 0;
-                            }
-                            return ($a['score'] < $b['score']) ? 1 : -1;
-                             });
-                    for($i=0;$i<count($data);$i++) {
-                        echo('<tr>');
-                        echo('<td>' . Html::a($data[$i]['name'], ['teacher/view','id'=> $data[$i]['id']], ['target' => '_blank']) . '</td>');
-                        echo('<td style="width: 20%">' . $data[$i]['score'] . '</td>');
-                        echo('<td style="width: 20%">');
+                echo"<table class='table'>";
+                echo "<thead>";
+                echo "<tr>";
+                echo "<th> Teacher Name </th>";
+                echo "<th> Score </th>";
+                echo "<th> Remarks </th>";
+                echo "</tr>";
+                echo "</thead>";
+                echo "<tbody>";
+                if(!empty($data) && !in_array(null,$data)){
+                    usort($data, function ($a, $b) {
+                        if ($a['score'] === $b['score']) {
+                            return 0;
+                        }
+                        return ($a['score'] < $b['score']) ? 1 : -1;
+                         });
+                for($i=0;$i<count($data);$i++) {
+                    echo('<tr>');
+                    echo('<td>' . Html::a($data[$i]['name'], ['teacher/view','id'=> $data[$i]['id']], ['target' => '_blank']) . '</td>');
+                    echo('<td style="width: 20%">' . $data[$i]['score'] . '</td>');
+                    echo('<td style="width: 20%">');
                     if(5 >= $data[$i]['score'] && 4.20 <= $data[$i]['score'] ){
                         echo 'Excellent';
                     }else if($data[$i]['score'] <= 4.19 && $data[$i]['score'] >= 3.40){
@@ -202,11 +202,11 @@ use kartik\tabs\TabsX;
                         echo 'Fail';
                     }
                     echo('</td');
-                        echo('</tr>');
-                    }
+                    echo('</tr>');
                 }
-                    echo "</tbody>";
-                    echo "</table>";
+            }
+                echo "</tbody>";
+                echo "</table>";
                 
                     
                     ?>

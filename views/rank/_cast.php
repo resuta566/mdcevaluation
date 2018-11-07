@@ -209,8 +209,6 @@ use kartik\tabs\TabsX;
                 }
                     echo "</tbody>";
                     echo "</table>";
-                
-                    
                     ?>
             </div>
 </div>

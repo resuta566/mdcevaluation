@@ -4,16 +4,16 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use app\models\User;
 
-if(Yii::$app->user->identity->role==User::ROLE_TEACHER || Yii::$app->user->identity->role==User::ROLE_HEAD){
-    $this->title = $model->teacher->fullName;
-}elseif(Yii::$app->user->identity->role==User::ROLE_STUDENT){
-    $this->title = $model->student->fullName;
+if(Yii::$app->user->identity->role== User::ROLE_ADMIN || Yii::$app->user->identity->role== User::ROLE_HEAD || Yii::$app->user->identity->role== User::ROLE_TEACHER){
+    $titles = Yii::$app->user->identity->teacher->fullName;
+}else{
+    $titles = Yii::$app->user->identity->student->fullName;
 }
+$this->title = $titles;
 $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['/']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-changepassword">
-    <h1><?= Html::encode($this->title) ?></h1>
     
     <p>Please fill out the following fields to change password :</p>
     
@@ -27,20 +27,21 @@ $this->params['breadcrumbs'][] = $this->title;
             'labelOptions'=>['class'=>'col-lg-2 control-label'],
         ],
     ]); ?>
-        <?= $form->field($model,'oldpass',['inputOptions'=>[
-            'placeholder'=>'Old Password'
-        ]])->passwordInput() ?>
+        <?= $form->field($model,'oldpass')->passwordInput([
+                                'autofocus'=>true,
+                                'placeholder' =>'Current Password',
+                                ])->label(false) ?>
         
-        <?= $form->field($model,'newpass',['inputOptions'=>[
-            'placeholder'=>'New Password'
-        ]])->passwordInput() ?>
+        <?= $form->field($model,'newpass')->passwordInput([
+                                'placeholder' =>'New Password',
+                                ])->label(false) ?>
         
-        <?= $form->field($model,'repeatnewpass',['inputOptions'=>[
-            'placeholder'=>'Repeat New Password'
-        ]])->passwordInput() ?>
+        <?= $form->field($model,'repeatnewpass')->passwordInput([
+                                'placeholder' =>'Repeat New Password',
+                                ])->label(false) ?>
         
         <div class="form-group">
-            <div class="col-lg-offset-2 col-lg-11">
+            <div class="col-lg-offset-1 col-lg-11">
                 <?= Html::submitButton('Change password',[
                     'class'=>'btn btn-primary'
                 ]) ?>

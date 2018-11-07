@@ -44,13 +44,7 @@ use kartik\tabs\TabsX;
         $sectionScore = array();
         $itemScore = array();
         foreach($teachers as $indexTeacher => $teacher):
-
-        $evaluation = Evaluation::find()->where(['eval_for' => $teacher->id])->one();
-        if(!$evaluation){
-        
-        }else{
-        Teacher::find()->where(['user_id' => $teacher->id])->one(); 
-            $inst = Instrument::find()->where(['id' => $evaluation->instrument->id])->one(); 
+            $inst = Instrument::find()->where(['id' => 1])->one(); 
 
 
             $sect = Section::find()->where(['instrument_id' => $inst->id]); 
@@ -158,38 +152,51 @@ use kartik\tabs\TabsX;
                     $averageScore = 0;
                     $mee = 0;
                     $me = 0;
-                                
-        }
+                               
                     endforeach; 
                     $data;
                 //    print_r($data); 
                 //     die();
                 echo"<table class='table'>";
-                echo "<thead>";
-                echo "<tr>";
-                echo "<th> Teacher Name </th>";
-                echo "<th> Score </th>";
-                echo "</tr>";
-                echo "</thead>";
-                echo "<tbody>";
-                if(!empty($data) && !in_array(null,$data)){
-                    usort($data, function ($a, $b) {
-                        if ($a['score'] === $b['score']) {
-                            return 0;
+                    echo "<thead>";
+                    echo "<tr>";
+                    echo "<th> Teacher Name </th>";
+                    echo "<th> Score </th>";
+                    echo "<th> Remarks </th>";
+                    echo "</tr>";
+                    echo "</thead>";
+                    echo "<tbody>";
+                    if(!empty($data) && !in_array(null,$data)){
+                        usort($data, function ($a, $b) {
+                            if ($a['score'] === $b['score']) {
+                                return 0;
+                            }
+                            return ($a['score'] < $b['score']) ? 1 : -1;
+                             });
+                    for($i=0;$i<count($data);$i++) {
+                        echo('<tr>');
+                        echo('<td>' . Html::a($data[$i]['name'], ['teacher/view','id'=> $data[$i]['id']], ['target' => '_blank']) . '</td>');
+                        echo('<td style="width: 20%">' . $data[$i]['score'] . '</td>');
+                        echo('<td style="width: 20%">');
+                        if(5 >= $data[$i]['score'] && 4.20 <= $data[$i]['score'] ){
+                            echo 'Excellent';
+                        }else if($data[$i]['score'] <= 4.19 && $data[$i]['score'] >= 3.40){
+                            echo 'Above Average';
+                        }else if($data[$i]['score'] <= 3.39 && $data[$i]['score'] >= 2.60){
+                            echo 'Average/Fair';
+                        }else if($data[$i]['score'] <= 2.59 && $data[$i]['score'] >= 1.80){
+                            echo 'Poor';
+                        }else if($data[$i]['score'] <= 1.79 && $data[$i]['score'] >= 1){
+                            echo 'Very Poor';
+                        }else{
+                            echo 'Fail';
                         }
-                        return ($a['score'] < $b['score']) ? 1 : -1;
-                         });
-                for($i=0;$i<count($data);$i++) {
-                    echo('<tr>');
-                    echo('<td>' . Html::a($data[$i]['name'], ['teacher/view','id'=> $data[$i]['id']], ['target' => '_blank']) . '</td>');
-                    echo('<td style="width: 20%">' . $data[$i]['score'] . '</td>');
-                    echo('</tr>');
+                        echo('</td');
+                        echo('</tr>');
+                    }
                 }
-            }
-                echo "</tbody>";
-                echo "</table>";
-                echo "</table>";
-                    
+                    echo "</tbody>";
+                    echo "</table>";
                     ?>
             </div>
 </div>

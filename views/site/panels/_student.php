@@ -58,7 +58,7 @@ $this->title = "Dashboard";
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="<?= \yii\helpers\Url::to(['/']) ?>">
+						<a class="navbar-brand" href="<?= \yii\helpers\Url::to(['/']) ?>" style="font-family:Old English Text MT;">
 							<img src="<?= Yii::$app->request->baseUrl ?>/img/mdclogo.png" style="display:inline; horizontal-align: top; height:45px;"/> Teacher Evaluation
 						</a>
 					</div>
@@ -81,7 +81,7 @@ $this->title = "Dashboard";
 				<div class="container-fluid">
 						<div class="card">
 					<div class="card-header" data-background-color="blue">
-						<h1 class="title">DASHBOARD</h1>
+						<h1 class="title" style="font-family:Old English Text MT;">DASHBOARD</h1>
 						<p class="category">Student Dashboard</p>
 					</div>
 								<div class="panel-body">

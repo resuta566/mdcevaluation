@@ -79,7 +79,7 @@ $this->title = "Admin Dashboard";
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="<?= \yii\helpers\Url::to(['/']) ?>">
+						<a class="navbar-brand" href="<?= \yii\helpers\Url::to(['/']) ?>" style="font-family:Old English Text MT;">
 							<img src="<?= Yii::$app->request->baseUrl ?>/img/mdclogo.png" style="display:inline; horizontal-align: top; height:45px;"/> Teacher Evaluation
 						</a>
 					</div>
@@ -102,12 +102,12 @@ $this->title = "Admin Dashboard";
 				<div class="container-fluid">
 						<div class="card">
 					<div class="card-header" data-background-color="blue">
-						<h1 class="title">DASHBOARD</h1>
+						<h1 class="title" style="font-family:Old English Text MT;">DASHBOARD</h1>
 						<p class="category">Admin Dashboard</p>
 					</div>
 								<div class="panel-body">
 								<center>
-								<h2>Evaluatee</h2>
+								<h2 style="font-family:Old English Text MT;">MATER DEI COLLEGE EVALUATION</h2>
 								<div class="col-md-4">
 									<div class="card">
 										<div class="card-header card-chart" data-background-color="green">
