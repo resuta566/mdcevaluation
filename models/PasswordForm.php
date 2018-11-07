@@ -24,12 +24,11 @@
             ])->one();
             $password = $user->password;
             $user = new \app\models\User;
-            $old_password = $user->setPassword($this->oldpass);
-            print_r($old_password);
-            if($password!=$old_password)
+            // $old_password = crypt($this->oldpass);
+            if(!Yii::$app->security->validatePassword($this->oldpass, $password))
             {
                 $this->addError($attribute,'Old password is incorrect');
-                die();
+                // die();
             }
             
         }
