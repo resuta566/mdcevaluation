@@ -238,46 +238,6 @@ class TeacherController extends Controller
         $instrument = Instrument::find('id')->where(['id'=> $action ])->one();
         $instrumentSection = Section::find('id')->where(['instrument_id' => $instrument])->all();
         $deptUsers = User::find()->where(['department' => $id])->andWhere(['role' => 20])->all();
-        // print_r($deanid);
-        // die();
-            // print_r($deptUser);
-            //Teacher to Dean
-            foreach ($deptUsers as $sc) :
-                if(!Evaluation::find()->where(['eval_by' => $sc->id])->andWhere(['eval_for' => $deanid ])->one()){
-                    $evaluation = new Evaluation();
-                $evaluation->eval_by =  $sc->id;
-                $evaluation->eval_for = $deanid;
-                $evaluation->instrument_id = $instrument->id;
-                $evaluation->save();
-                         foreach($instrumentSection as $iS){
-                             $evalSection = new EvaluationSection;
-                             $evalSection->scenario = 'create';
-                             $evalSection->evaluation_id = $evaluation->id;
-                             $evalSection->section_id = $iS->id;
-                             $evalSection->link('evaluation', $evaluation);
-                             $evalSection->link('section', $iS);
-                             // echo $iS->id." " . $iS->name. " - ";
-                             $instrumentSectionItem = Item::find()->where(['section_id' => $iS->id])->all(); 
-                                     // echo  $instrumentSectionItem ."<br>";
-                                     // echo "<br>";
-                                     foreach($instrumentSectionItem as $institem){
-                                             $evalItem = new EvaluationItem;
-                                             $evalItem->scenario = 'create';
-                                             $evalItem->evaluation_section_id = $evalSection->id;
-                                             $evalItem->item_id = $institem->id;
-                                             $evalItem->link('evaluationSection', $evalSection);
-                                             $evalItem->link('item', $institem);
-                                             $evalItem->save();
-                                             if(!$evalItem->save()){
-                                                 print_r($evalItem->getErrors());
-                                                 die();
-                                             }
-                                     }
-                         }
-                    Yii::$app->session->setFlash('success', 'Successfull Teacher to Dean Evaluation');
-                }
-                
-            endforeach;
             //Dean to Teacher
                foreach ($deptUsers as $sc) :
                 if(!Evaluation::find()->where(['eval_by' => $deanid])->andWhere(['eval_for' => $sc->id ])->one()){
@@ -317,52 +277,11 @@ class TeacherController extends Controller
                    
                 endforeach;
 
-        foreach($deptUsers as $deptUser):
-            // print_r($deptUser);
-            // die();
-            //Teachers Only Loop 
-               foreach ($deptUsers as $sc) :
-                   
-                   if($sc->id !== $deptUser->id && !Evaluation::find()->where(['eval_by' => $deptUser->id])->andWhere(['eval_for' => $sc->id ])->one()){
-                    $evaluation = new Evaluation();
-                    $evaluation->eval_by =  $deptUser->id;
-                    $evaluation->eval_for = $sc->id;
-                    $evaluation->instrument_id = $instrument->id;
-                    $evaluation->save();
-                             foreach($instrumentSection as $iS){
-                                 $evalSection = new EvaluationSection;
-                                 $evalSection->scenario = 'create';
-                                 $evalSection->evaluation_id = $evaluation->id;
-                                 $evalSection->section_id = $iS->id;
-                                 $evalSection->link('evaluation', $evaluation);
-                                 $evalSection->link('section', $iS);
-                                 // echo $iS->id." " . $iS->name. " - ";
-                                 $instrumentSectionItem = Item::find()->where(['section_id' => $iS->id])->all(); 
-                                         // echo  $instrumentSectionItem ."<br>";
-                                         // echo "<br>";
-                                         foreach($instrumentSectionItem as $institem){
-                                                 $evalItem = new EvaluationItem;
-                                                 $evalItem->scenario = 'create';
-                                                 $evalItem->evaluation_section_id = $evalSection->id;
-                                                 $evalItem->item_id = $institem->id;
-                                                 $evalItem->link('evaluationSection', $evalSection);
-                                                 $evalItem->link('item', $institem);
-                                                 $evalItem->save();
-                                                 if(!$evalItem->save()){
-                                                     print_r($evalItem->getErrors());
-                                                     die();
-                                                 }
-                                         }
-                             }
-                             
-                    Yii::$app->session->setFlash('success', ' Successfull Peer Evaluation');
+                Yii::$app->session->setFlash('success', ' Successfull Peer Evaluation');
                     
-            if(!$evaluation->save()){ 
-                Yii::$app->session->setFlash('danger', ' There is already an Evaluation for this teachers.');        
-            }
-                            }
-                endforeach;
-            endforeach;
+                if(!$evaluation->save()){ 
+                    Yii::$app->session->setFlash('danger', ' There is already an Evaluation for this teachers.');        
+                }
            return $this->redirect(['index']);
     }
     /**

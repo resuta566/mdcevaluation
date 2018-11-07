@@ -22,7 +22,7 @@ $user = \app\models\User::find()->where(['role' => 30])->andWhere(['department'=
     <div class="card-content">
     <?php echo $this->render('_searchCabmb', ['model' => $searchModel]); ?>
     <div>
-    <p>Start Peer Evaluation</p>
+    <p>Start Head Evaluation</p>
     <?= Html::beginForm(['teacheval', 'id' =>  $user->department, 'deanid' =>  $user->id ],'post'); ?>
 
     <?=  Html::dropDownList('instrumentdropdown', null,

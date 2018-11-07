@@ -11,7 +11,7 @@ use yii\bootstrap\Modal;
 
 $this->title = 'COE Teachers';
 $this->params['breadcrumbs'][] = $this->title;
-$user = \app\models\User::find()->where(['role' => 30])->andWhere(['department'=> 2])->one();
+$user = \app\models\User::find()->where(['role' => 100])->andWhere(['department'=> 2])->one();
 ?>
 
 <div class="card">
@@ -23,7 +23,7 @@ $user = \app\models\User::find()->where(['role' => 30])->andWhere(['department'=
     <div class="card-content">
     <?php echo $this->render('_searchCoe', ['model' => $searchModel]); ?>
     <div>
-    <p>Start Peer Evaluation</p>
+    <p>Start Head Evaluation</p>
     <?= Html::beginForm(['teacheval', 'id' =>  $user->department, 'deanid' =>  $user->id ],'post'); ?>
 
     <?=  Html::dropDownList('instrumentdropdown', null,
