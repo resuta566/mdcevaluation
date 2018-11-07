@@ -17,6 +17,18 @@ use yii\grid\GridView;
 use kartik\tabs\TabsX;
     
 ?>
+
+<div id="div1">
+
+   <div class="jem">
+    <p style="font-family:Old English Text MT;"> Mater Dei College
+<br>
+     Tubigon,Bohol,Philippines
+     <br>Teacher Evaluation <br>
+      CAST Department</p>
+    </div>
+
+
     <div>
     <?php
         $data = array(array(),array());
@@ -27,25 +39,28 @@ use kartik\tabs\TabsX;
         
         $sectScore = 0; 
         $me = 0;
-        $mee = 0;
+        $mee = 0; 
         
         $sectionScore = array();
         $itemScore = array();
+        // var_dump($castTeachers);
+        // die();
         if(Yii::$app->user->identity->department == 4){
             $teachers = User::find()->where(['department' => [Yii::$app->user->identity->department,3]])->all();
         }else if(Yii::$app->user->identity->department == 7){
             $teachers = User::find()->where(['department' => [Yii::$app->user->identity->department,8]])->all();
         }else{
-            $teachers = User::find()->where(['department' => Yii::$app->user->identity->department])->all();
+            $teachers = User::find()->where(['department' => Yii::$app->user->identity->department,'role' => [20,30]])->all();
         }
-        
-        foreach($teachers as $indexTeacher => $teacher):
+        foreach($teachers as $indexCastTeac => $casTeacher):
 
-        $evaluation = Evaluation::find()->where(['eval_for' => $teacher->id])->one();
+        $evaluation = Evaluation::find()->where(['eval_for' => $casTeacher->id])->one();
+            // var_dump($evaluation);
+            // die();
         if(!$evaluation){
-        
+            // die();
         }else{
-        Teacher::find()->where(['user_id' => $teacher->id])->one(); 
+        Teacher::find()->where(['user_id' => $casTeacher->id])->one(); 
             $inst = Instrument::find()->where(['id' => $evaluation->instrument->id])->one(); 
 
 
@@ -61,7 +76,7 @@ use kartik\tabs\TabsX;
                                                         evaluation_item.score as "SCORE" 
                                                         FROM `evaluation` 
                                                         INNER JOIN (evaluation_section,evaluation_item) 
-                                                        ON evaluation.eval_for = '. $teacher->id .' 
+                                                        ON evaluation.eval_for = '. $casTeacher->id .' 
                                                         WHERE evaluation_section.evaluation_id = evaluation.id 
                                                         AND evaluation_item.evaluation_section_id = evaluation_section.id 
                                                         AND evaluation_item.item_id = '.$sI->id .' 
@@ -73,7 +88,7 @@ use kartik\tabs\TabsX;
                                                         evaluation_item.score as "SCORE" 
                                                         FROM `evaluation` 
                                                         INNER JOIN (evaluation_section,evaluation_item) 
-                                                        ON evaluation.eval_for = '. $teacher->id .' 
+                                                        ON evaluation.eval_for = '. $casTeacher->id .' 
                                                         WHERE evaluation_section.evaluation_id = evaluation.id 
                                                         AND evaluation_item.evaluation_section_id = evaluation_section.id 
                                                         AND evaluation_item.item_id = '.$sI->id .' 
@@ -85,7 +100,7 @@ use kartik\tabs\TabsX;
                                                         evaluation_item.score as "SCORE" 
                                                         FROM `evaluation` 
                                                         INNER JOIN (evaluation_section,evaluation_item) 
-                                                        ON evaluation.eval_for = '. $teacher->id .' 
+                                                        ON evaluation.eval_for = '. $casTeacher->id .' 
                                                         WHERE evaluation_section.evaluation_id = evaluation.id 
                                                         AND evaluation_item.evaluation_section_id = evaluation_section.id 
                                                         AND evaluation_item.item_id = '.$sI->id .' 
@@ -97,7 +112,7 @@ use kartik\tabs\TabsX;
                                                         evaluation_item.score as "SCORE" 
                                                         FROM `evaluation` 
                                                         INNER JOIN (evaluation_section,evaluation_item) 
-                                                        ON evaluation.eval_for = '. $teacher->id .' 
+                                                        ON evaluation.eval_for = '. $casTeacher->id .' 
                                                         WHERE evaluation_section.evaluation_id = evaluation.id 
                                                         AND evaluation_item.evaluation_section_id = evaluation_section.id 
                                                         AND evaluation_item.item_id = '.$sI->id .' 
@@ -109,7 +124,7 @@ use kartik\tabs\TabsX;
                                                         evaluation_item.score as "SCORE" 
                                                         FROM `evaluation` 
                                                         INNER JOIN (evaluation_section,evaluation_item) 
-                                                        ON evaluation.eval_for = '. $teacher->id .' 
+                                                        ON evaluation.eval_for = '. $casTeacher->id .' 
                                                         WHERE evaluation_section.evaluation_id = evaluation.id 
                                                         AND evaluation_item.evaluation_section_id = evaluation_section.id 
                                                         AND evaluation_item.item_id = '.$sI->id .' 
@@ -145,11 +160,11 @@ use kartik\tabs\TabsX;
                                 
                                 $me +=$sectItems->count();
                             endforeach; 
-                    " AVERAGE SCORE: ". $teacher->teacher->fullname."-".$averageScore = $mee/$me; 
-                    $name = $teacher->teacher->fullname; 
-                    $data[$indexTeacher]['id'] = $teacher->teacher->id;
-                    $data[$indexTeacher]['name'] = $name;
-                    $data[$indexTeacher]['score'] = $averageScore;
+                    " AVERAGE SCORE: ". $casTeacher->teacher->fullname."-".$averageScore = $mee/$me; 
+                    $name = $casTeacher->teacher->fullname; 
+                    $data[$indexCastTeac]['id'] = $casTeacher->teacher->id;
+                    $data[$indexCastTeac]['name'] = $name;
+                    $data[$indexCastTeac]['score'] = $averageScore;
                     
                     $averageScore = 0;
                     $mee = 0;
@@ -158,33 +173,34 @@ use kartik\tabs\TabsX;
         }
                     endforeach; 
                     $data;
-                //    print_r($data); 
-                //     die();
-
-                echo"<table class='table'>";
-                echo "<thead>";
-                echo "<tr>";
-                echo "<th> Teacher Name </th>";
-                echo "<th> Score </th>";
-                echo "</tr>";
-                echo "</thead>";
-                echo "<tbody>";
-                if(!empty($data) && !in_array(null,$data)){
-                    usort($data, function ($a, $b) {
-                        if ($a['score'] === $b['score']) {
-                            return 0;
-                        }
-                        return ($a['score'] < $b['score']) ? 1 : -1;
-                         });
-                for($i=0;$i<count($data);$i++) {
-                    echo('<tr>');
-                    echo('<td>'.Html::a($data[$i]['name'], ['teacher/view','id'=> $data[$i]['id']], ['target' => '_blank']). '</td>');
-                    echo('<td style="width: 20%">' . $data[$i]['score'] . '</td>');
-                    echo('</tr>');
+                //    var_dump($data);
+                //    die();
+                    echo"<table class='table'>";
+                    echo "<thead>";
+                    echo "<tr>";
+                    echo "<th> Teacher Name </th>";
+                    echo "<th> Score </th>";
+                    echo "</tr>";
+                    echo "</thead>";
+                    echo "<tbody>";
+                    if(!empty($data) && !in_array(null,$data)){
+                        usort($data, function ($a, $b) {
+                            if ($a['score'] === $b['score']) {
+                                return 0;
+                            }
+                            return ($a['score'] < $b['score']) ? 1 : -1;
+                             });
+                    for($i=0;$i<count($data);$i++) {
+                        echo('<tr>');
+                        echo('<td>' . Html::a($data[$i]['name'], ['teacher/view','id'=> $data[$i]['id']], ['target' => '_blank']) . '</td>');
+                        echo('<td style="width: 20%">' . $data[$i]['score'] . '</td>');
+                        echo('</tr>');
+                    }
                 }
-            }
-                echo "</tbody>";
-                echo "</table>";
+                    echo "</tbody>";
+                    echo "</table>";
+                
                     
                     ?>
+            </div>
 </div>

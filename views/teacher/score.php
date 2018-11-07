@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php  $evaluation = Evaluation::find()->where(['eval_for' => $model->user->id])->one(); ?>
         <?php $inst = Instrument::find()->where(['id' => $evaluation->instrument->id])->one(); ?>
         <?php $sect = Section::find()->where(['instrument_id' => $inst->id]); ?>
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered table-striped">  
             <thead>
             </thead>
             <tbody class="container-items">
@@ -141,9 +141,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     ?>
                                                     
                                                 <?php 
+                                                if($itemScore[0] == 0 && $itemScore[1] == 0 && $itemScore[2] == 0 && $itemScore[3] == 0 && $itemScore[4] == 0){
+                                                    throw new \yii\web\HttpException(404, 'There is stil no score!');
+                                                }
                                                 $itemAve =
                                                 (($itemScore[0]*1)+($itemScore[1]*2)+($itemScore[2]*3)+($itemScore[3]*4)+($itemScore[4]*5))/($itemScore[0]+$itemScore[1]+$itemScore[2]+$itemScore[3]+$itemScore[4])
-                                                ?>
+                                               ?>
                                                 <?= $itemAve ?>
                                                 <?php $sectScore += $itemAve?>
                                                 </td>

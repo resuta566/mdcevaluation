@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::endForm();?>
 
      <?php 
-      $castTeachers = User::find()->where(['department' => 1])->andWhere(['role' => [20,30,100]])->all();
+      $castTeachers = User::find()->where(['department' => 1])->andWhere(['role' => [20,30]])->all();
       $coeTeachers = User::find()->where(['department' => 2])->andWhere(['role' => [20,30]])->all();
       $cabmhTeachers = User::find()->where(['department' => 3])->andWhere(['role' => [20,30]])->all();
       $cabmbTeachers = User::find()->where(['department' => 4])->andWhere(['role' => [20,30]])->all();

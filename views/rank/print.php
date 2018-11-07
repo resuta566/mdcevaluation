@@ -6,7 +6,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <?php
- $teachers = app\models\User::find()->where(['department' => $userDept])->andWhere(['role' => [20,30,100]])->all();
+ $teachers = app\models\User::find()->where(['department' => $userDept])->andWhere(['role' => [20,30]])->all();
  ?>
 
  <button onclick="printContent('div1')" class="btn btn-info btn-pdfprint"><i class="glyphicon glyphicon-print" style="font-size: 20px"></i></button>

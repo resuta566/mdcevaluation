@@ -72,7 +72,7 @@ $this->title = "Dashboard";
 							<span class="icon-bar"></span>
 						</button>
 						<a class="navbar-brand" href="<?= \yii\helpers\Url::to(['/']) ?>">
-							<img src="http://mdc.ph/wp-content/uploads/2013/08/MDC-Logo-clipped.png" style="display:inline; horizontal-align: top; height:45px;"/> Teacher Evaluation
+							<img src="<?= Yii::$app->request->baseUrl ?>/img/mdclogo.png" style="display:inline; horizontal-align: top; height:45px;"/> Teacher Evaluation
 						</a>
 					</div>
 					<div class="collapse navbar-collapse">
@@ -98,6 +98,7 @@ $this->title = "Dashboard";
 						<p class="category">Teacher Dashboard</p>
 					</div>
 								<div class="panel-body">
+								<?php if(Yii::$app->user->identity->role==User::ROLE_ADMIN){?>
 								<?php $evaluation =\app\models\Evaluation::find()->where(['eval_by' => Yii::$app->user->identity->id])->andWhere(['status' => 0])->all();  ?>
 								<?php if(!$evaluation){?>
 										<h3>There is no Evaluation yet.</h3>
@@ -125,6 +126,7 @@ $this->title = "Dashboard";
                         			</div>
 									</center>
 							<?php endforeach; ?>
+								<?php }?>
 								<?php }?>
 								</div>
 						  	</div>

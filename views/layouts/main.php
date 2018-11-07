@@ -32,7 +32,7 @@ MaterialAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 <div class="wrapper">
-	    <div class="sidebar" data-color="blue" data-image="http://mdc.ph/wp-content/uploads/2013/08/MDC-Logo-clipped.png">
+	    <div class="sidebar" data-color="blue" data-image="<?= Yii::$app->request->baseUrl ?>/img/mdclogo.png">
 
 			<!--
 		        Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"

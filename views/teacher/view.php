@@ -70,11 +70,9 @@ $this->params['breadcrumbs'][] = $this->title;
        
     </div>
     <div class="pull-right">
-    <?php if(Yii::$app->user->identity->role == 100){ ?>
     <?php if($model->user->id = Evaluation::find()->where(['eval_for' => $model->user->id])->all()){?>
     <?= Html::a('Comments', ['comments', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
     <?= Html::a('Score', ['score', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
-    <?php }?>
     <?php }?>
     </div>
     </div>
@@ -87,6 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <th>Middle Name</th>
         <th>Gender</th>
         <th>Department</th>
+        <th>Evaluation Status</th>
     </tr>
     <tr>
     
@@ -95,16 +94,18 @@ $this->params['breadcrumbs'][] = $this->title;
         <td><?= $model->mname ?></td>
         <td><?= $model->genderName ?></td>
         <td><?= $model->user->departmentName ?></td>
+        <td><?= $model->evalDone ?></td>
        
     </tr>
     </table>
+    <br>
      <h2><b>Subjects</b>
      </h2>
      <?php if(Yii::$app->user->identity->role == 100){ ?>
         <?php 
 $items = [
     [
-        'label'=>'<i class="glyphicon glyphicon-off"></i> INACTIVE',
+        'label'=>'<i class="glyphicon glyphicon-off"></i> FOR EVALUATION',
         'content'=> 
         // This is the Inactive Evaluation subjects
        Html::beginForm(['bulk'],'post').
@@ -159,7 +160,7 @@ $items = [
         'active'=>true
     ],
     [
-        'label'=>'<i class="glyphicon glyphicon-transfer"></i> ACTIVE',
+        'label'=>'<i class="glyphicon glyphicon-transfer"></i> ONGOING EVALUATION',
         'content'=>
         //Active Evaluation Subjects 
         Html::beginForm(['stop'],'post').
@@ -209,7 +210,7 @@ echo TabsX::widget([
         <?php 
 $items = [
     [
-        'label'=>'<i class="glyphicon glyphicon-off"></i> INACTIVE',
+        'label'=>'<i class="glyphicon glyphicon-off"></i> FOR EVALUATION',
         'content'=> 
                     GridView::widget([
                         'dataProvider' => $dataProvider,
@@ -239,7 +240,7 @@ $items = [
         'active'=>true
     ],
     [
-        'label'=>'<i class="glyphicon glyphicon-transfer"></i> ACTIVE',
+        'label'=>'<i class="glyphicon glyphicon-transfer"></i> ONGOING EVALUATION',
         'content'=>
         //Active Evaluation Subjects 
         Html::beginForm(['stop'],'post').

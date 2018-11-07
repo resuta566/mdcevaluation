@@ -23,12 +23,25 @@ use Yii;
  */
 class Evaluation extends \yii\db\ActiveRecord
 {
+    const STATUS_FINISHED = 1;
+    const STATUS_NOTYET = 0;
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
         return 'evaluation';
+    }
+
+    public static function getStatus() {
+        return $status = [
+            1 => 'FINISHED',
+            0 => 'NOT YET',
+        ];
+    }
+
+    public function getStatusName() {
+        return static::getStatus()[$this->status];
     }
 
     /**

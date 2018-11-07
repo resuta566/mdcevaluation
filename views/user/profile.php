@@ -35,4 +35,6 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
+
+        <a href="<?= \yii\helpers\Url::to(['/teacher/score','id' => Yii::$app->user->identity->id]) ?>">A</a>
 </div>

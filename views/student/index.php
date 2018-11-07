@@ -67,6 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'mname',
                     'genderName',
                     'user.departmentName',
+                    'evalDone'
 
                 //     ['class' => 'yii\grid\ActionColumn',
                 //      'template' => '{view}',

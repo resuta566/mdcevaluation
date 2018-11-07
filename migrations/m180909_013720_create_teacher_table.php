@@ -18,6 +18,7 @@ class m180909_013720_create_teacher_table extends Migration
             'fname' => $this->string(50)->notNull(),
             'mname' => $this->string(50)->notNull(),
             'gender' => $this->integer(1)->notNull(),
+            'type' => $this->integer(1)->notNull(),
             'user_id' => $this->integer(11),
 
         ]);

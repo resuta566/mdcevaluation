@@ -75,7 +75,36 @@ $this->params['breadcrumbs'][] = $this->title;
        
     </tr>
     </table>
-
+    <div class="row">
+    <h3>Evaluation Status</h3>
+    <?php $evaluation = \app\models\Evaluation::find()->where(['eval_by' => $model->user_id])->all();  ?>
+								<?php if(!$evaluation){?>
+										<h3>There is no Evaluation yet.</h3>
+										<small>Please wait for the admin to create an evaluation for this Student.</small>
+								<?php } else{ ?>
+									<?php foreach ($evaluation as $usereval => $eval): ?>
+								<center> 
+								<div class="col-lg-3 col-md-6 col-sm-6">
+									<div class="card card-stats">
+                                                <div class="card-header" data-background-color="orange">
+                                                    <i class="glyphicon glyphicon-blackboard"></i>
+                                                </div>
+                                                <div class="card-content">
+                                                    <h5 class="title"><?= $eval->evalFor->teacher->fullName ?></h5>
+													<p class="category <?= $eval->status ?'text-primary': 'text-danger'?>" ><?= $eval->statusName ?></p>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <div class="stats">
+                                                        <i class="glyphicon glyphicon-briefcase"></i><?= $eval->class->name ?>
+                                                    </div>
+                                        </div>
+										
+                        			</div>
+									</center>
+							<?php endforeach; ?>
+								<?php }?>
+    </div>
+    <div>
     <h2><strong>Subject Enrolled</strong></h2>
     <?= GridView::widget([
         'dataProvider' => $activeDataProvider,
@@ -118,5 +147,6 @@ $this->params['breadcrumbs'][] = $this->title;
            ],
         ],
     ]); ?>
+    </div>
 </div>
 </div>

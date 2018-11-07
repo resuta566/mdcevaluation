@@ -12,37 +12,24 @@ use Yii;
  * @property string $fname
  * @property string $mname
  * @property int $gender
+ * @property int $type 1 = Full Time , 0 = Part Time
  * @property int $user_id
  *
- * @property Classes $classes
+ * @property Classes[] $classes
  * @property User $user
  */
 class Teacher extends \yii\db\ActiveRecord
 {
+
     const GENDER_MALE = 1;
     const GENDER_FEMALE =2;
 
-
-    public static function getGender() {
-        return $gender = [
-            1 => 'MALE',
-            2 => 'FEMALE',
-        ];
-    }
-
-    public function getGenderName() {
-        return static::getGender()[$this->gender];
-    }
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
         return 'teacher';
-    }
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**
@@ -51,10 +38,9 @@ class Teacher extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['lname', 'fname', 'mname', 'gender'], 'required'],
-            [['gender', 'user_id'], 'integer'],
+            [['lname', 'fname', 'mname', 'gender', 'type'], 'required'],
+            [['gender', 'type', 'user_id'], 'integer'],
             [['lname', 'fname', 'mname'], 'string', 'max' => 50],
-            [['user_id'], 'unique'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -66,19 +52,14 @@ class Teacher extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'lname' => 'Last Name',
-            'fname' => 'First Name',
-            'mname' => 'Middle Name',
-            'genderName' => 'Gender',
+            'lname' => 'Lname',
+            'fname' => 'Fname',
+            'mname' => 'Mname',
             'gender' => 'Gender',
+            'type' => 'Type',
             'user_id' => 'User ID',
-
+            'evalDone' => 'Evaluation Status'
         ];
-    }
-
-    public function getFullName()
-    {
-        return $this->lname . ", " . $this->fname;
     }
 
     /**
@@ -86,7 +67,7 @@ class Teacher extends \yii\db\ActiveRecord
      */
     public function getClasses()
     {
-        return $this->hasOne(Classes::className(), ['teacher_id' => 'id']);
+        return $this->hasMany(Classes::className(), ['teacher_id' => 'id']);
     }
 
     /**
@@ -96,6 +77,39 @@ class Teacher extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+
+    public static function getGender() {
+        return $gender = [
+            1 => 'MALE',
+            2 => 'FEMALE',
+        ];
+    }
+
+    public function getGenderName() {
+        return static::getGender()[$this->gender];
+    }
+
+    public static function getType() {
+        return $type = [
+            1 => 'FULL TIME',
+            0 => 'PART TIME',
+        ];
+    }
+
+    public function getTypeName() {
+        return static::getType()[$this->type];
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getFullName()
+    {
+        return $this->lname . ", " . $this->fname;
+    }
+
     public function getTeacherUser()
     {
         $we = Yii::$app->formatter->asText($this->id);
@@ -105,5 +119,17 @@ class Teacher extends \yii\db\ActiveRecord
     {
         return $this->id . "" . $this->lname;
     }
-    
+
+    public function getEvalDone()
+    {
+        if(!Evaluation::find()->andWhere(['eval_by' => $this->user->id])->all()){
+            return 'NO EVALUATION';
+        }else{
+            if(Evaluation::find()->where(['status' => 1])->andWhere(['eval_by' => $this->user->id])->all() ==  Evaluation::find()->where(['eval_by' => $this->user->id])->all()){
+                return 'DONE';
+            }else{
+                return 'NOT YET';
+            }
+        }
+    }
 }

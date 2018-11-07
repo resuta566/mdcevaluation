@@ -69,6 +69,7 @@ class Student extends \yii\db\ActiveRecord
             'genderName' => 'Gender',
             'gender' => 'Gender',
             'user_id' => 'User ID',
+            'evalDone' => 'Evaluation Status'
         ];
     }
 
@@ -108,5 +109,18 @@ class Student extends \yii\db\ActiveRecord
     public function getClasses()
     {
         return $this->hasMany(Classes::className(), ['id' => 'class_id'])->viaTable('student_class', ['student_id' => 'id']);
+    }
+
+    public function getEvalDone()
+    {
+        if(!Evaluation::find()->andWhere(['eval_by' => $this->user->id])->all()){
+            return 'NO EVALUATION';
+        }else{
+            if(Evaluation::find()->where(['status' => 1])->andWhere(['eval_by' => $this->user->id])->all() ==  Evaluation::find()->where(['eval_by' => $this->user->id])->all()){
+                return 'DONE';
+            }else{
+                return 'NOT YET';
+            }
+        }
     }
 }

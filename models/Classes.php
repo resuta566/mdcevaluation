@@ -67,7 +67,7 @@ class Classes extends \yii\db\ActiveRecord
             'day' => 'Day',
             'time' => 'Time',
             'teacher_id' => 'Teacher ID',
-            'estatus' => 'Estatus',
+            'estatus' => 'Evaluation Status',
         ];
     }
 
