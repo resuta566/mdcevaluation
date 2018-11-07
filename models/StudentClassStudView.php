@@ -40,7 +40,7 @@ class StudentClassStudView extends StudentClass
      */
     public function search($params)
     {
-        $query = StudentClass::find()->where(['student_id'=> 9000]);
+        $query = StudentClass::find()->where(['student_id'=> $params]);
 
         // add conditions that should always apply here
 

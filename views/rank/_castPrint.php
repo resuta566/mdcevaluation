@@ -28,7 +28,14 @@ use kartik\tabs\TabsX;
      </p>
     </div>
     <div class="jem">
-    <h2 style="font-family:Old English Text MT;"> <?= User::find()->where(['department' => $userDept])->one()->departmentname; ?> Department</h2>
+    <h2 style="font-family:Old English Text MT;"> <?php
+    if($userDept = 1 ){
+        echo 'COLLEGE RANKING';
+    }else{
+        echo User::find()->where(['department' => $userDept])->one()->departmentname .' Department'; 
+    }
+    
+    ?> </h2>
     </div>
 
 
@@ -48,13 +55,8 @@ use kartik\tabs\TabsX;
         $sectionScore = array();
         $itemScore = array();
         foreach($teachers as $indexTeacher => $teacher):
-
-        $evaluation = Evaluation::find()->where(['eval_for' => $teacher->id])->one();
-        if(!$evaluation){
-        
-        }else{
         Teacher::find()->where(['user_id' => $teacher->id])->one(); 
-            $inst = Instrument::find()->where(['id' => $evaluation->instrument->id])->one(); 
+            $inst = Instrument::find()->where(['id' => 1])->one(); 
 
 
             $sect = Section::find()->where(['instrument_id' => $inst->id]); 
@@ -163,7 +165,7 @@ use kartik\tabs\TabsX;
                     $mee = 0;
                     $me = 0;
                                 
-        }
+        
                     endforeach; 
                     $data;
                 //    print_r($data); 
@@ -174,6 +176,7 @@ use kartik\tabs\TabsX;
                 echo "<tr>";
                 echo "<th> Teacher Name </th>";
                 echo "<th> Score </th>";
+                echo "<th> Remarks </th>";
                 echo "</tr>";
                 echo "</thead>";
                 echo "<tbody>";
@@ -188,6 +191,21 @@ use kartik\tabs\TabsX;
                     echo('<tr>');
                     echo('<td>'.$data[$i]['name']. '</td>');
                     echo('<td style="width: 20%">' . $data[$i]['score'] . '</td>');
+                    echo('<td style="width: 20%">');
+                    if(5 >= $data[$i]['score'] && 4.20 <= $data[$i]['score'] ){
+                        echo 'Excellent';
+                    }else if($data[$i]['score'] <= 4.19 && $data[$i]['score'] >= 3.40){
+                        echo 'Above Average';
+                    }else if($data[$i]['score'] <= 3.39 && $data[$i]['score'] >= 2.60){
+                        echo 'Average/Fair';
+                    }else if($data[$i]['score'] <= 2.59 && $data[$i]['score'] >= 1.80){
+                        echo 'Poor';
+                    }else if($data[$i]['score'] <= 1.79 && $data[$i]['score'] >= 1){
+                        echo 'Very Poor';
+                    }else{
+                        echo 'Fail';
+                    }
+                    echo('</td');
                     echo('</tr>');
                 }
             }

@@ -46,22 +46,16 @@ use kartik\tabs\TabsX;
         // var_dump($castTeachers);
         // die();
         if(Yii::$app->user->identity->department == 4){
-            $teachers = User::find()->where(['department' => [Yii::$app->user->identity->department,3]])->all();
+            $teachers = User::find()->where(['department' => [Yii::$app->user->identity->department,3],'role' => [20,30]])->all();
         }else if(Yii::$app->user->identity->department == 7){
-            $teachers = User::find()->where(['department' => [Yii::$app->user->identity->department,8]])->all();
+            $teachers = User::find()->where(['department' => [Yii::$app->user->identity->department,8],'role' => [20,30]])->all();
         }else{
             $teachers = User::find()->where(['department' => Yii::$app->user->identity->department,'role' => [20,30]])->all();
         }
         foreach($teachers as $indexCastTeac => $casTeacher):
 
-        $evaluation = Evaluation::find()->where(['eval_for' => $casTeacher->id])->one();
-            // var_dump($evaluation);
-            // die();
-        if(!$evaluation){
-            // die();
-        }else{
         Teacher::find()->where(['user_id' => $casTeacher->id])->one(); 
-            $inst = Instrument::find()->where(['id' => $evaluation->instrument->id])->one(); 
+            $inst = Instrument::find()->where(['id' => 1])->one(); 
 
 
             $sect = Section::find()->where(['instrument_id' => $inst->id]); 
@@ -169,8 +163,6 @@ use kartik\tabs\TabsX;
                     $averageScore = 0;
                     $mee = 0;
                     $me = 0;
-                                
-        }
                     endforeach; 
                     $data;
                 //    var_dump($data);
@@ -180,6 +172,7 @@ use kartik\tabs\TabsX;
                     echo "<tr>";
                     echo "<th> Teacher Name </th>";
                     echo "<th> Score </th>";
+                    echo "<th> Remarks </th>";
                     echo "</tr>";
                     echo "</thead>";
                     echo "<tbody>";
@@ -194,6 +187,21 @@ use kartik\tabs\TabsX;
                         echo('<tr>');
                         echo('<td>' . Html::a($data[$i]['name'], ['teacher/view','id'=> $data[$i]['id']], ['target' => '_blank']) . '</td>');
                         echo('<td style="width: 20%">' . $data[$i]['score'] . '</td>');
+                        echo('<td style="width: 20%">');
+                    if(5 >= $data[$i]['score'] && 4.20 <= $data[$i]['score'] ){
+                        echo 'Excellent';
+                    }else if($data[$i]['score'] <= 4.19 && $data[$i]['score'] >= 3.40){
+                        echo 'Above Average';
+                    }else if($data[$i]['score'] <= 3.39 && $data[$i]['score'] >= 2.60){
+                        echo 'Average/Fair';
+                    }else if($data[$i]['score'] <= 2.59 && $data[$i]['score'] >= 1.80){
+                        echo 'Poor';
+                    }else if($data[$i]['score'] <= 1.79 && $data[$i]['score'] >= 1){
+                        echo 'Very Poor';
+                    }else{
+                        echo 'Fail';
+                    }
+                    echo('</td');
                         echo('</tr>');
                     }
                 }

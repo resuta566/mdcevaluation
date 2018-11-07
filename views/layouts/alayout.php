@@ -90,7 +90,7 @@ MaterialAsset::register($this);
                 'options' => ['class' => 'nav'],
                 'items' => [
                     ['label' => 'Dashboard', 'icon' => 'home', 'url' => ['/']],
-                    ['label' => 'Teacher', 'icon' => 'user', 'url' => ['/rank/department']],
+                    ['label' => 'Ranking', 'icon' => 'equalizer', 'url' => ['/rank/department']],
                     ['label' => 'Profile', 'icon' => 'user', 'url' => ['/user/profile','id' => Yii::$app->user->identity->id]],
                 ],
             ]

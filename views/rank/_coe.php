@@ -171,6 +171,7 @@ use kartik\tabs\TabsX;
                 echo "<tr>";
                 echo "<th> Teacher Name </th>";
                 echo "<th> Score </th>";
+                echo "<th> Remarks </th>";
                 echo "</tr>";
                 echo "</thead>";
                 echo "<tbody>";
@@ -185,6 +186,21 @@ use kartik\tabs\TabsX;
                     echo('<tr>');
                     echo('<td>' . Html::a($data[$i]['name'], ['teacher/view','id'=> $data[$i]['id']], ['target' => '_blank']) . '</td>');
                     echo('<td style="width: 20%">' . $data[$i]['score'] . '</td>');
+                    
+                        if($data[$i]['score'] <= 5 || $data[$i]['score'] >= 4.20){
+                            echo 'Excellent';
+                        }else if($data[$i]['score'] <= 4.19 || $data[$i]['score'] >= 3.40){
+                            echo 'Above Average';
+                        }else if($data[$i]['score'] <= 3.39 || $data[$i]['score'] >= 2.60){
+                            echo 'Above Average';
+                        }else if($data[$i]['score'] <= 2.59 || $data[$i]['score'] >= 1.80){
+                            echo 'Above Average';
+                        }else if($data[$i]['score'] <= 1.79 || $data[$i]['score'] >= 1){
+                            echo 'Above Average';
+                        }else if($data[$i]['score'] = 0){
+                            echo 'Fail';
+                        }
+                            
                     echo('</tr>');
                 }
             }

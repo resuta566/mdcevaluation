@@ -77,6 +77,11 @@ class TeacherController extends Controller
                             'allow' => true,
                             'roles' => [User::ROLE_HEAD]
                         ],
+                        [
+                            'actions'=>['view'],
+                            'allow' => true,
+                            'roles' => [User::ROLE_TEACHER]
+                        ],
                 ],
             ],
             'verbs' => [
@@ -109,7 +114,7 @@ class TeacherController extends Controller
         $this->layout = "alayout";
         $searchModel = new TeacherSearchList();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $dataProvider->pagination = ['pageSize' => 150,];
         return $this->render('list', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -204,6 +209,16 @@ class TeacherController extends Controller
                 'instrument' => $instrument,
                 'activeDataProvider' => $activeDataProvider
             ]);
+        }elseif(Yii::$app->user->identity->teacher->id == $model->id){
+            return $this->render('view', [
+                'model'=> $model,
+                'eval' =>  $eval,
+                'classes'=> $classes,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'instrument' => $instrument,
+                'activeDataProvider' => $activeDataProvider
+            ]);
         }
         throw new \yii\web\HttpException(401, 'You are Forbidden to view this teacher.');
         
@@ -239,6 +254,7 @@ class TeacherController extends Controller
         $instrumentSection = Section::find('id')->where(['instrument_id' => $instrument])->all();
         $deptUsers = User::find()->where(['department' => $id])->andWhere(['role' => 20])->all();
             //Dean to Teacher
+            $evaluation;
                foreach ($deptUsers as $sc) :
                 if(!Evaluation::find()->where(['eval_by' => $deanid])->andWhere(['eval_for' => $sc->id ])->one()){
                     $evaluation = new Evaluation();
@@ -276,12 +292,12 @@ class TeacherController extends Controller
                 }
                    
                 endforeach;
-
-                Yii::$app->session->setFlash('success', ' Successfull Peer Evaluation');
-                    
                 if(!$evaluation->save()){ 
                     Yii::$app->session->setFlash('danger', ' There is already an Evaluation for this teachers.');        
                 }
+                Yii::$app->session->setFlash('success', ' Successfull Head to Teacher Evaluation');
+                    
+                
            return $this->redirect(['index']);
     }
     /**

@@ -85,6 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <th>Middle Name</th>
         <th>Gender</th>
         <th>Department</th>
+        <th>Type</th>
         <th>Evaluation Status</th>
     </tr>
     <tr>
@@ -94,6 +95,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <td><?= $model->mname ?></td>
         <td><?= $model->genderName ?></td>
         <td><?= $model->user->departmentName ?></td>
+        <td><?= $model->typeName ?></td>
         <td><?= $model->evalDone ?></td>
        
     </tr>
@@ -206,7 +208,7 @@ echo TabsX::widget([
     'encodeLabels'=>false
 ]);
 ?>
-        <?php }else{?>
+        <?php }elseif( Yii::$app->user->identity->role == 20 || Yii::$app->user->identity->role == 30){?>
         <?php 
 $items = [
     [

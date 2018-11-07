@@ -52,13 +52,14 @@ class Teacher extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'lname' => 'Lname',
-            'fname' => 'Fname',
-            'mname' => 'Mname',
+            'lname' => 'Last Name',
+            'fname' => 'First Name',
+            'mname' => 'Middle Name',
             'gender' => 'Gender',
             'type' => 'Type',
             'user_id' => 'User ID',
-            'evalDone' => 'Evaluation Status'
+            'evalDone' => 'Evaluation Status',
+            'typeName' => 'Type'
         ];
     }
 

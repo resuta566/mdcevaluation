@@ -43,6 +43,11 @@ class ClassesController extends Controller
                         'roles' => [User::ROLE_HEAD]
                     ],
                     [
+                        'actions' => ['view'],
+                        'allow' => true,
+                        'roles' => [User::ROLE_TEACHER]
+                    ],
+                    [
                         'actions' => ['index','view'],
                         'allow' => true,
                         'roles' => [User::ROLE_ADMIN]
@@ -86,12 +91,54 @@ class ClassesController extends Controller
         $dataProvider = $searchModel->search($id);
         $model = Classes::findOne($id);
         $sclasses = StudentClass::find()->where(['class_id'=>$id])->one();
-        return $this->render('view', [
-            'model'=> $model,
-            'sclasses'=> $sclasses,
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        if(Yii::$app->user->identity->role == User::ROLE_TEACHER){
+            if(Yii::$app->user->identity->teacher->id == $model->teacher->id){
+                return $this->render('view', [
+                    'model'=> $model,
+                    'sclasses'=> $sclasses,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                ]);
+            }
+            
+        }elseif(Yii::$app->user->identity->role == User::ROLE_ADMIN){
+            return $this->render('view', [
+                'model'=> $model,
+                'sclasses'=> $sclasses,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }elseif(Yii::$app->user->identity->role == User::ROLE_HEAD){
+            if(Yii::$app->user->identity->department == 4){
+                if($model->teacher->user->department == 3 || $model->teacher->user->department == 4){
+                    return $this->render('view', [
+                        'model'=> $model,
+                        'sclasses'=> $sclasses,
+                        'searchModel' => $searchModel,
+                        'dataProvider' => $dataProvider,
+                    ]);  
+                }
+            }elseif(Yii::$app->user->identity->department == 7){
+                if($model->teacher->user->department == 7 || $model->teacher->user->department == 8){
+                    return $this->render('view', [
+                        'model'=> $model,
+                        'sclasses'=> $sclasses,
+                        'searchModel' => $searchModel,
+                        'dataProvider' => $dataProvider,
+                    ]);  
+                }
+            }elseif(Yii::$app->user->identity->department == $model->teacher->user->department){
+                return $this->render('view', [
+                    'model'=> $model,
+                    'sclasses'=> $sclasses,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                ]); 
+            }
+            throw new \yii\web\HttpException(401, 'You are Forbidden to view this teacher.');
+        }
+        throw new \yii\web\HttpException(401, 'You are Forbidden to view this teacher.');
+       
     }
 
     public function actionEvaluate($id)

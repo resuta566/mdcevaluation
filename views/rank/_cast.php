@@ -25,7 +25,7 @@ use kartik\tabs\TabsX;
 <br>
      Tubigon,Bohol,Philippines
      <br>Teacher Evaluation <br>
-      CAST Department</p>
+      COLLEGE RANKING</p>
     </div>
 
 
@@ -46,14 +46,16 @@ use kartik\tabs\TabsX;
         // var_dump($castTeachers);
         // die();
         foreach($castTeachers as $indexCastTeac => $casTeacher):
+            // var_dump($casTeacher);
+        // $evaluation = Evaluation::find()->where(['eval_for' => $casTeacher->id])->one();
 
-        $evaluation = Evaluation::find()->where(['eval_for' => $casTeacher->id])->one();
-
-        if(!$evaluation){
-            die();
-        }else{
+            // print_r($evaluation);
+            // die();
+        // if(!$evaluation){
+        //     // die();
+        // }else{
         Teacher::find()->where(['user_id' => $casTeacher->id])->one(); 
-            $inst = Instrument::find()->where(['id' => $evaluation->instrument->id])->one(); 
+            $inst = Instrument::find()->where(['id' => 1])->one(); 
 
 
             $sect = Section::find()->where(['instrument_id' => $inst->id]); 
@@ -162,7 +164,7 @@ use kartik\tabs\TabsX;
                     $mee = 0;
                     $me = 0;
                                 
-        }
+        // }
                     endforeach; 
                     $data;
                 //    var_dump($data);
@@ -172,6 +174,7 @@ use kartik\tabs\TabsX;
                     echo "<tr>";
                     echo "<th> Teacher Name </th>";
                     echo "<th> Score </th>";
+                    echo "<th> Remarks </th>";
                     echo "</tr>";
                     echo "</thead>";
                     echo "<tbody>";
@@ -186,6 +189,21 @@ use kartik\tabs\TabsX;
                         echo('<tr>');
                         echo('<td>' . Html::a($data[$i]['name'], ['teacher/view','id'=> $data[$i]['id']], ['target' => '_blank']) . '</td>');
                         echo('<td style="width: 20%">' . $data[$i]['score'] . '</td>');
+                        echo('<td style="width: 20%">');
+                        if(5 >= $data[$i]['score'] && 4.20 <= $data[$i]['score'] ){
+                            echo 'Excellent';
+                        }else if($data[$i]['score'] <= 4.19 && $data[$i]['score'] >= 3.40){
+                            echo 'Above Average';
+                        }else if($data[$i]['score'] <= 3.39 && $data[$i]['score'] >= 2.60){
+                            echo 'Average/Fair';
+                        }else if($data[$i]['score'] <= 2.59 && $data[$i]['score'] >= 1.80){
+                            echo 'Poor';
+                        }else if($data[$i]['score'] <= 1.79 && $data[$i]['score'] >= 1){
+                            echo 'Very Poor';
+                        }else{
+                            echo 'Fail';
+                        }
+                        echo('</td');
                         echo('</tr>');
                     }
                 }

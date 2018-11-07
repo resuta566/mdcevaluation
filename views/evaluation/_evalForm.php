@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                        echo Html::activeHiddenInput($modelSection, "[{$indexSection}]id");
                    }
                ?>
-               <h2><strong><?= $modelSection->section->name ?></strong></h2>
+               <h4><strong><?= $modelSection->section->name ?></strong></h4>
            <?= $this->render('_evalFormItem', [
                    'form' => $form,
                    'modelSection' => $modelSection,

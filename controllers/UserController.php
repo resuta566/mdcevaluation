@@ -163,4 +163,46 @@ class UserController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    public function actionChangepassword(){
+        $model = new \app\models\PasswordForm;
+        $modeluser = User::find()->where([
+            'id'=>Yii::$app->user->identity->id
+        ])->one();
+      
+        if($model->load(Yii::$app->request->post())){
+            if($model->validate()){
+                try{
+                    $modeluser->password = $_POST['PasswordForm']['newpass'];
+                    if($modeluser->save()){
+                        Yii::$app->getSession()->setFlash(
+                            'success','Password changed'
+                        );
+                        return $this->redirect(['index']);
+                    }else{
+                        Yii::$app->getSession()->setFlash(
+                            'error','Password not changed'
+                        );
+                        return $this->redirect(['index']);
+                    }
+                }catch(Exception $e){
+                    Yii::$app->getSession()->setFlash(
+                        'error',"{$e->getMessage()}"
+                    );
+                    return $this->render('change',[
+                        'model'=>$model
+                    ]);
+                }
+            }else{
+                return $this->render('change',[
+                    'model'=>$model
+                ]);
+            }
+        }else{
+            return $this->render('change',[
+                'model'=>$model
+            ]);
+        }
+    }
+
 }

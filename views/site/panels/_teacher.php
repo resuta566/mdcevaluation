@@ -43,8 +43,8 @@ $this->title = "Dashboard";
 								<?php }else if(Yii::$app->user->identity->role==User::ROLE_HEAD){?>
 									<li>
 									<a href="<?= \yii\helpers\Url::to(['/rank/department']) ?>">
-										<i class="glyphicon glyphicon-blackboard"> </i>
-										<p>Teachers</p>
+										<i class="glyphicon glyphicon-equalizer"> </i>
+										<p>Ranking</p>
 									</a>
 								</li>
 								<li>
@@ -97,37 +97,116 @@ $this->title = "Dashboard";
 						<h1 class="title">DASHBOARD</h1>
 						<p class="category">Teacher Dashboard</p>
 					</div>
-								<div class="panel-body">
-								<?php if(Yii::$app->user->identity->role==User::ROLE_ADMIN){?>
-								<?php $evaluation =\app\models\Evaluation::find()->where(['eval_by' => Yii::$app->user->identity->id])->andWhere(['status' => 0])->all();  ?>
+					<div class="panel-body">
+					<?php if(Yii::$app->user->identity->role==User::ROLE_TEACHER){?>
+						<center>
+							<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="card card-stats">
+							<a href="<?= \yii\helpers\Url::to(['teacher/view', 'id' => Yii::$app->user->identity->teacher->id ]) ?>">
+								<div class="card-header" data-background-color="green">
+									<i class="glyphicon glyphicon-user"></i>
+								</div>
+								<div class="card-content">
+									<p class="category">Teacher Profile</p>
+								</div>
+								<div class="card-footer">
+									<div class="stats">
+										<i class="glyphicon glyphicon-check"></i> Comments and Score
+									</div>
+								</div>
+								</a>
+							</div>
+							</div>
+							<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="card card-stats">
+							<a href="<?= \yii\helpers\Url::to(['user/profile', 'id' => Yii::$app->user->identity->id ]) ?>">
+								<div class="card-header" data-background-color="orange">
+										<i class="glyphicon glyphicon-blackboard"></i>
+									</div>
+									<div class="card-content">
+										<p class="category">Teachers</p>
+									</div>
+									<div class="card-footer">
+										<div class="stats">
+											<i class="glyphicon glyphicon-briefcase"></i> Active
+										</div>
+									</div>
+								</a>
+							</div>
+							</div>
+						</center>
+					<?php }else{?>
+					<div class="row">
+								<?php $evaluation = app\models\Evaluation::find()->where(['eval_by' => Yii::$app->user->identity->id])->andWhere(['status' => 0])->all();  ?>
 								<?php if(!$evaluation){?>
 										<h3>There is no Evaluation yet.</h3>
 										<small>Please wait for the admin to create an evaluation form for you.</small>
 								<?php } else{ ?>
+									<div class="row">
+									<center>
+						<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="card card-stats">
+							<a href="<?= \yii\helpers\Url::to(['/rank/department']) ?>">
+								<div class="card-header" data-background-color="green">
+									<i class="glyphicon glyphicon-equalizer"></i>
+								</div>
+								<div class="card-content">
+									<p class="category">Ranking</p>
+								</div>
+								<div class="card-footer">
+									<div class="stats">
+										<i class="glyphicon glyphicon-check"></i> Teacher Ranking
+									</div>
+								</div>
+								</a>
+							</div>
+							</div>
+
+							<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="card card-stats">
+							<a href="<?= \yii\helpers\Url::to(['/user/profile']) ?>">
+								<div class="card-header" data-background-color="gray">
+									<i class="glyphicon glyphicon-user"></i>
+								</div>
+								<div class="card-content">
+									<p class="category">User Profile</p>
+								</div>
+								<div class="card-footer">
+									<div class="stats">
+										<i class="glyphicon glyphicon-check"></i> User Profile
+									</div>
+								</div>
+								</a>
+							</div>
+							</div>
+					</center>
+					</div>
+					<center>
+					<h2>Evaluation<h2>
+					</center>
 									<?php foreach ($evaluation as $usereval => $eval): ?>
-								<center> 
-								<div class="col-lg-3 col-md-6 col-sm-6">
-									<div class="card card-stats">
-                                            <a href="<?= \yii\helpers\Url::to(['evaluation/evaluate', 'id' => $eval->id ]) ?>">
-                                                <div class="card-header" data-background-color="orange">
-                                                    <i class="glyphicon glyphicon-blackboard"></i>
-                                                </div>
-                                                <div class="card-content">
-                                                    <h5 class="title"><?= $eval->evalFor->teacher->fullName ?></h5>
-													<!--  -->
-                                                </div>
-                                                <div class="card-footer">
-                                                    <div class="stats">
-                                                        <i class="glyphicon glyphicon-briefcase"></i> <?= $eval->evalFor->departmentName ?>
+									<center>
+									<div class="col-lg-3 col-md-6 col-sm-6">
+												<div class="card card-stats">
+												<a href="<?= \yii\helpers\Url::to(['evaluation/evaluate', 'id' => $eval->id ]) ?>">
+													<div class="card-header" data-background-color="purple">
+														<i class="glyphicon glyphicon-blackboard"></i>
+													</div>
+													<div class="card-content">
+														<h4 class="title"><?= $eval->evalFor->teacher->fullName ?></h4>
+													</div>
+													<div class="card-footer">
+														<div class="stats">
+														<i class="glyphicon glyphicon-briefcase"></i> <?= $eval->evalFor->departmentName?>
                                                     </div>
-                                                </a>
-                                        </div>
-										
-                        			</div>
+													</div>
+													</a>
+												</div>
 									</center>
 							<?php endforeach; ?>
 								<?php }?>
 								<?php }?>
+								</div>
 								</div>
 						  	</div>
 			</div>

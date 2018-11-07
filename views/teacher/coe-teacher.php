@@ -11,7 +11,7 @@ use yii\bootstrap\Modal;
 
 $this->title = 'COE Teachers';
 $this->params['breadcrumbs'][] = $this->title;
-$user = \app\models\User::find()->where(['role' => 100])->andWhere(['department'=> 2])->one();
+$user = \app\models\User::find()->where(['role' => 30])->andWhere(['department'=> 2])->one();
 ?>
 
 <div class="card">

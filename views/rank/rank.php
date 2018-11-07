@@ -33,12 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
      <?= Html::beginForm(['prints'],'post');?>
              <?php
                 $dept_list = array(
-                    1 => 'CAST',
-                    2 => 'COE',
-                    3 => 'CABM-H',
-                    4 => 'CABM-B',
-                    5 => 'CON',
-                    6 => 'CCJ',
+                    1 => 'COLLEGE',
                     7 => 'Senior High School',
                     8 => 'Junior High School',
                     9 => 'Elementary'
@@ -58,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::endForm();?>
 
      <?php 
-      $castTeachers = User::find()->where(['department' => 1])->andWhere(['role' => [20,30]])->all();
+      $castTeachers = User::find()->where(['department' => [1,2,3,4,5,6,]])->andWhere(['role' => [20,30]])->all();
       $coeTeachers = User::find()->where(['department' => 2])->andWhere(['role' => [20,30]])->all();
       $cabmhTeachers = User::find()->where(['department' => 3])->andWhere(['role' => [20,30]])->all();
       $cabmbTeachers = User::find()->where(['department' => 4])->andWhere(['role' => [20,30]])->all();
@@ -80,36 +75,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'castTeachers' => $castTeachers 
                     ]),
                     'active' => true
-                ],[
-                    'label' => 'COE', 
-                    'icon' => 'user',
-                    'content' => $this->render('_coe',[
-                        'teachers' => $coeTeachers 
-                    ]),
-                ],[
-                    'label' => 'CABM-B', 
-                    'icon' => 'user',
-                    'content' => $this->render('_cabmb',[
-                        'teachers' => $cabmbTeachers 
-                    ]),
-                ],[
-                    'label' => 'CABM-H', 
-                    'icon' => 'user',
-                    'content' => $this->render('_cabmh',[
-                        'teachers' => $cabmhTeachers 
-                    ]),
-                ],[
-                    'label' => 'CON', 
-                    'icon' => 'user',
-                    'content' => $this->render('_con',[
-                        'teachers' => $conTeachers 
-                    ]),
-                ],[
-                    'label' => 'CCJ', 
-                    'icon' => 'user',
-                    'content' => $this->render('_ccj',[
-                        'teachers' => $ccjTeachers 
-                    ]),
                 ],[
                     'label' => 'SHS', 
                     'icon' => 'user',
