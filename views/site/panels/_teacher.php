@@ -164,7 +164,7 @@ $this->title = "Dashboard";
 
 							<div class="col-lg-3 col-md-6 col-sm-6">
 							<div class="card card-stats">
-							<a href="<?= \yii\helpers\Url::to(['/user/profile']) ?>">
+							<a href="<?= \yii\helpers\Url::to(['/user/profile' , 'id' => Yii::$app->user->identity->id]) ?>">
 								<div class="card-header" data-background-color="gray">
 									<i class="glyphicon glyphicon-user"></i>
 								</div>

@@ -147,11 +147,11 @@ class TeacherController extends Controller
     {
         $model = Teacher::findOne($id);
         $user = User::find()->where(['id' => $model->user->id])->one();
-        $evaluation = Evaluation::find()->where(['eval_for' => $user->id])->one();
-        $sections = EvaluationSection::find()->where(['evaluation_id' => $evaluation->id])->one();
-        if($sections->comment == null){
-            throw new \yii\web\HttpException(404, "The Evaluatee didn't submit comments yet.");
-        }
+        // $evaluation = Evaluation::find()->where(['eval_for' => $user->id])->one();
+        // $sections = EvaluationSection::find()->where(['evaluation_id' => $evaluation->id])->one();
+        // if($sections->comment == null){
+        //     throw new \yii\web\HttpException(404, "The Evaluatee didn't submit comments yet.");
+        // }
         return $this->render('comments',[
             'model' => $model,
             'user' => $user
@@ -262,6 +262,8 @@ class TeacherController extends Controller
         $instrumentSection = Section::find('id')->where(['instrument_id' => $instrument])->all();
         $deptUsers = User::find()->where(['department' => $id])->andWhere(['role' => 20])->all();
             //Dean to Teacher
+            ini_set('max_execution_time', 0);
+            ini_set('memory_limit','-1');
             $evaluation;
                foreach ($deptUsers as $sc) :
                 if(!Evaluation::find()->where(['eval_by' => $deanid])->andWhere(['eval_for' => $sc->id ])->one()){
@@ -318,6 +320,7 @@ class TeacherController extends Controller
         $instrument = Instrument::find('id')->where(['id'=> $action ])->one();
         $instrumentSection = Section::find('id')->where(['instrument_id' => $instrument])->all();
         ini_set('max_execution_time', 0);
+        ini_set('memory_limit','-1');
         $selection=(array)Yii::$app->request->post('selection');//typecasting
         foreach($selection as $id){
          $model = Classes::findOne((int)$id);//make a typecasting
