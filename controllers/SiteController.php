@@ -56,6 +56,11 @@ class SiteController extends Controller
                         'actions' => ['index','delete','about'],
                         'allow' => true,
                         'roles' => [User::ROLE_ADMIN]
+                    ],
+                    [
+                        'actions' => ['index','delete','about'],
+                        'allow' => true,
+                        'roles' => [User::ROLE_GUIDANCE]
                     ]
                 ],
             ],
@@ -118,6 +123,10 @@ class SiteController extends Controller
          }else if (Yii::$app->user->identity->role==User::ROLE_HEAD) {
             
             return $this->render('panels/_teacher');
+
+         }else if (Yii::$app->user->identity->role==User::ROLE_GUIDANCE) {
+            
+            return $this->render('panels/_admin');
 
          }else{
             return $this->render('index');

@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'encodeLabels' => false,
             'items' => [
                 [
-                    'label' => 'CAST', 
+                    'label' => 'COLLEGE', 
                     'icon' => 'user',
                     'content' => $this->render('_cast',[
                         'castTeachers' => $castTeachers 

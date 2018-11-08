@@ -45,6 +45,11 @@ class RankController extends Controller
                         'roles' => [User::ROLE_ADMIN]
                     ],
                     [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => [User::ROLE_GUIDANCE]
+                    ],
+                    [
                         'actions' => ['department'],
                         'allow' => true,
                         'roles' => [User::ROLE_HEAD]

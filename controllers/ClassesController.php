@@ -51,6 +51,11 @@ class ClassesController extends Controller
                         'actions' => ['index','view'],
                         'allow' => true,
                         'roles' => [User::ROLE_ADMIN]
+                    ],
+                    [
+                        'actions' => ['index','view'],
+                        'allow' => true,
+                        'roles' => [User::ROLE_GUIDANCE]
                     ]
                 ],
             ],

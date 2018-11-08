@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
      <div class="card-content">
      
 
-    <button onclick="printContent('div1')" class="btn btn-info btn-pdfprint">Print Content</button>
+    <button onclick="printContent('div1')" class="btn btn-info btn-pdfprint"><i class="glyphicon glyphicon-print"></i></button>
     <?php $score = array();?>
     <?php $itemAve;?>
     <?php $scores;?>
@@ -170,9 +170,24 @@ $this->params['breadcrumbs'][] = $this->title;
                 </table>
                 
                 <div class="pull-right">
-                <h1>
-                <?= " AVERAGE SCORE: ".$mee/$me ?>
-                </h1>
+                <h2>
+                <?= " AVERAGE SCORE: ". $data = $mee/$me ?> <br><?php
+                 echo('REMARKS: ');
+                 if(5 >= $data && 4.20 <= $data ){
+                     echo 'Excellent';
+                 }else if($data <= 4.19 && $data >= 3.40){
+                     echo 'Above Average';
+                 }else if($data <= 3.39 && $data >= 2.60){
+                     echo 'Average/Fair';
+                 }else if($data <= 2.59 && $data >= 1.80){
+                     echo 'Poor';
+                 }else if($data <= 1.79 && $data >= 1){
+                     echo 'Very Poor';
+                 }else{
+                     echo 'Fail';
+                 }
+                ?>
+                </h2>
                 </div>
                 
       </div>

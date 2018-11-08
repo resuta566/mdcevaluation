@@ -39,6 +39,11 @@ class HeadController extends Controller
                         'actions' => ['index','view','evaluate'],
                         'allow' => true,
                         'roles' => [User::ROLE_ADMIN]
+                    ],
+                    [
+                        'actions' => ['index','view','evaluate'],
+                        'allow' => true,
+                        'roles' => [User::ROLE_GUIDANCE]
                     ]
                 ],
             ],

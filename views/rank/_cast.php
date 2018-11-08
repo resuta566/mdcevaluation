@@ -43,17 +43,7 @@ use kartik\tabs\TabsX;
         
         $sectionScore = array();
         $itemScore = array();
-        // var_dump($castTeachers);
-        // die();
         foreach($castTeachers as $indexCastTeac => $casTeacher):
-            // var_dump($casTeacher);
-        // $evaluation = Evaluation::find()->where(['eval_for' => $casTeacher->id])->one();
-
-            // print_r($evaluation);
-            // die();
-        // if(!$evaluation){
-        //     // die();
-        // }else{
         Teacher::find()->where(['user_id' => $casTeacher->id])->one(); 
             $inst = Instrument::find()->where(['id' => 1])->one(); 
 

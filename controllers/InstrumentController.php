@@ -43,6 +43,11 @@ class InstrumentController extends Controller
                         'actions' => ['index','view','create','update','delete'],
                         'allow' => true,
                         'roles' => [User::ROLE_ADMIN]
+                    ],
+                    [
+                        'actions' => ['index','view','create','update','delete'],
+                        'allow' => true,
+                        'roles' => [User::ROLE_GUIDANCE]
                     ]
                 ],
             ],

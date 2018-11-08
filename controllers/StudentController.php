@@ -41,6 +41,11 @@ class StudentController extends Controller
                         'actions' => ['index','view','generate','list'],
                         'allow' => true,
                         'roles' => [User::ROLE_ADMIN]
+                    ],
+                    [
+                        'actions' => ['index','view','generate','list'],
+                        'allow' => true,
+                        'roles' => [User::ROLE_GUIDANCE]
                     ]
                 ],
             ],

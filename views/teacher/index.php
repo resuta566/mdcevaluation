@@ -67,6 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'fname',
             'mname',
             'user.departmentName',
+            'user.roleName',
             'evalDone',
             'typeName',
             'genderName',

@@ -6,7 +6,9 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <?php
-if($userDept = 1 ){
+// print_r($userDept);
+// die();
+if($userDept == 1 ){
     $teachers = app\models\User::find()->where(['department' => [1,2,3,4,5,6,]])->andWhere(['role' => [20,30]])->all();
 }else{
     $teachers = app\models\User::find()->where(['department' => $userDept])->andWhere(['role' => [20,30]])->all();

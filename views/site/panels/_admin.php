@@ -224,6 +224,32 @@ $this->title = "Admin Dashboard";
 													</div>
 												</div>
 											</div>
+											<?php $evaluation = app\models\Evaluation::find()->where(['eval_by' => Yii::$app->user->identity->id])->andWhere(['status' => 0])->all();  ?>
+								<?php if(!$evaluation){?>
+										<h3>There is no Evaluation yet.</h3>
+										<small>Please wait for the admin to create an evaluation form for you.</small>
+								<?php } else{ ?>
+											<?php foreach ($evaluation as $usereval => $eval): ?>
+									<center>
+									<div class="col-lg-3 col-md-6 col-sm-6">
+												<div class="card card-stats">
+												<a href="<?= \yii\helpers\Url::to(['evaluation/evaluate', 'id' => $eval->id ]) ?>">
+													<div class="card-header" data-background-color="purple">
+														<i class="glyphicon glyphicon-blackboard"></i>
+													</div>
+													<div class="card-content">
+														<h4 class="title"><?= $eval->evalFor->teacher->fullName ?></h4>
+													</div>
+													<div class="card-footer">
+														<div class="stats">
+														<i class="glyphicon glyphicon-briefcase"></i> <?= $eval->evalFor->departmentName?>
+                                                    </div>
+													</div>
+													</a>
+												</div>
+									</center>
+							<?php endforeach; ?>
+							<?php } ?>
 			</div>
 	</div>
 

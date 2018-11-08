@@ -71,7 +71,15 @@ class TeacherController extends Controller
                           ],
                         'allow' => true,
                         'roles' => [User::ROLE_ADMIN]
-                        ],
+                        ],[
+                            'actions' => [
+                                'index','view','generate','unlink','bulk','generatebulk','list',
+                                'cast-teacher','coe-teacher','cabmh-teacher','cabmb-teacher','con-teacher','ccj-teacher',
+                                'shs-teacher','jhs-teacher','elem-teacher','teacheval'
+                              ],
+                            'allow' => true,
+                            'roles' => [User::ROLE_GUIDANCE]
+                            ],
                         [
                             'actions'=>['view'],
                             'allow' => true,
@@ -199,7 +207,7 @@ class TeacherController extends Controller
                 'instrument' => $instrument,
                 'activeDataProvider' => $activeDataProvider
             ]);
-        }elseif(Yii::$app->user->identity->role == 100){
+        }elseif(Yii::$app->user->identity->role == 100 || Yii::$app->user->identity->role == 60){
             return $this->render('view', [
                 'model'=> $model,
                 'eval' =>  $eval,
@@ -309,17 +317,7 @@ class TeacherController extends Controller
         $action = Yii::$app->request->post('instrumentdropdown');
         $instrument = Instrument::find('id')->where(['id'=> $action ])->one();
         $instrumentSection = Section::find('id')->where(['instrument_id' => $instrument])->all();
-        // foreach($instrumentSection as $iS){
-        //     echo $iS->id." " . $iS->name. " - ";
-        // $instrumentSectionItem = Item::find()->where(['section_id' => $iS->id])->all(); 
-        // // echo  $instrumentSectionItem ."<br>";
-        // echo "<br>";
-        // foreach($instrumentSectionItem as $iSt){
-        //     echo $iSt->id." - ";
-        // }
-        // }
-        //Items
-        // $instrumentSectionItem = Item::find()->where(['section_id' => $instrumentSection->id]); 
+        ini_set('max_execution_time', 0);
         $selection=(array)Yii::$app->request->post('selection');//typecasting
         foreach($selection as $id){
          $model = Classes::findOne((int)$id);//make a typecasting

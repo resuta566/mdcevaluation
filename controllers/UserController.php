@@ -38,6 +38,10 @@ class UserController extends Controller
                         'actions' => ['index','delete','view','update','changepassword'],
                         'allow' => true,
                         'roles' => [User::ROLE_ADMIN]
+                    ], [
+                        'actions' => ['index','delete','view','update','changepassword'],
+                        'allow' => true,
+                        'roles' => [User::ROLE_GUIDANCE]
                     ],
                     [
                         'actions' => ['changepassword'],

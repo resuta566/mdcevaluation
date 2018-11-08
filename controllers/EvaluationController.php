@@ -63,6 +63,11 @@ class EvaluationController extends Controller
                         'actions' => ['evaluate'],
                         'allow' => true,
                         'roles' => [User::ROLE_ADMIN]
+                    ],
+                    [
+                        'actions' => ['evaluate'],
+                        'allow' => true,
+                        'roles' => [User::ROLE_GUIDANCE]
                     ]
                 ],
             ],

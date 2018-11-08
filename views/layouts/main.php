@@ -63,7 +63,7 @@ MaterialAsset::register($this);
 						</div>
 
 	    	<div class="sidebar-wrapper">
-			<?php if(Yii::$app->user->identity->role==User::ROLE_ADMIN){ ?>
+			<?php if(Yii::$app->user->identity->role==User::ROLE_ADMIN || Yii::$app->user->identity->role==User::ROLE_GUIDANCE){ ?>
 			<?= ramosisw\CImaterial\widgets\Menu::widget(
 				[
 					'options' => ['class' => 'nav'],

@@ -103,7 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <br>
      <h2><b>Subjects</b>
      </h2>
-     <?php if(Yii::$app->user->identity->role == 100){ ?>
+     <?php if(Yii::$app->user->identity->role == 100 || Yii::$app->user->identity->role == 60){ ?>
         <?php 
 $items = [
     [

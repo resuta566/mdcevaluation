@@ -29,7 +29,7 @@ use kartik\tabs\TabsX;
     </div>
     <div class="jem">
     <h2 style="font-family:Old English Text MT;"> <?php
-    if($userDept = 1 ){
+    if($userDept == 1 ){
         echo 'COLLEGE RANKING';
     }else{
         echo User::find()->where(['department' => $userDept])->one()->departmentname .' Department'; 

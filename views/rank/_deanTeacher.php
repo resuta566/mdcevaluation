@@ -25,7 +25,6 @@ use kartik\tabs\TabsX;
 <br>
      Tubigon,Bohol,Philippines
      <br>Teacher Evaluation <br>
-      CAST Department</p>
     </div>
 
 

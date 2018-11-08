@@ -43,7 +43,7 @@ MaterialAsset::register($this);
 			<div class="logo">
 			
 
-		 <?php if(Yii::$app->user->identity->role==User::ROLE_ADMIN){ ?>
+		 <?php if(Yii::$app->user->identity->role==User::ROLE_ADMIN || Yii::$app->user->identity->role==User::ROLE_GUIDANCE){ ?>
 			<a href="<?= \yii\helpers\Url::to(['/']) ?>" class="simple-text">
 		<?= Yii::$app->user->identity->teacher->fullName . '</a>'; ?>
 		</a>
@@ -59,7 +59,7 @@ MaterialAsset::register($this);
 						</div>
 			
 	    	<div class="sidebar-wrapper">
-			<?php if(Yii::$app->user->identity->role==User::ROLE_ADMIN){ ?>
+			<?php if(Yii::$app->user->identity->role==User::ROLE_ADMIN || Yii::$app->user->identity->role==User::ROLE_GUIDANCE){ ?>
 			<?= ramosisw\CImaterial\widgets\Menu::widget(
 				[
 					'options' => ['class' => 'nav'],
