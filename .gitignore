@@ -13,10 +13,10 @@ nbproject
 Thumbs.db
 
 # composer vendor dir
-vendor/
-vendor2/
-/vendor
-/vendor2
+# vendor/
+# vendor2/
+# /vendor
+# /vendor2
 evalsystem.zip
 # composer itself is not needed
 composer.phar

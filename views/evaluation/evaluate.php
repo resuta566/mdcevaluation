@@ -19,13 +19,19 @@ $this->title = 'Evaluate';
         <center>
         <strong>
         <?php
-        if(Yii::$app->user->identity->role== User::ROLE_HEAD){
+        if(Yii::$app->user->identity->role== User::ROLE_HEAD || Yii::$app->user->identity->role== User::ROLE_ADMIN || Yii::$app->user->identity->role== User::ROLE_GUIDANCE){
             echo '<h2>Head\'s Evaluation of Faculty</h2>';
         }else{
             echo '<h2>Student\'s Evaluation of Faculty</h2>';
         }
         ?>
         </strong>
+        1 - Very Poor, 
+        2 - Poor, 
+        3 - Average/Fair, 
+        4 - Above Average, 
+        5 - Excellent
+        
         </center>
         <br>
     <?= $this->render('_evalForm', [

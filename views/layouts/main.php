@@ -74,6 +74,7 @@ MaterialAsset::register($this);
 						['label' => 'Ranking', 'icon' => 'equalizer', 'url' => ['/rank']],
 						['label' => 'Students', 'icon' => 'education', 'url' => ['/student']],
 						['label' => 'Instruments', 'icon' => 'book', 'url' => ['/instrument']],
+						['label' => 'Profile', 'icon' => 'user', 'url' => ['/user/profile','id' => Yii::$app->user->identity->id]],
 					],
 				]
 			) ?>

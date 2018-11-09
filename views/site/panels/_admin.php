@@ -64,6 +64,12 @@ $this->title = "Admin Dashboard";
 												<p>Instrument</p>
 											</a>
 										</li>
+										<li>
+									<a href="<?= \yii\helpers\Url::to(['/user/profile','id' => Yii::$app->user->identity->id]) ?>">
+										<i class="glyphicon glyphicon-user"> </i>
+										<p>Profile</p>
+									</a>
+								</li>
 								</ul>
 	    	</div>
 		</div>
@@ -224,6 +230,7 @@ $this->title = "Admin Dashboard";
 													</div>
 												</div>
 											</div>
+											<center><h3>To Evaluate</h3>	</center>
 											<?php $evaluation = app\models\Evaluation::find()->where(['eval_by' => Yii::$app->user->identity->id])->andWhere(['status' => 0])->all();  ?>
 								<?php if(!$evaluation){?>
 										<h3>There is no Evaluation yet.</h3>
